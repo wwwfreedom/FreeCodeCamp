@@ -1,0 +1,37 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  margin: 0 1em;
+  align-items: center;
+}
+
+.brand {
+  font-size: 1em;
+  @include MQ(M) {
+    font-size: 1.5em;
+  }
+}
+
+.mobileNav {
+  @include MQ(M) {
+    display: none;
+  }
+}
+
+.navigation {
+  display: none;
+  @include MQ(M) {
+    display: flex;
+  }
+  a {
+    padding-right: 1em;
+    text-decoration: none;
+    color: #a9a9a9;
+    &:hover {
+      color: #909090;
+    }
+  }
+}

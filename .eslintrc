@@ -17,6 +17,10 @@
   },
   "rules": {
     "semi" : [2, "never"],
-    "react-in-jsx-scope": 0
+    "react-in-jsx-scope": 0,
+    "eol-last": 0,
+    "jsx-quotes": 0,
+    "quotes": 0,
+    "space-before-function-paren": [1, "never"]
   }
 }
