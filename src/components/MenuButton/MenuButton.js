@@ -9,7 +9,7 @@ export default function MenuButton(props) {
     menuTextAnimate: props.navStatus
   })
   let barStatus = cx({
-    bar: true,
+    // bar: true,
     barActive: props.navStatus,
     barClosing: !props.navStatus
   })

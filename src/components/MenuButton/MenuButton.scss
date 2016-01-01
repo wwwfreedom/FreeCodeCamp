@@ -9,7 +9,6 @@ $menu-animation-timing:   ease-out;
   height: 30px;
   color: #60635E;
   letter-spacing: 0.1em;
-  z-index: 9999;
 }
 
 .clickRegion {
@@ -18,6 +17,7 @@ $menu-animation-timing:   ease-out;
   width: 40px;
   height: 30px;
   cursor: pointer;
+  z-index: 999;
 }
 
 .menuText {

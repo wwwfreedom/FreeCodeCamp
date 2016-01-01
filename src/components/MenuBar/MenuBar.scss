@@ -6,6 +6,7 @@
   height: 60px;
   margin: 0 1em;
   align-items: center;
+  index: -2;
 }
 
 .brand {
@@ -15,7 +16,7 @@
   }
 }
 
-.mobileNav {
+.mobileNavTrigger {
   @include MQ(M) {
     display: none;
   }
