@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import MenuBar from '../MenuBar/MenuBar.js'
-import SideBar from '../SideBar/SideBar.js'
+import MenuBar from '../../components/MenuBar/MenuBar.js'
+import SideBar from '../../components/SideBar/SideBar.js'
 
 export default class Navigation extends Component {
   state = {
