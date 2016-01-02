@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames/bind'
+import { Link } from 'react-router'
 import sty from './SideBar.scss'
 
 let cx = classNames.bind(sty)
@@ -22,12 +23,12 @@ export default class SideBar extends Component {
       // the mobileNavOffTrigger here is allow user to turn off the mobile nav when they click outside of the mobile nav
       <div className={mobileNav}>
       <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
-        <div className={menu} onClick={this.toggleMobileNav}>
-          <div className={sty.menuContent}>
-            <nav role='navigation' className={sty.menuItem}>
-              <a href="">Yolo</a>
-            </nav>
-          </div>
+        <div className={menu}>
+          <nav role='navigation' className={sty.menuContent}>
+            <Link to='/quotes' onClick={this.props.toggleMenu}>Quotes</Link>
+            <Link to='/pomoTimer' onClick={this.props.toggleMenu}>Pomodoro Timer</Link>
+            <Link to='/about' onClick={this.props.toggleMenu}>About</Link>
+          </nav>
         </div>
       </div>
     )

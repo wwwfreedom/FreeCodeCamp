@@ -4,16 +4,39 @@
   display: flex;
   justify-content: space-between;
   height: 60px;
-  margin: 0 1em;
+  margin: 0 auto;
+  padding: 0 1.5em;
   align-items: center;
-  index: -2;
+  letter-spacing: 0.1em;
+  background: $deskNavBgColour;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.12);
+  @include MQ(M) {
+    padding: 0 2em;
+  }
+  @include MQ(L) {
+    padding: 0 3em;
+  }
 }
 
 .brand {
-  font-size: 1em;
+  font-size: 1.5em;
+  a {
+    text-decoration: none;
+    color: $link-color;
+    font-weight: 400;
+    &:hover {
+      color: $dark-gray;
+      transition: all 0.5s;
+    }
+  }
   @include MQ(M) {
     font-size: 1.5em;
   }
+}
+
+.activeLink {
+  padding-bottom: 0.3em;
+  box-shadow: 0 6px 0 rgba(0,0,0,.1);
 }
 
 .mobileNavTrigger {
@@ -26,13 +49,16 @@
   display: none;
   @include MQ(M) {
     display: flex;
+    font-size: 1.2em;
+    font-weight: 400;
   }
   a {
-    padding-right: 1em;
+    margin-right: 1em;
     text-decoration: none;
-    color: #a9a9a9;
+    color: $link-color;
     &:hover {
-      color: #909090;
+      color: $dark-gray;
+      transition: all 0.5s;
     }
   }
 }
