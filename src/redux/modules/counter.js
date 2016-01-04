@@ -8,7 +8,7 @@ export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value)
+export const increment = createAction(COUNTER_INCREMENT, (value = 0) => value)
 
 // This is a thunk, meaning it is a function that immediately
 // returns a function for lazy evaluation. It is incredibly useful for
