@@ -8,16 +8,18 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-.mobileNavClose {
-  composes: mobileNavCommon;
-  opacity: 0;
-  transition: all 0.5s;
-}
+// .mobileNavClose {
+//   composes: mobileNavCommon;
+//   opacity: 0;
+//   transition: all 0.5s;
+//   display: none;
+// }
 
 .mobileNavOpen {
   composes: mobileNavCommon;
   opacity: 1;
-  transition: all 0.5s;
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  display: block;
 }
 
 // this creates an area to trigger the mobile nav off
@@ -30,7 +32,9 @@
   top: 0;
   right: 0;
   visibility: hidden;
-  width: 300px;
+  // setting the width and overflow hidden stop the div to take up space when they are close and stop the horizontal scrolling.
+  width: 0px;
+  overflow: hidden;
   height: 100%;
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
   transform: translate3d(100%, 0, 0);

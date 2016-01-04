@@ -12,8 +12,8 @@ export default class SideBar extends Component {
   }
   render() {
     let mobileNav = cx({
-      mobileNavClose: this.props.mobileNavIsOpen,
       mobileNavOpen: this.props.mobileNavIsOpen
+      // mobileNavClose: this.props.mobileNavIsOpen
     })
     let menu = cx({
       menuClose: this.props.mobileNavIsOpen === false,
@@ -22,7 +22,7 @@ export default class SideBar extends Component {
     return (
       // the mobileNavOffTrigger here is allow user to turn off the mobile nav when they click outside of the mobile nav
       <div className={mobileNav}>
-      <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
+        <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
         <div className={menu}>
           <nav role='navigation' className={sty.menuContent}>
             <Link to='/quotes' onClick={this.props.toggleMenu}>Quotes</Link>
