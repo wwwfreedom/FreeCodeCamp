@@ -3,6 +3,8 @@ import SideBar from '../../src/components/SideBar/SideBar.js'
 import util from 'util'
 import ShallowTestUtils from 'react-shallow-testutils'
 import sty from '../../src/components/SideBar/SideBar.scss'
+import { bindActionCreators } from 'redux'
+import { menuLinks } from '../../src/redux/modules/generalUi.js'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -21,26 +23,33 @@ function shallowRenderWithProps(props = {}) {
 
 describe('(Component) SideBar', function() {
   var component
-  var rendered
-  var props
+  let rendered
+  let props
+  let spies
 
-  beforeEach(function() {
+  beforeEach(function () {
+    spies = {}
     props = {
-      mobileNavIsOpen: true,
-      toggleMenu: sinon.spy()
+      mobileNavIsOpen: false,
+      menuLinks: menuLinks,
+      ...bindActionCreators({
+        toggleMenu: (spies.toggleMenu = sinon.spy())
+      }, spies.dispatch = sinon.spy())
     }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
   })
 
   it('should have a wrapper div with no class when sideBar is not active ', function() {
-    const actual = shallowRenderWithProps({mobileNavIsOpen: false}).props.className
+    const actual = component.props.className
     const expected = ''
     expect(actual).to.equal(expected)
   })
 
   it('should have a wrapper div with class mobileNavOpen when sideBar is active', function() {
-    const actual = shallowRenderWithProps({mobileNavIsOpen: true}).props.className
+    const actual = shallowRenderWithProps(Object.assign({}, props, {
+      mobileNavIsOpen: true
+    })).props.className
     const expected = sty.mobileNavOpen
     expect(actual).to.equal(expected)
   })
@@ -54,7 +63,7 @@ describe('(Component) SideBar', function() {
 
   it('should have a div with class menuClose when sideBar is not active', function() {
     const actual = ShallowTestUtils.findWithClass(
-      shallowRenderWithProps({mobileNavIsOpen: false}), `${sty.menuClose}`
+      component, `${sty.menuClose}`
     ).props.className
     const expected = sty.menuClose
 
@@ -63,7 +72,9 @@ describe('(Component) SideBar', function() {
 
   it('should have a div with class menuOpen when sideBar is active', function() {
     const actual = ShallowTestUtils.findWithClass(
-      component, `${sty.menuOpen}`
+      shallowRenderWithProps(Object.assign({}, props, {
+        mobileNavIsOpen: true
+      })), `${sty.menuOpen}`
     ).props.className
     const expected = sty.menuOpen
 
@@ -77,20 +88,32 @@ describe('(Component) SideBar', function() {
     expect(actualType).to.equal(expectedType)
   })
 
-  it('should have a wrapper div with no class when user click outside the menu area', function() {
-    // var view = safeRender(<SideBar mobileNavIsOpen={true} />)
-    // var check = TestUtils.scryRenderedDOMComponentsWithClass(view, sty.mobileNavOffTrigger)
-    // TestUtils.Simulate.click[check[0]]
-    // var wrapper = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(view, 'test'))
-    // // TestUtils.Simulate.click[check[0]]
-    // // var wrapper1 = ReactDOM.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(view, 'test'))
-    // // const actual = TestUtils.findRenderedDOMComponentWithClass(rendered, `${sty.mobileNavOffTrigger}`)
-    // // const actualDom =() => React.findDOMNode(actual)
-    // // TestUtils.Simulate.click(actualDom)
-    // // const expected =
+  it('div with class mobileNavOffTrigger should dispatch a sidebarActivate action when clicked', function() {
+    const actual = TestUtils.findRenderedDOMComponentWithClass(rendered, sty.mobileNavOffTrigger)
+
+    expect(actual).to.exist
+    spies.dispatch.should.have.not.been.called
+    TestUtils.Simulate.click(actual)
+    spies.dispatch.should.have.been.called
   })
 
-  it('should have a wrapper div with no class when user click on any link')
-
-  it('should have a wrapper div with no class when user press esc key')
+  it('should dispatch a sidebarActivate action when user click on any links', function () {
+    const actual = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'a')
+    spies.dispatch.should.have.not.been.called
+    actual.forEach((link) => {
+      TestUtils.Simulate.click(link)
+      spies.dispatch.should.have.been.called
+    })
+  })
+  // I don't know how to target window so just targeting componnent level for now
+  // it('should dispatch a sidebarActivate action when user press esc key', function () {
+  //   // spies.dispatch.should.have.not.been.called
+  //   // const dom = renderWithProps(Object.assign({}, props, {
+  //   //   mobileNavIsOpen: true
+  //   // }))
+  //   // const actual = TestUtils.findRenderedDOMComponentWithClass(dom, sty.mobileNavOpen)
+  //   // console.log(util.inspect())
+  //   // TestUtils.Simulate.keyDown(dom, { keycode: 27 })
+  //   // spies.dispatch.should.have.been.called
+  // })
 })

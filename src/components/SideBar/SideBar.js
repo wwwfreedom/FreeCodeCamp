@@ -8,7 +8,8 @@ let cx = classNames.bind(sty)
 export default class SideBar extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
-    toggleMenu: React.PropTypes.func.isRequired
+    toggleMenu: React.PropTypes.func.isRequired,
+    menuLinks: React.PropTypes.array.isRequired
   }
   render() {
     let mobileNav = cx({
@@ -25,12 +26,26 @@ export default class SideBar extends Component {
         <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
         <div className={menu}>
           <nav role='navigation' className={sty.menuContent}>
-            <Link to='/quotes' onClick={this.props.toggleMenu}>Quotes</Link>
-            <Link to='/pomoTimer' onClick={this.props.toggleMenu}>Pomodoro Timer</Link>
-            <Link to='/about' onClick={this.props.toggleMenu}>About</Link>
+            {this.renderMenuLinks()}
           </nav>
         </div>
       </div>
+    )
+  }
+
+  renderMenuLinks = () => {
+    const { menuLinks, toggleMenu } = this.props
+    return (
+      menuLinks.map((link, index) =>
+        <Link
+          to={`/${link}`}
+          activeClassName={sty.activeLink}
+          onClick={toggleMenu}
+          key={index}
+        >
+          {link}
+        </Link>
+      )
     )
   }
 

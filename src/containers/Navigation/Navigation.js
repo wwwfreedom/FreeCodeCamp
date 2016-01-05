@@ -5,13 +5,15 @@ import SideBar from '../../components/SideBar/SideBar.js'
 import { actions as generalUiActions } from '../../redux/modules/generalUi.js'
 
 const mapStateToProps = (state) => ({
-  mobileNavIsOpen: state.sideBarStatus
+  mobileNavIsOpen: state.generalUi.sideBarStatus,
+  menuLinks: state.generalUi.menuLinks
 })
 
 export class Navigation extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
-    sidebarActivate: React.PropTypes.func.isRequired
+    sidebarActivate: React.PropTypes.func.isRequired,
+    menuLinks: React.PropTypes.array.isRequired
   }
   render() {
     return (
@@ -19,10 +21,12 @@ export class Navigation extends Component {
         <SideBar
           mobileNavIsOpen={this.props.mobileNavIsOpen}
           toggleMenu={this.props.sidebarActivate}
+          menuLinks={this.props.menuLinks}
         />
         <MenuBar
           mobileNavIsOpen={this.props.mobileNavIsOpen}
           toggleMenu={this.props.sidebarActivate}
+          menuLinks={this.props.menuLinks}
         />
       </div>
     )

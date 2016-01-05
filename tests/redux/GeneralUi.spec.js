@@ -1,11 +1,40 @@
-import sideBarStatus from '../../src/redux/modules/generalUi.js'
-
+import { generalUi, sidebarActivate } from '../../src/redux/modules/generalUi.js'
 // const store = createStore(counter)
-describe('(Redux) sideBarStatus reducer', function () {
+describe('(Redux) generalUi reducer', function () {
   it('reducer should return the right state', function () {
-    expect(sideBarStatus(false, {type: 'SIDEBAR_ACTIVATE'})).to.equal(true)
-    expect(sideBarStatus(true, {type: 'SIDEBAR_ACTIVATE'})).to.equal(false)
-    expect(sideBarStatus(true, {type: 'dadfas'})).to.equal(true)
+    expect(generalUi({
+      sideBarStatus: false,
+      menuLinks: []
+    }, {type: 'SIDEBAR_ACTIVATE'})).to.deep.equal({
+      sideBarStatus: true,
+      menuLinks: []
+    })
+
+    expect(generalUi({
+      sideBarStatus: true,
+      menuLinks: []
+    }, {type: 'SIDEBAR_ACTIVATE'})).to.deep.equal({
+      sideBarStatus: false,
+      menuLinks: []
+    })
+
+    // test for default case
+    expect(generalUi({
+      sideBarStatus: true,
+      menuLinks: []
+    }, {type: 'asdfsad'})).to.deep.equal({
+      sideBarStatus: true,
+      menuLinks: []
+    })
+  })
+})
+
+describe('(Redux) generalUi actions', function () {
+  it('should create an action to activate the sideBar with no payload', function () {
+    expect(sidebarActivate()).to.deep.equal({
+      type: 'SIDEBAR_ACTIVATE',
+      payload: undefined
+    })
   })
 })
 

@@ -6,7 +6,8 @@ import MenuButton from '../../components/MenuButton/MenuButton.js'
 export default class MenuBar extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
-    toggleMenu: React.PropTypes.func.isRequired
+    toggleMenu: React.PropTypes.func.isRequired,
+    menuLinks: React.PropTypes.array.isRequired
   }
   render() {
     return (
@@ -15,14 +16,27 @@ export default class MenuBar extends Component {
           <Link to='/'>Kevin Truong</Link>
         </div>
         <nav role='navigation' className={sty.navigation}>
-          <Link to='/quotes' activeClassName={sty.activeLink}>Quotes</Link>
-          <Link to='/pomoTimer' activeClassName={sty.activeLink}>Pomodoro Timer</Link>
-          <Link to='/about' activeClassName={sty.activeLink}>About</Link>
+          {this.renderMenuLinks()}
         </nav>
         <div className={sty.mobileNavTrigger}>
           <MenuButton navStatus={this.props.mobileNavIsOpen} onClick={this.props.toggleMenu}/>
         </div>
       </div>
+    )
+  }
+
+  renderMenuLinks = () => {
+    const { menuLinks } = this.props
+    return (
+      menuLinks.map((link, index) =>
+        <Link
+          to={`/${link}`}
+          activeClassName={sty.activeLink}
+          key={index}
+        >
+          {link}
+        </Link>
+      )
     )
   }
 }

@@ -1,10 +1,16 @@
 import { createAction, handleActions } from 'redux-actions'
 
 /**
+ * Fixed variables
+ */
+export const menuLinks = ['quotes', 'pomoTimer', 'portfolio', 'about']
+
+/**
  * Constants
  */
 
 export const SIDEBAR_ACTIVATE = 'SIDEBAR_ACTIVATE'
+// export const MENULINKS_FETCH = 'MENULINKS_FETCH'
 
 /**
  * Actions
@@ -17,6 +23,7 @@ export const SIDEBAR_ACTIVATE = 'SIDEBAR_ACTIVATE'
  * @return {object}
  */
 export const sidebarActivate = createAction(SIDEBAR_ACTIVATE)
+// export const menuLinksFetch = createAction(MENULINKS_FETCH)
 
 export const actions = {
   sidebarActivate
@@ -25,18 +32,34 @@ export const actions = {
 /**
  * Reducer
  */
-export default handleActions({
-  [SIDEBAR_ACTIVATE]: (state, { payload }) => !state
-}, false)
+export const generalUi = handleActions({
+  SIDEBAR_ACTIVATE: (state) => Object.assign({}, state, {
+    sideBarStatus: !state.sideBarStatus
+  }),
 
-// const sideBarStatus = (state = false, action) => {
+  MENULINKS_FETCH: (state) => Object.assign({}, state, {
+    menuLinks: state.menuLinks
+  })
+}, {
+  // this the default state
+  sideBarStatus: false,
+  menuLinks: menuLinks
+})
+
+// This is the original way of writing reducer the above is just the same thing but a nice syntax abstraction.
+// export const generalUi = (state = {
+//   sideBarStatus: false,
+//   menuLinks: menuLinks
+// }, action) => {
 //   switch (action.type) {
 //     case 'SIDEBAR_ACTIVATE':
-//       return !state
+//       return Object.assign({}, state, {
+//         sideBarStatus: !state.sideBarStatus
+//       })
 //     default:
 //       return state
 //   }
 // }
 
-// export default sideBarStatus
+export default generalUi
 
