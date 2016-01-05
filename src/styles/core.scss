@@ -16,13 +16,14 @@ body {
   height: 100%;
   font-size: 16px;
   font-weight: 300;
-  background: #F5F5F5;
+  background: $bg-color;
   font-family: 'Lato', serif;
   /*max-width: 960px;*/
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
+  -webkit-font-smoothing: antialiased;
 }
 
 *,

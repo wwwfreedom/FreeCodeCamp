@@ -4,12 +4,12 @@ import classNames from 'classnames/bind'
 let cx = classNames.bind(sty)
 
 export default function MenuButton(props) {
-  let className = cx({
-    menuText: true,
-    menuTextAnimate: props.navStatus
-  })
+  // let className = cx({
+  //   menuText: true,
+  //   menuTextAnimate: props.navStatus
+  // })
   let barStatus = cx({
-    bar: true,
+    // bar: true,
     barActive: props.navStatus,
     barClosing: !props.navStatus
   })
@@ -20,9 +20,9 @@ export default function MenuButton(props) {
         <span className={barStatus}></span>
         <span className={barStatus}></span>
       </div>
-      <div className={className}>Menu</div>
     </div>
   )
+  // <div className={className}>Menu</div>
 }
 
 MenuButton.propTypes = {

@@ -2,32 +2,41 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import sty from './MenuBar.scss'
 import MenuButton from '../../components/MenuButton/MenuButton.js'
-// import TiThMenu from 'react-icons/lib/ti/th-menu'
 
 export default class MenuBar extends Component {
-  state = {
-    mobileNavStatus: false
+  static propTypes = {
+    mobileNavIsOpen: React.PropTypes.bool.isRequired,
+    toggleMenu: React.PropTypes.func.isRequired,
+    menuLinks: React.PropTypes.array.isRequired
   }
   render() {
     return (
       <div className={sty.container}>
-        <div className={sty.brand}>Kevin Truong</div>
+        <div className={sty.brand}>
+          <Link to='/'>Kevin Truong</Link>
+        </div>
         <nav role='navigation' className={sty.navigation}>
-          <Link to='/quotes'>Quotes</Link>
-          <Link to='/pomoTimer'>Pomodoro Timer</Link>
-          <Link to='/about'>About</Link>
+          {this.renderMenuLinks()}
         </nav>
-        <nav role='navigation' className={sty.mobileNav}>
-          <MenuButton navStatus={this.state.mobileNavStatus} onClick={this.handleMenuClick}/>
-        </nav>
+        <div className={sty.mobileNavTrigger}>
+          <MenuButton navStatus={this.props.mobileNavIsOpen} onClick={this.props.toggleMenu}/>
+        </div>
       </div>
     )
   }
 
-  handleMenuClick = () => {
-    this.setState({
-      mobileNavStatus: !this.state.mobileNavStatus
-    })
-    console.log('clicked')
+  renderMenuLinks = () => {
+    const { menuLinks } = this.props
+    return (
+      menuLinks.map((link, index) =>
+        <Link
+          to={`/${link}`}
+          activeClassName={sty.activeLink}
+          key={index}
+        >
+          {link}
+        </Link>
+      )
+    )
   }
 }
