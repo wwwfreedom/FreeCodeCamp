@@ -1,44 +1,32 @@
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { actions as counterActions } from '../redux/modules/counter'
-import styles from './HomeView.scss'
+import React, { Component } from 'react'
+import sty from './HomeView.scss'
+import { actions as homeViewActions } from '../redux/modules/homeView.js'
+import Header from 'components/Header/Header'
 
-// We define mapStateToProps where we'd normally use
-// the @connect decorator so the data requirements are clear upfront, but then
-// export the decorated component after the main class definition so
-// the component can be tested w/ and w/o being connected.
-// See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  headerImage: state.homeView.headerImage,
+  headerText: state.homeView.headerText,
+  headerParagraph: state.homeView.headerParagraph
 })
-export class HomeView extends React.Component {
+export class HomeView extends Component {
   static propTypes = {
-    counter: React.PropTypes.number.isRequired,
-    doubleAsync: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    headerImage: React.PropTypes.string.isRequired,
+    headerText: React.PropTypes.string.isRequired,
+    headerParagraph: React.PropTypes.string.isRequired
   }
-
-  render () {
+  render() {
+    const { headerImage, headerText, headerParagraph } = this.props
     return (
-      <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>
-          Sample Counter:&nbsp;
-          <span className={styles['counter--green']}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
-        <hr />
-        <Link to='/about'>Go To About View</Link>
+      <div className={sty.container}>
+        <Header
+          headerText={headerText}
+          headerImage={headerImage}
+          headerParagraph={headerParagraph}
+        />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, counterActions)(HomeView)
+export default connect(mapStateToProps, homeViewActions)(HomeView)

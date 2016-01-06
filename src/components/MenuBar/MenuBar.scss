@@ -3,7 +3,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  height: $menuBarHeight;
   margin: 0 auto;
   padding: 0 1.5em;
   align-items: center;

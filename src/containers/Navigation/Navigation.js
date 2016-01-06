@@ -13,7 +13,8 @@ export class Navigation extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
     sidebarActivate: React.PropTypes.func.isRequired,
-    menuLinks: React.PropTypes.array.isRequired
+    menuLinks: React.PropTypes.array.isRequired,
+    menuLinksFetch: React.PropTypes.func.isRequired
   }
   render() {
     return (
