@@ -29,7 +29,21 @@ const initialState = {
       title: 'About Me',
       text: "I'm a self taught web developer based in Adelaide. My passion is to solve interesting problems using innovative web technologies. Lately, I've been developing with React.js. If you're interested in my work, check out my portfolio and say hi."
     }
-  }
+  },
+  portfolio: [
+    {
+      title: 'Escape Room SA',
+      link: 'http://escaperoomsa.com.au/',
+      introText: 'A mobile optimize custom design business website',
+      description: "I build this website for my business partner. The business has three requirements. Number one was accesibility, I custom design the website to display responsively across a variaty of devices. Number two was customer engagement, I added inbuilt mailing list sign up and custom contact form. The final requirement was performance, I optimize the website build process and was able to have average load time around 3 seconds on most modern devices."
+    },
+    {
+      title: 'Pomo Time',
+      link: 'pomoTime',
+      introText: 'A simple pomodoro timer built with React.js',
+      description: "I build this application as part of an zipline assignment for Free Code Camp. The requirement from Free Code Camp is to make a functional pomodoro timer. The focus of this app in on simplicity and displaying useful metric to keep the user motivated. "
+    }
+  ]
 }
 
 export const homeView = handleActions({
