@@ -52,7 +52,7 @@ $headerMinHeight: 500px;
   flex-direction: column;
   text-align: center;
   z-index: 4;
-  color: $textColor;
+  color: $headerTextColor;
   h1 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -65,7 +65,7 @@ $headerMinHeight: 500px;
 
 // style for the line separator
 .separator {
-  color: $textColor;
+  color: $headerTextColor;
   margin: 1em auto;
   position: relative;
   z-index: 3;
@@ -75,7 +75,7 @@ $headerMinHeight: 500px;
   width: 12em;
   &:before {
     display: block;
-    border: 1px solid $textColor;
+    border: 1px solid $headerTextColor;
     width: 40%;
     content: ' ';
     position: absolute;
@@ -84,7 +84,7 @@ $headerMinHeight: 500px;
   }
   &:after {
     display: block;
-    border: 1px solid $textColor;
+    border: 1px solid $headerTextColor;
     width: 40%;
     content: ' ';
     position: absolute;
