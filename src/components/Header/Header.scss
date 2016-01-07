@@ -1,0 +1,94 @@
+@import 'base';
+$headerMinHeight: 500px;
+.container {
+  position: relative;
+}
+
+// style responsible for the pattern overlay on top of the background image
+.bgPattern {
+  width: 100%;
+  background-size: 100%;
+  &:after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: $headerMinHeight;
+    // lesson: can't use calc with variable
+    @include MQ(L) {
+      // height: calc($headerMinHeight + 100px);
+      height: 600px;
+    }
+    z-index: 2;
+    content: "";
+    opacity: .3;
+    background: #000;
+    background: url("../../static/images/pattern.png");
+  }
+}
+
+.bgImage {
+  width: 100%;
+  min-height: $headerMinHeight;
+  @include MQ(L) {
+    height: 600px;
+  }
+  // backup gradient just incase there's no picture
+  background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  // note the the prop below adjust according to the main-axis
+  justify-content: center;
+  // lesson: align-content doesn't work if there is only one div, only when there are multiple div then it will work
+  // align-content: flex-end;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  z-index: 4;
+  color: $textColor;
+  h1 {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  p {
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+}
+
+// style for the line separator
+.separator {
+  color: $textColor;
+  margin: 1em auto;
+  position: relative;
+  z-index: 3;
+}
+
+.lineSeparator {
+  width: 12em;
+  &:before {
+    display: block;
+    border: 1px solid $textColor;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+  }
+  &:after {
+    display: block;
+    border: 1px solid $textColor;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+}

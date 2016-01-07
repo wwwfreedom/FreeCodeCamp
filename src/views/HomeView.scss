@@ -1,8 +1,10 @@
-.counter {
-  font-weight: bold;
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
-.counter--green {
-  composes: counter;
-  color: rgb(25,200,25);
+.nextDiv {
+  width: 100%;
+  height: 1000px;
+  background: red;
 }

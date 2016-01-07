@@ -10,7 +10,7 @@ export const menuLinks = ['quotes', 'pomoTimer', 'portfolio', 'about']
  */
 
 export const SIDEBAR_ACTIVATE = 'SIDEBAR_ACTIVATE'
-// export const MENULINKS_FETCH = 'MENULINKS_FETCH'
+export const MENULINKS_FETCH = 'MENULINKS_FETCH'
 
 /**
  * Actions
@@ -23,10 +23,11 @@ export const SIDEBAR_ACTIVATE = 'SIDEBAR_ACTIVATE'
  * @return {object}
  */
 export const sidebarActivate = createAction(SIDEBAR_ACTIVATE)
-// export const menuLinksFetch = createAction(MENULINKS_FETCH)
+export const menuLinksFetch = createAction(MENULINKS_FETCH)
 
 export const actions = {
-  sidebarActivate
+  sidebarActivate,
+  menuLinksFetch
 }
 
 /**
