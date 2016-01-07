@@ -10,11 +10,11 @@ export default class Section extends Component {
     const { text, title } = this.props
     return (
       <div className={sty.container}>
-        <div className={sty.title}>{title}</div>
+        <div className={sty.title}><h2>{title}</h2></div>
         <div className={sty.separator}>
           <div className={sty.lineSeparator}>∎</div>
         </div>
-        <div className={sty.text}> {text} </div>
+        <div className={sty.text}><p>{text}</p></div>
       </div>
     )
   }

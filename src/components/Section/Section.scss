@@ -4,14 +4,17 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 3em 1em;
+  margin: 3.5em 1em;
   background-color: $bg-color;
 }
 
 .title {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: 2em;
+  h2 {
+    margin: 0;
+    font-size: 2em;
+  }
   color: $sectionHeaderTextColor;
 }
 
@@ -23,7 +26,6 @@
   line-height: 29px;
   @include MQ(M) {
     width: 450px;
-    // font-size: 1.3em;
   }
 }
 
