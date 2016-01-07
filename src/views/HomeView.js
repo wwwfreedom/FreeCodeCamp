@@ -4,13 +4,15 @@ import sty from './HomeView.scss'
 import { actions as homeViewActions } from '../redux/modules/homeView.js'
 import Header from 'components/Header/Header'
 import Section from 'components/Section/Section'
+import Portfolio from 'components/Portfolio/Portfolio'
 
 const mapStateToProps = (state) => ({
   headerImage: state.homeView.headerImage,
   headerText: state.homeView.headerText,
   headerParagraph: state.homeView.headerParagraph,
   aboutSectionTitle: state.homeView.section.about.title,
-  aboutSectionText: state.homeView.section.about.text
+  aboutSectionText: state.homeView.section.about.text,
+  portfolio: state.homeView.portfolio
 })
 
 export class HomeView extends Component {
@@ -19,11 +21,12 @@ export class HomeView extends Component {
     headerText: React.PropTypes.string.isRequired,
     headerParagraph: React.PropTypes.string.isRequired,
     aboutSectionText: React.PropTypes.string.isRequired,
-    aboutSectionTitle: React.PropTypes.string.isRequired
+    aboutSectionTitle: React.PropTypes.string.isRequired,
+    portfolio: React.PropTypes.array.isRequired
   }
 
   render() {
-    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle } = this.props
+    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio } = this.props
     return (
       <div className={sty.container}>
         <Header
@@ -34,6 +37,9 @@ export class HomeView extends Component {
         <Section
           text={aboutSectionText}
           title={aboutSectionTitle}
+        />
+        <Portfolio
+          portfolio={portfolio}
         />
         <div className={sty.nextDiv}></div>
       </div>
