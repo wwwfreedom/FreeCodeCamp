@@ -24,6 +24,7 @@ export class HomeView extends Component {
           headerImage={headerImage}
           headerParagraph={headerParagraph}
         />
+        <div className={sty.nextDiv}></div>
       </div>
     )
   }

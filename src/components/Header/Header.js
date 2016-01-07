@@ -1,11 +1,11 @@
-import sty from './Header.scss'
-
 import React, { Component } from 'react'
+import sty from './Header.scss'
 
 export default class Header extends Component {
   static propTypes = {
     headerImage: React.PropTypes.string.isRequired,
-    headerText: React.PropTypes.string.isRequired
+    headerText: React.PropTypes.string.isRequired,
+    headerParagraph: React.PropTypes.string.isRequired
   }
   render() {
     const { headerImage, headerText, headerParagraph } = this.props

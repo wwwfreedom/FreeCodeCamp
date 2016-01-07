@@ -1,7 +1,7 @@
 @import 'base';
 $headerMinHeight: 500px;
 .container {
-  background: transparent;
+  position: relative;
 }
 
 // style responsible for the pattern overlay on top of the background image
@@ -11,7 +11,7 @@ $headerMinHeight: 500px;
   &:after {
     position: absolute;
     left: 0;
-    top: $menuBarHeight;
+    top: 0;
     width: 100%;
     min-height: $headerMinHeight;
     // lesson: can't use calc with variable
@@ -43,7 +43,7 @@ $headerMinHeight: 500px;
   flex-direction: column;
   // note the the prop below adjust according to the main-axis
   justify-content: center;
-  // lesson here is that align-content doesn't work if there is only one div, only when there are multiple div then it will work
+  // lesson: align-content doesn't work if there is only one div, only when there are multiple div then it will work
   // align-content: flex-end;
 }
 
@@ -52,7 +52,7 @@ $headerMinHeight: 500px;
   flex-direction: column;
   text-align: center;
   z-index: 4;
-  color: $text-color;
+  color: $textColor;
   h1 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -65,7 +65,7 @@ $headerMinHeight: 500px;
 
 // style for the line separator
 .separator {
-  color: #fff;
+  color: $textColor;
   margin: 1em auto;
   position: relative;
   z-index: 3;
@@ -75,7 +75,7 @@ $headerMinHeight: 500px;
   width: 12em;
   &:before {
     display: block;
-    border: 1px solid $text-color;
+    border: 1px solid $textColor;
     width: 40%;
     content: ' ';
     position: absolute;
@@ -84,7 +84,7 @@ $headerMinHeight: 500px;
   }
   &:after {
     display: block;
-    border: 1px solid #fff;
+    border: 1px solid $textColor;
     width: 40%;
     content: ' ';
     position: absolute;
