@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 /**
  * Fixed variables
  */
-export const menuLinks = ['quotes', 'pomoTimer', 'portfolio', 'about']
+export const menuLinks = ['quotes', 'pomoTime', 'portfolio', 'about']
 
 /**
  * Constants
