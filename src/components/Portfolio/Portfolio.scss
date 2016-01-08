@@ -14,8 +14,6 @@
     color: $sectionHeaderTextColor;
   }
   margin: 0 auto;
-  justify-content: center;
-  align-content: center;
 }
 
 .content {
@@ -35,7 +33,7 @@
 }
 
 .image {
-  margin: 0 1em;
+  margin: 0 1em 1em 1em;
   border: 1px solid #dfdfdf;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
@@ -49,10 +47,10 @@
   img {
     max-width: 100%;
     border-radius: 0 0 10px 10px;
-
   }
 }
 
+// this is the css to make the chrome header on top of the image
 .imageHeader {
   background-color: $lightGray;
   padding: 10px;
@@ -81,6 +79,20 @@
 .text {
   padding: 0 1em;
   color: $textColor;
+  a {
+    text-decoration: none;
+    color: $sectionHeaderTextColor;
+    border: 1px solid $sectionHeaderTextColor;
+    padding: 0.75em;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    &:hover {
+      color: $headerTextColor;
+      background: $sectionHeaderTextColor;
+      transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    }
+  }
+
   @include MQ(M) {
     text-align: left;
   }
@@ -109,7 +121,6 @@
 .introText {
   font-size: 1.1em;
   h4 {
-    // margin: 0;
     @include MQ(M) {
       margin: 0.5em 0 2em 0;
     }
@@ -117,14 +128,16 @@
 }
 
 .description {
+  // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
   font-family: 'Merriweather', serif;
   width: 400px;
-  margin: 0 auto;
+  margin: 3em auto;
   font-size: 1em;
+  // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
   line-height: 24px;
   @include MQ(M) {
     width: 450px;
-    margin: 0;
+    margin: 0 0 2em 0;
   }
   @include MQ(L) {
     width: 500px;
@@ -137,7 +150,6 @@
   margin: 1.5em auto;
   position: relative;
   z-index: 3;
-  // margin: 0 auto;
   width: 12em;
   @include MQ(M) {
     display: none;

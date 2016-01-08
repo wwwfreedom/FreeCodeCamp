@@ -1,5 +1,5 @@
 import sty from './Portfolio.scss'
-
+import { Link } from 'react-router'
 export default function Portfolio ({portfolio}) {
   return (
     <div className={sty.container}>
@@ -28,6 +28,7 @@ function renderContent (portfolio) {
               <div className={sty.lineSeparator}>∎</div>
             </div>
             <div className={sty.description}><p>{item.description}</p></div>
+            {renderLinks(item)}
           </div>
         </div>
       )}
@@ -35,7 +36,24 @@ function renderContent (portfolio) {
   )
 }
 
-// remember if want to [] notation of accessing object for more complex query of dynamic properties
+function renderLinks (item) {
+  // lesson: includes() es6 string method is awesome
+  if (item.link.includes('http:')) {
+    return (
+      <a href={item.link} target='_blank'> View Project</a>
+    )
+  } else {
+    return (
+      <Link
+        to={`/${item.link}`}
+      >
+        View Project
+      </Link>
+    )
+  }
+}
+
+// lesson: remember if want to [] notation of accessing object for more complex query of dynamic properties
 Portfolio.propTypes = {
   portfolio: React.PropTypes.array.isRequired
 }
