@@ -69,10 +69,10 @@ $headerMinHeight: 500px;
   margin: 1em auto;
   position: relative;
   z-index: 3;
+  width: 12em;
 }
 
 .lineSeparator {
-  width: 12em;
   &:before {
     display: block;
     border: 1px solid $headerTextColor;

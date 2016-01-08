@@ -1,0 +1,119 @@
+@import 'base';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 3.5em 1em;
+  background: $altBgColor;
+  h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    font-size: 2em;
+    color: $sectionHeaderTextColor;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 3.5em 1em;
+  @include MQ(M) {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.image {
+  padding: 0 1em;
+  img {
+    width: 400px;
+    @include MQ(M) {
+      width: 450px;
+    }
+  }
+}
+
+.text {
+  padding: 0 1em;
+  color: $textColor;
+  @include MQ(M) {
+    text-align: left;
+  }
+}
+.title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  h3 {
+    margin: 1.5em 0 1em 0;
+    font-size: 1.5em;
+    @include MQ(M) {
+      margin: 1em 0 0 0;
+    }
+  }
+  color: $sectionHeaderTextColor;
+  @include MQ(M) {
+    color: $textColor;
+  }
+}
+
+.introText {
+  font-size: 1.1em;
+  h4 {
+    // margin: 0;
+    @include MQ(M) {
+      margin: 0.5em 0 2em 0;
+    }
+  }
+  // letter-spacing: 0.1em;
+}
+
+.description {
+  font-family: 'Merriweather', serif;
+  width: 400px;
+  margin: 0 auto;
+  font-size: 1em;
+  // text-align: justify;
+  line-height: 24px;
+  @include MQ(M) {
+    width: 450px;
+  }
+}
+
+// .text {
+//   position: relative;
+// }
+
+.separator {
+  color: $mediumGray;
+  margin: 1.5em auto;
+  position: relative;
+  z-index: 3;
+  // margin: 0 auto;
+  width: 12em;
+  @include MQ(M) {
+    display: none;
+  }
+}
+
+.lineSeparator {
+  &:before {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+  }
+  &:after {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+}
