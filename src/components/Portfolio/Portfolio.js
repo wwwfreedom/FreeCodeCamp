@@ -14,7 +14,13 @@ function renderContent (portfolio) {
     <div className={sty.innerContainer}>
       {portfolio.map((item, index) =>
         <div className={sty.content} key={index}>
-          <div className={sty[`image${index + 1}`]}><img src={item.image} alt={item.title}/></div>
+          <div className={sty[`image${index + 1}`]}>
+            <div className={sty.imageHeader}>
+              <span></span>
+              <span></span>
+            </div>
+            <img src={item.image} alt={item.title}/>
+          </div>
           <div className={sty.text}>
             <div className={sty.title}><h3>{item.title}</h3></div>
             <div className={sty.introText}><h4>{item.introText}</h4></div>

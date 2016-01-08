@@ -27,12 +27,32 @@
 }
 
 .image {
-  padding: 0 1em;
+  margin: 0 1em;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  @include MQ(M) {
+    width: 450px;
+  }
   img {
-    width: 400px;
-    @include MQ(M) {
-      width: 450px;
-    }
+    max-width: 100%;
+    border-radius: 0 0 10px 10px;
+
+  }
+}
+
+.imageHeader {
+  background-color: $lightGray;
+  padding: 10px;
+  display: flex;
+  border-radius: 10px 10px 0 0;
+  span {
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    margin-right: 10px;
+    background-color: $mediumGray;
   }
 }
 
