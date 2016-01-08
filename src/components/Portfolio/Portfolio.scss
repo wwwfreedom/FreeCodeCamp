@@ -22,6 +22,7 @@
   @include MQ(M) {
     flex-direction: row;
     justify-content: space-around;
+    margin: 6em 1em;
   }
 }
 
@@ -35,6 +36,17 @@
   }
 }
 
+.image1 {
+  composes: image;
+}
+
+.image2 {
+  composes: image;
+  @include MQ(M) {
+    order: 1;
+  }
+}
+
 .text {
   padding: 0 1em;
   color: $textColor;
@@ -42,6 +54,8 @@
     text-align: left;
   }
 }
+
+
 .title {
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -66,7 +80,6 @@
       margin: 0.5em 0 2em 0;
     }
   }
-  // letter-spacing: 0.1em;
 }
 
 .description {
@@ -80,10 +93,6 @@
     width: 450px;
   }
 }
-
-// .text {
-//   position: relative;
-// }
 
 .separator {
   color: $mediumGray;
