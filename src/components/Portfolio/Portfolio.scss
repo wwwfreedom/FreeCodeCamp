@@ -1,0 +1,179 @@
+@import 'base';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 3.5em 1em 0 1em;
+  background: $altBgColor;
+  h2 {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    font-size: 2em;
+    color: $sectionHeaderTextColor;
+  }
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: 3.5em 1em;
+  max-width: 960px;
+  @include MQ(M) {
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 6em 1em;
+  }
+  @include MQ(L) {
+    max-width: 1170px;
+    width: 1170px;
+  }
+}
+
+.image {
+  margin: 0 1em 1em 1em;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  @include MQ(M) {
+    width: 450px;
+  }
+  @include MQ(L) {
+    width: 550px;
+  }
+  img {
+    max-width: 100%;
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+// this is the css to make the chrome header on top of the image
+.imageHeader {
+  background-color: $lightGray;
+  padding: 10px;
+  display: flex;
+  border-radius: 10px 10px 0 0;
+  span {
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    margin-right: 10px;
+    background-color: $mediumGray;
+  }
+}
+
+.image1 {
+  composes: image;
+}
+
+.image2 {
+  composes: image;
+  @include MQ(M) {
+    order: 1;
+  }
+}
+
+.text {
+  padding: 0 1em;
+  color: $textColor;
+  @include MQ(M) {
+    text-align: left;
+  }
+  @include MQ(L) {
+    width: 550px;
+  }
+}
+
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  h3 {
+    margin: 1.5em 0 1em 0;
+    font-size: 1.5em;
+    @include MQ(M) {
+      margin: 1em 0 0 0;
+    }
+  }
+  color: $sectionHeaderTextColor;
+  @include MQ(M) {
+    color: $textColor;
+  }
+}
+
+.introText {
+  font-size: 1.1em;
+  h4 {
+    @include MQ(M) {
+      margin: 0.5em 0 2em 0;
+    }
+  }
+}
+
+
+.separator {
+  color: $mediumGray;
+  margin: 1.5em auto;
+  position: relative;
+  z-index: 3;
+  width: 12em;
+  @include MQ(M) {
+    display: none;
+  }
+}
+
+.lineSeparator {
+  &:before {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+  }
+  &:after {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+}
+
+.description {
+  // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
+  font-family: 'Merriweather', serif;
+  width: 400px;
+  margin: 3em auto;
+  font-size: 1em;
+  // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
+  line-height: 24px;
+  @include MQ(M) {
+    width: 450px;
+    margin: 0 0 2em 0;
+  }
+  @include MQ(L) {
+    width: 500px;
+    line-height: 25px;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $sectionHeaderTextColor;
+  border: 1px solid $sectionHeaderTextColor;
+  padding: 0.75em;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  &:hover {
+    color: $headerTextColor;
+    background: $sectionHeaderTextColor;
+    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  }
+}

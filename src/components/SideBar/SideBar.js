@@ -49,25 +49,25 @@ export default class SideBar extends Component {
     )
   }
 
-  // componentDidMount() {
-  //   window.onkeydown = this.listenForClose
-  // }
-  // componentWillUnmount() {
-  //   window.onkeydown = null
-  // }
+  componentDidMount() {
+    window.onkeydown = this.listenForClose
+  }
+  componentWillUnmount() {
+    window.onkeydown = null
+  }
   // this allow trigger of mobile via passing in props
-  // componentWillReceiveProps(nextProps) {
-  //   // Allow open props to be controlled by props
-  //   if (nextProps.mobileNavIsOpen !== this.props.mobileNavIsOpen) {
-  //     this.props.toggleMenu()
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    // Allow open props to be controlled by props
+    if (nextProps.mobileNavIsOpen !== this.props.mobileNavIsOpen) {
+      this.props.toggleMenu()
+    }
+  }
   // listen to escape key to close mobile nav
-  // listenForClose = (e) => {
-  //   e = e || window.event
+  listenForClose = (e) => {
+    e = e || window.event
 
-  //   if (this.props.mobileNavIsOpen === true && (e.key === 'Escape' || e.keyCode === 27)) {
-  //     this.props.toggleMenu()
-  //   }
-  // }
+    if (this.props.mobileNavIsOpen === true && (e.key === 'Escape' || e.keyCode === 27)) {
+      this.props.toggleMenu()
+    }
+  }
 }
