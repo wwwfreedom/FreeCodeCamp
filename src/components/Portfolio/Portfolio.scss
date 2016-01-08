@@ -79,20 +79,6 @@
 .text {
   padding: 0 1em;
   color: $textColor;
-  a {
-    text-decoration: none;
-    color: $sectionHeaderTextColor;
-    border: 1px solid $sectionHeaderTextColor;
-    padding: 0.75em;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
-    &:hover {
-      color: $headerTextColor;
-      background: $sectionHeaderTextColor;
-      transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    }
-  }
-
   @include MQ(M) {
     text-align: left;
   }
@@ -127,23 +113,6 @@
   }
 }
 
-.description {
-  // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
-  font-family: 'Merriweather', serif;
-  width: 400px;
-  margin: 3em auto;
-  font-size: 1em;
-  // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
-  line-height: 24px;
-  @include MQ(M) {
-    width: 450px;
-    margin: 0 0 2em 0;
-  }
-  @include MQ(L) {
-    width: 500px;
-    line-height: 25px;
-  }
-}
 
 .separator {
   color: $mediumGray;
@@ -174,5 +143,37 @@
     position: absolute;
     top: 50%;
     right: 5%;
+  }
+}
+
+.description {
+  // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
+  font-family: 'Merriweather', serif;
+  width: 400px;
+  margin: 3em auto;
+  font-size: 1em;
+  // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
+  line-height: 24px;
+  @include MQ(M) {
+    width: 450px;
+    margin: 0 0 2em 0;
+  }
+  @include MQ(L) {
+    width: 500px;
+    line-height: 25px;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $sectionHeaderTextColor;
+  border: 1px solid $sectionHeaderTextColor;
+  padding: 0.75em;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  &:hover {
+    color: $headerTextColor;
+    background: $sectionHeaderTextColor;
+    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
   }
 }

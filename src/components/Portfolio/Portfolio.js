@@ -1,5 +1,7 @@
 import sty from './Portfolio.scss'
 import { Link } from 'react-router'
+import * as _ from 'lodash'
+
 export default function Portfolio ({portfolio}) {
   return (
     <div className={sty.container}>
@@ -38,14 +40,16 @@ function renderContent (portfolio) {
 
 function renderLinks (item) {
   // lesson: includes() es6 string method is awesome
-  if (item.link.includes('http:')) {
+  // test doesn't like includes so I'll implement lodash solution
+  if (_.includes(item.link, 'http:')) {
     return (
-      <a href={item.link} target='_blank'> View Project</a>
+      <a href={item.link} target='_blank' className={sty.link}> View Project</a>
     )
   } else {
     return (
       <Link
         to={`/${item.link}`}
+        className={sty.link}
       >
         View Project
       </Link>
