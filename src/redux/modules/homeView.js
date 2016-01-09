@@ -45,7 +45,26 @@ const initialState = {
       introText: 'A simple pomodoro timer built with React.js',
       description: "I build this application as a zipline project for Free Code Camp. The project requirement from Free Code Camp is to make a functional pomodoro timer. The focus of this app in on simplicity and displaying useful metric to keep the user motivated. "
     }
-  ]
+  ],
+  contact: {
+    github: 'https://github.com/wwwfreedom',
+    linkedIn: 'https://au.linkedin.com/',
+    fcc: 'http://www.freecodecamp.com/wwwfreedom',
+    map: 'http://maps.googleapis.com/maps/api/staticmap?center=Adelaide&zoom=12&scale=2&size=640x300&maptype=roadmap&format=png&visual_refresh=true',
+    formInput: {
+      name: 'testName',
+      nameLabel: 'How should I call you?',
+      // might not even need the email
+      email: 'testEmail',
+      emailLabel: 'Please enter your email...',
+      messageLabel: 'What would you like to say?',
+      message: 'testMessage'
+    },
+    formStatus: {
+      submitted: false,
+      error: false
+    }
+  }
 }
 
 export const homeView = handleActions({

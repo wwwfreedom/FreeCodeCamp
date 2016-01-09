@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
   headerParagraph: state.homeView.headerParagraph,
   aboutSectionTitle: state.homeView.section.about.title,
   aboutSectionText: state.homeView.section.about.text,
-  portfolio: state.homeView.portfolio
+  portfolio: state.homeView.portfolio,
+  contact: state.homeView.contact
 })
 
 export class HomeView extends Component {
@@ -22,7 +23,8 @@ export class HomeView extends Component {
     headerParagraph: React.PropTypes.string.isRequired,
     aboutSectionText: React.PropTypes.string.isRequired,
     aboutSectionTitle: React.PropTypes.string.isRequired,
-    portfolio: React.PropTypes.array.isRequired
+    portfolio: React.PropTypes.array.isRequired,
+    contact: React.PropTypes.object.isRequired
   }
 
   render() {
