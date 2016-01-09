@@ -50,7 +50,7 @@ const initialState = {
     github: 'https://github.com/wwwfreedom',
     linkedIn: 'https://au.linkedin.com/',
     fcc: 'http://www.freecodecamp.com/wwwfreedom',
-    map: 'http://maps.googleapis.com/maps/api/staticmap?center=Adelaide&zoom=12&scale=2&size=640x300&maptype=roadmap&format=png&visual_refresh=true',
+    map: 'http://maps.googleapis.com/maps/api/staticmap?center=Richmond+south+australia&zoom=12&scale=2&size=600x300&maptype=roadmap&format=png&visual_refresh=true',
     formInput: {
       name: 'testName',
       nameLabel: 'How should I call you?',

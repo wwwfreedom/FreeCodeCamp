@@ -14,10 +14,9 @@ $headerMinHeight: 500px;
     top: 0;
     width: 100%;
     min-height: $headerMinHeight;
-    // lesson: can't use calc with variable
+    // lesson: can't use calc with variable, have to interpolate the sass variable like so #{$sassVariable}
     @include MQ(L) {
-      // height: calc($headerMinHeight + 100px);
-      height: 600px;
+      height: calc(#{$headerMinHeight} + 100px);
     }
     z-index: 2;
     content: "";
