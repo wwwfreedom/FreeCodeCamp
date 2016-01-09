@@ -1,0 +1,39 @@
+@import 'base';
+.container {
+  background: blue;
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+}
+
+.map {
+  background: pink;
+  width: 100%;
+  height: 300px;
+}
+
+.content {
+  background: purple;
+  margin: 2em 0;
+  @include MQ(M) {
+    display: flex;
+  }
+  // margin: 1em;
+  // width: 100%;
+  // height: 300px;
+}
+
+.form {
+  background: yellow;
+  width: 100%;
+  height: 300px;
+
+  margin-top: 2em;
+}
+
+.links {
+  background: black;
+  width: 100%;
+  height: 300px;
+  margin-top: 2em;
+}
