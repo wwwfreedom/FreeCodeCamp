@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import sty from './HomeView.scss'
 import { actions as homeViewActions } from '../redux/modules/homeView.js'
 import Header from 'components/Header/Header'
@@ -25,11 +25,14 @@ export class HomeView extends Component {
     aboutSectionText: React.PropTypes.string.isRequired,
     aboutSectionTitle: React.PropTypes.string.isRequired,
     portfolio: React.PropTypes.array.isRequired,
-    contact: React.PropTypes.object.isRequired
+    contact: React.PropTypes.object.isRequired,
+    contactNameSet: PropTypes.func.isRequired,
+    contactEmailSet: PropTypes.func.isRequired,
+    contactMessageSet: PropTypes.func.isRequired
   }
 
   render() {
-    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact } = this.props
+    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet } = this.props
     return (
       <div className={sty.container}>
         <Header
@@ -46,6 +49,9 @@ export class HomeView extends Component {
         />
         <Contact
           contact={contact}
+          contactNameSet={contactNameSet}
+          contactEmailSet={contactEmailSet}
+          contactMessageSet={contactMessageSet}
         />
         <div className={sty.nextDiv}></div>
       </div>

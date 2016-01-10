@@ -5,16 +5,25 @@ import { createAction, handleActions } from 'redux-actions'
  */
 export const HEADER_IMAGE_GET = 'HEADER_IMAGE_GET'
 export const HEADER_TEXT_GET = 'HEADER_TEXT_GET'
+export const CONTACT_NAME_SET = 'CONTACT_NAME_SET'
+export const CONTACT_EMAIL_SET = 'CONTACT_EMAIL_SET'
+export const CONTACT_MESSAGE_SET = 'CONTACT_MESSAGE_SET'
 
 /**
  * Actions
  */
 export const headerImageGet = createAction(HEADER_IMAGE_GET)
 export const headerTextGet = createAction(HEADER_TEXT_GET)
+export const contactNameSet = createAction(CONTACT_NAME_SET, (value) => value)
+export const contactEmailSet = createAction(CONTACT_EMAIL_SET, (value) => value)
+export const contactMessageSet = createAction(CONTACT_MESSAGE_SET, (value) => value)
 
 export const actions = {
   headerImageGet,
-  headerTextGet
+  headerTextGet,
+  contactNameSet,
+  contactEmailSet,
+  contactMessageSet
 }
 
 /**
@@ -52,13 +61,13 @@ const initialState = {
     fcc: 'http://www.freecodecamp.com/wwwfreedom',
     map: 'http://maps.googleapis.com/maps/api/staticmap?center=Richmond+south+australia&zoom=12&scale=2&size=600x300&maptype=roadmap&format=png&visual_refresh=true',
     formInput: {
-      name: 'testName',
+      name: '',
       namePlaceholder: 'How should I call you?',
       // might not even need the email
-      email: 'testEmail',
+      email: '',
       emailPlaceholder: 'Please enter your email...',
       messagePlaceholder: 'What would you like to say?',
-      message: 'testMessage'
+      message: ''
     },
     formStatus: {
       submitted: false,
@@ -74,5 +83,32 @@ export const homeView = handleActions({
 
   HEADER_IMAGE_GET: (state) => Object.assign({}, state, {
     headerImage: state.headerImage
+  }),
+
+  CONTACT_NAME_SET: (state, { payload }) => Object.assign({}, state, {
+    contact: {...state.contact,
+      formInput: {
+        ...state.contact.formInput,
+        name: payload
+      }
+    }
+  }),
+
+  CONTACT_EMAIL_SET: (state, { payload }) => Object.assign({}, state, {
+    contact: {...state.contact,
+      formInput: {
+        ...state.contact.formInput,
+        email: payload
+      }
+    }
+  }),
+
+  CONTACT_MESSAGE_SET: (state, { payload }) => Object.assign({}, state, {
+    contact: {...state.contact,
+      formInput: {
+        ...state.contact.formInput,
+        message: payload
+      }
+    }
   })
 }, initialState)
