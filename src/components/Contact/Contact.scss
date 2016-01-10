@@ -1,9 +1,36 @@
 @import 'base';
 
 $mapHeight: 200px;
+$inputColor: #fff;
+$inputTextAreaMargin: 0.5em;
+
+// Mixins
+$level: 1;
+
+@mixin materialShadow($level) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  @else if $level == 2 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+
+  @else if $level == 3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+
+  @else if $level == 4 {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  @else if $level == 5 {
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+}
 
 .container {
-  background: blue;
+  // background: blue;
   display: flex;
   flex-direction: column;
   margin: 2em 0;
@@ -52,22 +79,104 @@ $mapHeight: 200px;
 }
 
 .content {
-  background: purple;
+  // background: purple;
   margin: 2em 0;
   @include MQ(M) {
     display: flex;
   }
-  // margin: 1em;
-  // width: 100%;
-  // height: 300px;
 }
 
 .form {
-  background: yellow;
-  width: 100%;
-  height: 300px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+  h3 {
+    color: $textColor;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  input {
+    display: block;
+    width: 300px;
+    margin: $inputTextAreaMargin auto;
+    padding: 10px 15px;
+    background-color: $mediumGray;
+    appearance: none;
+    outline: 0;
+    border: none;
+    @include materialShadow(2);
+    border-radius: 3px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 300;
+    transition-duration: 0.25s;
+    &:focus {
+      background-color: $inputColor;
+      width: 350px;
+      color: $textColor;
+    }
+    &[type="submit"] {
+      background-color: $altBgColor;
+      border: 3px solid $altBgColor;
+      margin: 1em auto;
+      text-align: center;
+      font-weight: 400;
+      color: $textColor;
+      &:hover {
+        @include materialShadow(4);
+        transform: scale(1.005);
+      }
+    }
+  }
+  textarea {
+    width: 300px;
+    margin: $inputTextAreaMargin auto;
+    padding: 10px 15px;
+    background-color: $mediumGray;
+    text-align: left;
+    font-weight: 300;
+    font-size: 18px;
+    appearance: none;
+    outline: 0;
+    border: none;
+    @include materialShadow(2)
+    transition-duration: 0.25s;
+    &:focus {
+      background-color: $inputColor;
+      width: 350px;
+      color: $textColor;
+    }
+  }
 
-  margin-top: 2em;
+  ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+    color: $inputColor;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    color: $inputColor;
+  }
+
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: $inputColor;
+  }
+
+  :-ms-input-placeholder { /* IE 10+ */
+    color: $inputColor;
+  }
+
+  ::-ms-input-placeholder { /* Edge */
+    color: $inputColor;
+  }
+
+  :placeholder-shown { /* Standard one last! */
+    color: $inputColor;
+  }
 }
 
 .links {

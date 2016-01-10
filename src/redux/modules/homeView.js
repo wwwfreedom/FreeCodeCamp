@@ -53,11 +53,11 @@ const initialState = {
     map: 'http://maps.googleapis.com/maps/api/staticmap?center=Richmond+south+australia&zoom=12&scale=2&size=600x300&maptype=roadmap&format=png&visual_refresh=true',
     formInput: {
       name: 'testName',
-      nameLabel: 'How should I call you?',
+      namePlaceholder: 'How should I call you?',
       // might not even need the email
       email: 'testEmail',
-      emailLabel: 'Please enter your email...',
-      messageLabel: 'What would you like to say?',
+      emailPlaceholder: 'Please enter your email...',
+      messagePlaceholder: 'What would you like to say?',
       message: 'testMessage'
     },
     formStatus: {
