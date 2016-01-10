@@ -83,6 +83,7 @@ $level: 1;
   margin: 2em 0;
   @include MQ(M) {
     display: flex;
+    // align-content: space-around;
   }
 }
 
@@ -92,6 +93,12 @@ $level: 1;
   justify-content: center;
   width: 400px;
   margin: 0 auto;
+  @include MQ(SM) {
+    width: 450px;
+  }
+  @include MQ(M) {
+    width: 100%;
+  }
   h3 {
     color: $textColor;
     font-size: 1.5em;
@@ -104,6 +111,12 @@ $level: 1;
   input {
     display: block;
     width: 300px;
+    @include MQ(SM) {
+      width: 350px;
+    }
+    @include MQ(L) {
+      width: 400px;
+    }
     margin: $inputTextAreaMargin auto;
     padding: 10px 15px;
     background-color: $mediumGray;
@@ -119,6 +132,12 @@ $level: 1;
     &:focus {
       background-color: $inputColor;
       width: 350px;
+      @include MQ(SM) {
+        width: 400px;
+      }
+      @include MQ(L) {
+        width: 450px;
+      }
       color: $textColor;
     }
     &[type="submit"] {
@@ -136,6 +155,12 @@ $level: 1;
   }
   textarea {
     width: 300px;
+    @include MQ(SM) {
+      width: 350px;
+    }
+    @include MQ(L) {
+      width: 400px;
+    }
     margin: $inputTextAreaMargin auto;
     padding: 10px 15px;
     background-color: $mediumGray;
@@ -145,11 +170,17 @@ $level: 1;
     appearance: none;
     outline: 0;
     border: none;
-    @include materialShadow(2)
+    @include materialShadow(2);
     transition-duration: 0.25s;
     &:focus {
       background-color: $inputColor;
       width: 350px;
+      @include MQ(SM) {
+        width: 400px;
+      }
+      @include MQ(L) {
+        width: 450px;
+      }
       color: $textColor;
     }
   }
