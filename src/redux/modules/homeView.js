@@ -72,16 +72,6 @@ export const contactFormSubmit = (payload) => {
   }
 }
 
-// function receiveEmail (payload) {
-//   return {
-//     type: CONTACT_FORM_SUCCESS,
-//     payload: payload
-//   }
-// }
-// function sendEmail (argument) {
-//   return dispatch =>
-// }
-
 export const actions = {
   headerImageGet,
   headerTextGet,
@@ -122,7 +112,7 @@ const initialState = {
   ],
   contact: {
     github: 'https://github.com/wwwfreedom',
-    linkedIn: 'https://au.linkedin.com/',
+    codepen: 'http://codepen.io/wwwfreedom/',
     fcc: 'http://www.freecodecamp.com/wwwfreedom',
     map: 'http://maps.googleapis.com/maps/api/staticmap?center=Richmond+south+australia&zoom=12&scale=2&size=600x300&maptype=roadmap&format=png&visual_refresh=true',
     formInput: {

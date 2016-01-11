@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import FaGitHub from 'react-icons/lib/fa/github'
+import FaCodepen from 'react-icons/lib/fa/codepen'
 
 import sty from './Contact.scss'
+import fcc from '../../static/images/fcc.svg'
 
 export default class Contact extends Component {
   static propTypes = {
@@ -56,6 +59,27 @@ export default class Contact extends Component {
             </form>
           </div>
           <div className={sty.links}>
+            <h3>Find Me Online</h3>
+            <div className={sty.linksContent}>
+              <a href={contact.github} target='_blank'>
+                <div className={sty.github}>
+                  <FaGitHub />
+                  <h4>GitHub</h4>
+                </div>
+              </a>
+              <a href={contact.fcc} target='_blank'>
+                <div className={sty.fcc}>
+                  <img src={fcc} alt="freecodecamp"/>
+                  <h4>Free Code Camp</h4>
+                </div>
+              </a>
+              <a href={contact.codepen} target='_blank'>
+                <div className={sty.codepen}>
+                  <FaCodepen />
+                  <h4>Codepen</h4>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>

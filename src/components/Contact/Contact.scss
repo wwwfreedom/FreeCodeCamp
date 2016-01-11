@@ -57,6 +57,11 @@ $inputTextAreaMargin: 0.5em;
   @include MQ(M) {
     display: flex;
   }
+  @include MQ(L) {
+    margin: 2em auto;
+    max-width: 1170px;
+    width: 1170px;
+  }
 }
 
 .form {
@@ -187,8 +192,67 @@ $inputTextAreaMargin: 0.5em;
 }
 
 .links {
-  background: black;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 300px;
   margin-top: 2em;
+  @include MQ(M) {
+    margin-top: 0;
+  }
+  h3 {
+    color: $textColor;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  h4 {
+    color: $textColor;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    &:hover {
+      transform: scale(1.1)
+    }
+  }
+}
+
+.linksContent {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5em;
+}
+
+.github {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  svg {
+    font-size: 3em;
+    margin: 0 auto;
+  }
+}
+
+.fcc {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  img {
+    width: 3em;
+    height: 3em;
+    color: $textColor;
+    margin: 0 auto;
+  }
+}
+
+.codepen {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  svg {
+    font-size: 3em;
+    margin: 0 auto;
+  }
 }
