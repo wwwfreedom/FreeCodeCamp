@@ -28,11 +28,12 @@ export class HomeView extends Component {
     contact: React.PropTypes.object.isRequired,
     contactNameSet: PropTypes.func.isRequired,
     contactEmailSet: PropTypes.func.isRequired,
-    contactMessageSet: PropTypes.func.isRequired
+    contactMessageSet: PropTypes.func.isRequired,
+    contactFormSubmit: PropTypes.func.isRequired
   }
 
   render() {
-    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet } = this.props
+    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
     return (
       <div className={sty.container}>
         <Header
@@ -52,6 +53,7 @@ export class HomeView extends Component {
           contactNameSet={contactNameSet}
           contactEmailSet={contactEmailSet}
           contactMessageSet={contactMessageSet}
+          contactFormSubmit={contactFormSubmit}
         />
         <div className={sty.nextDiv}></div>
       </div>

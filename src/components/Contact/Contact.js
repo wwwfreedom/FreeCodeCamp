@@ -7,12 +7,13 @@ export default class Contact extends Component {
     contact: PropTypes.object.isRequired,
     contactNameSet: PropTypes.func.isRequired,
     contactEmailSet: PropTypes.func.isRequired,
-    contactMessageSet: PropTypes.func.isRequired
+    contactMessageSet: PropTypes.func.isRequired,
+    contactFormSubmit: PropTypes.func.isRequired
   }
   state = {
-    name: this.props.contact.formInput.name || '',
-    email: this.props.contact.formInput.email || '',
-    message: this.props.contact.formInput.message || ''
+    name: this.props.contact.formInput.name,
+    email: this.props.contact.formInput.email,
+    message: this.props.contact.formInput.message
   }
   render() {
     const { contact } = this.props
@@ -25,7 +26,7 @@ export default class Contact extends Component {
         <div className={sty.content}>
           <div className={sty.form}>
             <h3>Shoot me a message</h3>
-            <form onSubmit={(e) => this.handleSubmit(e)}>
+            <form className='form' ref='form' onSubmit={(e) => this.handleSubmit(e)}>
               <input
                 type="text"
                 required
@@ -51,35 +52,46 @@ export default class Contact extends Component {
                 onBlur={(e) => this.handleBlur(e, 'message')}
                 placeholder={contact.formInput.messagePlaceholder}>
               </textarea>
-              <input
-                type="submit"
-                value="Send"
-              />
+              {this.renderSubmitButton()}
             </form>
           </div>
           <div className={sty.links}>
-
           </div>
         </div>
       </div>
     )
   }
-
+  renderSubmitButton = () => {
+    const { formStatus } = this.props.contact
+    if (formStatus.submitted === false && formStatus.error === false) {
+      return <input type="submit" value="Send"/>
+    } else if (formStatus.submitted === false && formStatus.error === true) {
+      return <input type="text" style={{backgroundColor: '#FFBABA'}} disabled value={formStatus.response}/>
+    } else {
+      return <input type="text" style={{backgroundColor: '#DFF2BF'}} disabled value={formStatus.response}/>
+    }
+  }
   handleSubmit = (e) => {
     e.preventDefault()
+    var payload = {
+      name: this.state.name,
+      email: this.state.email,
+      message: this.state.message
+    }
+    this.props.contactFormSubmit(payload)
   }
 
   handleBlur = (e, type) => {
     if (type === 'name') {
-      this.props.contactNameSet(this.state.name)
+      this.props.contactNameSet(e.target.value)
     }
 
     if (type === 'email') {
-      this.props.contactEmailSet(this.state.email)
+      this.props.contactEmailSet(e.target.value)
     }
 
     if (type === 'message') {
-      this.props.contactMessageSet(this.state.message)
+      this.props.contactMessageSet(e.target.value)
     }
   }
 
