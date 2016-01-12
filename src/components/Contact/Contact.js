@@ -88,11 +88,11 @@ export default class Contact extends Component {
   renderSubmitButton = () => {
     const { formStatus } = this.props.contact
     if (formStatus.submitted === false && formStatus.error === false) {
-      return <input type="submit" value="Send"/>
+      return <input type="submit" className='submit' value="Send"/>
     } else if (formStatus.submitted === false && formStatus.error === true) {
-      return <input type="text" style={{backgroundColor: '#FFBABA'}} disabled value={formStatus.response}/>
+      return <input type="text" style={{backgroundColor: '#FFBABA'}} disabled value={formStatus.response} className='submit'/>
     } else {
-      return <input type="text" style={{backgroundColor: '#DFF2BF'}} disabled value={formStatus.response}/>
+      return <input type="text" style={{backgroundColor: '#DFF2BF'}} disabled value={formStatus.response} className='submit'/>
     }
   }
   handleSubmit = (e) => {
