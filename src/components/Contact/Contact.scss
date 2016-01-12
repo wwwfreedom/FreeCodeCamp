@@ -1,0 +1,258 @@
+@import 'base';
+
+$mapHeight: 200px;
+$inputColor: #fff;
+$inputTextAreaMargin: 0.5em;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+  position: relative;
+}
+
+.map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: $mapHeight;
+  @include MQ(M) {
+    height: calc(#{$mapHeight} + 100px);
+  }
+
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: $mapHeight;
+    @include MQ(M) {
+      height: calc(#{$mapHeight} + 100px);
+    }
+    z-index: 0;
+    content: "";
+    opacity: .3;
+    background: #000;
+    background: url("../../static/images/pattern.png");
+  }
+  h2 {
+    color: $headerTextColor;
+    font-size: 3em;
+    // font-weight: 300;
+    @include MQ(M) {
+      font-size: 5em;
+    }
+    letter-spacing: 0.1em;
+    z-index: 5;
+  }
+}
+
+.content {
+  margin: 2em 0;
+  @include MQ(M) {
+    display: flex;
+  }
+  @include MQ(L) {
+    margin: 2em auto;
+    max-width: 1170px;
+    width: 1170px;
+  }
+}
+
+.form {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+  @include MQ(SM) {
+    width: 450px;
+  }
+  @include MQ(M) {
+    width: 100%;
+  }
+  h3 {
+    color: $textColor;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  input {
+    display: block;
+    width: 300px;
+    @include MQ(SM) {
+      width: 350px;
+    }
+    @include MQ(L) {
+      width: 400px;
+    }
+    margin: $inputTextAreaMargin auto;
+    padding: 10px 15px;
+    background-color: $mediumGray;
+    appearance: none;
+    outline: 0;
+    border: none;
+    @include materialShadow(2);
+    border-radius: 3px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 300;
+    transition-duration: 0.25s;
+    &:focus {
+      background-color: $inputColor;
+      width: 350px;
+      @include MQ(SM) {
+        width: 400px;
+      }
+      @include MQ(L) {
+        width: 450px;
+      }
+      color: $textColor;
+    }
+    &[type="submit"] {
+      background-color: $altBgColor;
+      border: 3px solid $altBgColor;
+      margin: 1em auto;
+      text-align: center;
+      font-weight: 400;
+      color: $textColor;
+      &:hover {
+        @include materialShadow(4);
+        transform: scale(1.005);
+      }
+    }
+    &[disabled] {
+      font-weight: 400;
+      text-align: center;
+    }
+  }
+  textarea {
+    width: 300px;
+    @include MQ(SM) {
+      width: 350px;
+    }
+    @include MQ(L) {
+      width: 400px;
+    }
+    margin: $inputTextAreaMargin auto;
+    padding: 10px 15px;
+    background-color: $mediumGray;
+    text-align: left;
+    font-weight: 300;
+    font-size: 18px;
+    appearance: none;
+    outline: 0;
+    border: none;
+    @include materialShadow(2);
+    transition-duration: 0.25s;
+    &:focus {
+      background-color: $inputColor;
+      width: 350px;
+      @include MQ(SM) {
+        width: 400px;
+      }
+      @include MQ(L) {
+        width: 450px;
+      }
+      color: $textColor;
+    }
+  }
+
+  ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+    color: $inputColor;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    color: $inputColor;
+  }
+
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: $inputColor;
+  }
+
+  :-ms-input-placeholder { /* IE 10+ */
+    color: $inputColor;
+  }
+
+  ::-ms-input-placeholder { /* Edge */
+    color: $inputColor;
+  }
+
+  :placeholder-shown { /* Standard one last! */
+    color: $inputColor;
+  }
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 2em;
+  @include MQ(M) {
+    margin-top: 0;
+  }
+  h3 {
+    color: $textColor;
+    font-size: 1.5em;
+    text-align: center;
+  }
+  h4 {
+    color: $textColor;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    &:hover {
+      transform: scale(1.1)
+    }
+  }
+}
+
+.linksContent {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5em;
+}
+
+.github {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  svg {
+    font-size: 3em;
+    margin: 0 auto;
+  }
+}
+
+.fcc {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  img {
+    width: 3em;
+    height: 3em;
+    color: $textColor;
+    margin: 0 auto;
+  }
+}
+
+.codepen {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  svg {
+    font-size: 3em;
+    margin: 0 auto;
+  }
+}

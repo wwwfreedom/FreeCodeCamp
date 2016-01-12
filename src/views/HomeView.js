@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import sty from './HomeView.scss'
 import { actions as homeViewActions } from '../redux/modules/homeView.js'
 import Header from 'components/Header/Header'
 import Section from 'components/Section/Section'
 import Portfolio from 'components/Portfolio/Portfolio'
+import Contact from 'components/Contact/Contact'
 
 const mapStateToProps = (state) => ({
   headerImage: state.homeView.headerImage,
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
   headerParagraph: state.homeView.headerParagraph,
   aboutSectionTitle: state.homeView.section.about.title,
   aboutSectionText: state.homeView.section.about.text,
-  portfolio: state.homeView.portfolio
+  portfolio: state.homeView.portfolio,
+  contact: state.homeView.contact
 })
 
 export class HomeView extends Component {
@@ -22,11 +24,16 @@ export class HomeView extends Component {
     headerParagraph: React.PropTypes.string.isRequired,
     aboutSectionText: React.PropTypes.string.isRequired,
     aboutSectionTitle: React.PropTypes.string.isRequired,
-    portfolio: React.PropTypes.array.isRequired
+    portfolio: React.PropTypes.array.isRequired,
+    contact: React.PropTypes.object.isRequired,
+    contactNameSet: PropTypes.func.isRequired,
+    contactEmailSet: PropTypes.func.isRequired,
+    contactMessageSet: PropTypes.func.isRequired,
+    contactFormSubmit: PropTypes.func.isRequired
   }
 
   render() {
-    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio } = this.props
+    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
     return (
       <div className={sty.container}>
         <Header
@@ -40,6 +47,13 @@ export class HomeView extends Component {
         />
         <Portfolio
           portfolio={portfolio}
+        />
+        <Contact
+          contact={contact}
+          contactNameSet={contactNameSet}
+          contactEmailSet={contactEmailSet}
+          contactMessageSet={contactMessageSet}
+          contactFormSubmit={contactFormSubmit}
         />
         <div className={sty.nextDiv}></div>
       </div>

@@ -55,13 +55,14 @@ export default class SideBar extends Component {
   componentWillUnmount() {
     window.onkeydown = null
   }
+  // note there is a bug in the componentWillReceiveProps need to check it if you want to use it
   // this allow trigger of mobile via passing in props
-  componentWillReceiveProps(nextProps) {
-    // Allow open props to be controlled by props
-    if (nextProps.mobileNavIsOpen !== this.props.mobileNavIsOpen) {
-      this.props.toggleMenu()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   // Allow open props to be controlled by props
+  //   if (nextProps.mobileNavIsOpen !== this.props.mobileNavIsOpen) {
+  //     this.props.toggleMenu()
+  //   }
+  // }
   // listen to escape key to close mobile nav
   listenForClose = (e) => {
     e = e || window.event
