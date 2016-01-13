@@ -6,6 +6,7 @@ import Header from 'components/Header/Header'
 import Section from 'components/Section/Section'
 import Portfolio from 'components/Portfolio/Portfolio'
 import Contact from 'components/Contact/Contact'
+import Footer from 'components/Footer/Footer'
 
 const mapStateToProps = (state) => ({
   headerImage: state.homeView.headerImage,
@@ -55,7 +56,7 @@ export class HomeView extends Component {
           contactMessageSet={contactMessageSet}
           contactFormSubmit={contactFormSubmit}
         />
-        <div className={sty.nextDiv}></div>
+        <Footer />
       </div>
     )
   }
