@@ -1,10 +1,11 @@
 import TestUtils from 'react-addons-test-utils'
 import SideBar from '../../src/components/SideBar/SideBar.js'
-import util from 'util'
+// import util from 'util'
 import ShallowTestUtils from 'react-shallow-testutils'
 import sty from '../../src/components/SideBar/SideBar.scss'
 import { bindActionCreators } from 'redux'
 import { menuLinks } from '../../src/redux/modules/generalUi.js'
+import DropDown from 'components/DropDown/DropDown'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -32,8 +33,11 @@ describe('(Component) SideBar', function() {
     props = {
       mobileNavIsOpen: false,
       menuLinks: menuLinks,
+      dropDownLinks: ['test1', 'test2'],
+      dropDownStatus: false,
       ...bindActionCreators({
-        toggleMenu: (spies.toggleMenu = sinon.spy())
+        toggleMenu: (spies.toggleMenu = sinon.spy()),
+        dropDownActivate: (spies.dropDownActivate = sinon.spy())
       }, spies.dispatch = sinon.spy())
     }
     component = shallowRenderWithProps(props)
@@ -86,6 +90,13 @@ describe('(Component) SideBar', function() {
     const expectedType = 'nav'
 
     expect(actualType).to.equal(expectedType)
+  })
+
+  it('should have a dropdown component with as many link as the dropDownLinks props', function () {
+    const actual = ShallowTestUtils.findWithType(component, DropDown).props.dropDownLinks
+    const expected = props.dropDownLinks
+    expect(actual).to.equal(expected)
+    // console.log(util.inspect(actual))
   })
 
   it('div with class mobileNavOffTrigger should dispatch a sidebarActivate action when clicked', function() {
