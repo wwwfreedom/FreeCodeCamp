@@ -11,6 +11,7 @@ export const menuLinks = ['about', 'contact']
 
 export const SIDEBAR_ACTIVATE = 'SIDEBAR_ACTIVATE'
 export const MENULINKS_FETCH = 'MENULINKS_FETCH'
+export const DROPDOWN_ACTIVATE = 'DROPDOWN_ACTIVATE'
 
 /**
  * Actions
@@ -24,10 +25,12 @@ export const MENULINKS_FETCH = 'MENULINKS_FETCH'
  */
 export const sidebarActivate = createAction(SIDEBAR_ACTIVATE)
 export const menuLinksFetch = createAction(MENULINKS_FETCH)
+export const dropDownActivate = createAction(DROPDOWN_ACTIVATE)
 
 export const actions = {
   sidebarActivate,
-  menuLinksFetch
+  menuLinksFetch,
+  dropDownActivate
 }
 
 /**
@@ -40,12 +43,17 @@ export const generalUi = handleActions({
 
   MENULINKS_FETCH: (state) => Object.assign({}, state, {
     menuLinks: state.menuLinks
+  }),
+
+  DROPDOWN_ACTIVATE: (state) => Object.assign({}, state, {
+    dropDownStatus: !state.dropDownStatus
   })
 }, {
   // this the default state
   sideBarStatus: false,
   menuLinks: menuLinks,
-  dropDownLinks: ['pomotime', 'Quote Generator']
+  dropDownLinks: ['pomotime', 'Quote Generator'],
+  dropDownStatus: false
 })
 
 // This is the original way of writing reducer the above is just the same thing but a nice syntax abstraction.

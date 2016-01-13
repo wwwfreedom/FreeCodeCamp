@@ -9,35 +9,34 @@ let cx = classNames.bind(sty)
 
 export default class DropDown extends Component {
   static propTypes = {
-    dropDownLinks: PropTypes.array.isRequired
-  }
-
-  state = {
-    toggleState: false
+    dropDownLinks: PropTypes.array.isRequired,
+    dropDownActivate: React.PropTypes.func.isRequired,
+    dropDownStatus: React.PropTypes.bool.isRequired
   }
 
   render() {
-    const { dropDownLinks } = this.props
+    const { dropDownLinks, dropDownActivate, dropDownStatus } = this.props
     let dropDown = cx({
-      dropDown: this.state.toggleState === false,
-      dropDownOpen: this.state.toggleState === true
+      dropDown: dropDownStatus === false,
+      dropDownOpen: dropDownStatus === true
     })
     let containerDropDown = cx({
-      container: this.state.toggleState === false,
-      containerDropDown: this.state.toggleState === true
+      container: dropDownStatus === false,
+      containerDropDown: dropDownStatus === true
     })
+
     return (
       <div className={containerDropDown}>
-        <div className={sty.header} onClick={this.handleClick}>
+        <div className={sty.header} onClick={dropDownActivate}>
           <p>Portfolio</p>
-          {this.state.toggleState === false ? <FaAngleDown /> : <FaAngleUp />}
+          {dropDownStatus === false ? <FaAngleDown /> : <FaAngleUp />}
         </div>
         <div className={dropDown}>
           {dropDownLinks.map((link, index) =>
             <Link
               to={`/${link}`}
               key={index}
-              onClick={this.handleClick}
+              onClick={dropDownActivate}
               activeClassName={sty.activeLink}
             >
               {link}
@@ -46,10 +45,6 @@ export default class DropDown extends Component {
         </div>
       </div>
     )
-  }
-
-  handleClick = () => {
-    this.setState({ toggleState: !this.state.toggleState })
   }
 }
 
