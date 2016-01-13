@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 /**
  * Fixed variables
  */
-export const menuLinks = ['quotes', 'pomoTime', 'portfolio', 'about']
+export const menuLinks = ['about', 'contact']
 
 /**
  * Constants
@@ -44,7 +44,8 @@ export const generalUi = handleActions({
 }, {
   // this the default state
   sideBarStatus: false,
-  menuLinks: menuLinks
+  menuLinks: menuLinks,
+  dropDownLinks: ['pomotime', 'Quote Generator']
 })
 
 // This is the original way of writing reducer the above is just the same thing but a nice syntax abstraction.

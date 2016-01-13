@@ -6,7 +6,8 @@ import { actions as generalUiActions } from '../../redux/modules/generalUi.js'
 
 const mapStateToProps = (state) => ({
   mobileNavIsOpen: state.generalUi.sideBarStatus,
-  menuLinks: state.generalUi.menuLinks
+  menuLinks: state.generalUi.menuLinks,
+  dropDownLinks: state.generalUi.dropDownLinks
 })
 
 export class Navigation extends Component {
@@ -14,7 +15,8 @@ export class Navigation extends Component {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
     sidebarActivate: React.PropTypes.func.isRequired,
     menuLinks: React.PropTypes.array.isRequired,
-    menuLinksFetch: React.PropTypes.func.isRequired
+    menuLinksFetch: React.PropTypes.func.isRequired,
+    dropDownLinks: React.PropTypes.array.isRequired
   }
   render() {
     return (
@@ -28,6 +30,7 @@ export class Navigation extends Component {
           mobileNavIsOpen={this.props.mobileNavIsOpen}
           toggleMenu={this.props.sidebarActivate}
           menuLinks={this.props.menuLinks}
+          dropDownLinks={this.props.dropDownLinks}
         />
       </div>
     )

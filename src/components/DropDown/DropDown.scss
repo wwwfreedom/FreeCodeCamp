@@ -1,0 +1,59 @@
+@import 'base';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: $link-color;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  margin: 0 1em 0 0;
+  p { margin: 0 0.25em 0 0; }
+  padding-bottom: 0.5em;
+  box-shadow: 0 2px 0 rgba(0,0,0,.12);
+}
+
+
+.dropDown {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  transform: translate3d(0, -50%, 0);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+
+.dropDownOpen {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  visibility: visible;
+  top: 140%;
+  opacity: 1;
+  z-index: 5;
+  background: $deskNavBgColour;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  a {
+    box-shadow: 0 2px 0 rgba(0,0,0,.12);
+    padding: 0.5em 0.25em 0.5em 0.25em;
+    text-decoration: none;
+    color: $link-color;
+    font-size: 1em;
+    &:hover {
+      color: $dark-gray;
+    }
+  }
+
+.activeLink {
+  box-shadow: 0 6px 0 rgba(0,0,0,.1);
+}
+}
