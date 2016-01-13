@@ -10,6 +10,10 @@
   letter-spacing: 0.1em;
   background: $deskNavBgColour;
   box-shadow: 0 0 10px 0 rgba(0,0,0,.12);
+  // to make the menubar persistent always showing
+  z-index: 4;
+  position: fixed;
+  width: 100%;
   @include MQ(M) {
     padding: 0 2em;
   }
@@ -22,6 +26,7 @@
   font-size: 1.5em;
   a {
     text-decoration: none;
+    text-transform: uppercase;
     color: $link-color;
     font-weight: 400;
     &:hover {
@@ -53,6 +58,7 @@
   }
   a {
     margin-right: 1em;
+    text-transform: uppercase;
     text-decoration: none;
     color: $link-color;
     &:hover {
