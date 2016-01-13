@@ -9,7 +9,7 @@ let cx = classNames.bind(sty)
 
 export default class DropDown extends Component {
   static propTypes = {
-    links: PropTypes.array.isRequired
+    dropDownLinks: PropTypes.array.isRequired
   }
 
   state = {
@@ -17,19 +17,23 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { links } = this.props
+    const { dropDownLinks } = this.props
     let dropDown = cx({
       dropDown: this.state.toggleState === false,
       dropDownOpen: this.state.toggleState === true
     })
+    let containerDropDown = cx({
+      container: this.state.toggleState === false,
+      containerDropDown: this.state.toggleState === true
+    })
     return (
-      <div className={sty.container}>
+      <div className={containerDropDown}>
         <div className={sty.header} onClick={this.handleClick}>
           <p>Portfolio</p>
           {this.state.toggleState === false ? <FaAngleDown /> : <FaAngleUp />}
         </div>
         <div className={dropDown}>
-          {links.map((link, index) =>
+          {dropDownLinks.map((link, index) =>
             <Link
               to={`/${link}`}
               key={index}

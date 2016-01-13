@@ -25,6 +25,7 @@ export class Navigation extends Component {
           mobileNavIsOpen={this.props.mobileNavIsOpen}
           toggleMenu={this.props.sidebarActivate}
           menuLinks={this.props.menuLinks}
+          dropDownLinks={this.props.dropDownLinks}
         />
         <MenuBar
           mobileNavIsOpen={this.props.mobileNavIsOpen}

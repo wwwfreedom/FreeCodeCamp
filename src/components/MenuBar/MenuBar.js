@@ -18,7 +18,7 @@ export default class MenuBar extends Component {
           <Link to='/'>Kevin Truong</Link>
         </div>
         <nav role='navigation' className={sty.navigation}>
-          <DropDown links={this.props.dropDownLinks}/>
+          <DropDown dropDownLinks={this.props.dropDownLinks}/>
           {this.renderMenuLinks()}
         </nav>
         <div className={sty.mobileNavTrigger}>

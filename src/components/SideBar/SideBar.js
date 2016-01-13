@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames/bind'
 import { Link } from 'react-router'
 import sty from './SideBar.scss'
+import DropDown from 'components/DropDown/DropDown'
 
 let cx = classNames.bind(sty)
 
@@ -9,9 +10,11 @@ export default class SideBar extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
     toggleMenu: React.PropTypes.func.isRequired,
-    menuLinks: React.PropTypes.array.isRequired
+    menuLinks: React.PropTypes.array.isRequired,
+    dropDownLinks: React.PropTypes.array.isRequired
   }
   render() {
+    const { dropDownLinks } = this.props
     let mobileNav = cx({
       mobileNavOpen: this.props.mobileNavIsOpen
       // mobileNavClose: this.props.mobileNavIsOpen
@@ -26,6 +29,7 @@ export default class SideBar extends Component {
         <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
         <div className={menu}>
           <nav role='navigation' className={sty.menuContent}>
+            <DropDown dropDownLinks={dropDownLinks}/>
             {this.renderMenuLinks()}
           </nav>
         </div>
