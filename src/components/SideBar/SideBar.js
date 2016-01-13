@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames/bind'
 import { Link } from 'react-router'
 import sty from './SideBar.scss'
+import DropDown from 'components/DropDown/DropDown'
 
 let cx = classNames.bind(sty)
 
@@ -9,9 +10,13 @@ export default class SideBar extends Component {
   static propTypes = {
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
     toggleMenu: React.PropTypes.func.isRequired,
-    menuLinks: React.PropTypes.array.isRequired
+    menuLinks: React.PropTypes.array.isRequired,
+    dropDownLinks: React.PropTypes.array.isRequired,
+    dropDownActivate: React.PropTypes.func.isRequired,
+    dropDownStatus: React.PropTypes.bool.isRequired
   }
   render() {
+    const { dropDownLinks, dropDownActivate, dropDownStatus } = this.props
     let mobileNav = cx({
       mobileNavOpen: this.props.mobileNavIsOpen
       // mobileNavClose: this.props.mobileNavIsOpen
@@ -23,9 +28,14 @@ export default class SideBar extends Component {
     return (
       // the mobileNavOffTrigger here is allow user to turn off the mobile nav when they click outside of the mobile nav
       <div className={mobileNav}>
-        <div className={sty.mobileNavOffTrigger} onClick={this.props.toggleMenu}></div>
+        <div className={sty.mobileNavOffTrigger} onClick={this.handleClick}></div>
         <div className={menu}>
           <nav role='navigation' className={sty.menuContent}>
+            <DropDown
+              dropDownLinks={dropDownLinks}
+              dropDownStatus={dropDownStatus}
+              dropDownActivate={dropDownActivate}
+            />
             {this.renderMenuLinks()}
           </nav>
         </div>
@@ -34,19 +44,27 @@ export default class SideBar extends Component {
   }
 
   renderMenuLinks = () => {
-    const { menuLinks, toggleMenu } = this.props
+    const { menuLinks } = this.props
     return (
       menuLinks.map((link, index) =>
         <Link
           to={`/${link}`}
           activeClassName={sty.activeLink}
-          onClick={toggleMenu}
+          onClick={this.handleClick}
           key={index}
         >
           {link}
         </Link>
       )
     )
+  }
+
+  handleClick = () => {
+    this.props.toggleMenu()
+    // close dropdown on closing sidebar or navigating to new links
+    if (this.props.dropDownStatus === true) {
+      this.props.dropDownActivate()
+    }
   }
 
   componentDidMount() {
