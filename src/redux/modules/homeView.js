@@ -1,7 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 // I'm using ajax jquery here because for some reason using fetch or xhr does not work with formspree
 import $ from 'jquery'
-
 /**
  * Constants
  */
@@ -85,7 +84,7 @@ export const actions = {
  * Reducer
  */
 const initialState = {
-  headerImage: require('../../static/images/road.jpg'),
+  headerImage: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?crop=entropy&fit=crop&fm=jpg&h=825&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1450',
   headerText: "Hello, I'm Kevin.",
   headerParagraph: "I build things for the internet",
   section: {

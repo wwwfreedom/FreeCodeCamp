@@ -35,6 +35,7 @@ export class HomeView extends Component {
 
   render() {
     const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
+    console.log(headerImage)
     return (
       <div className={sty.container}>
         <Header
