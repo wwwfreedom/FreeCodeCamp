@@ -1,0 +1,92 @@
+@import 'base';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: $link-color;
+  position: relative;
+  padding: 1em 0 0.3em 0;
+  box-shadow: 0 2px 0 rgba(0,0,0,.12);
+  @include MQ(M) {
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+.containerDropDown {
+  composes: container;
+  padding: 1em 0 0 0;
+  @include MQ(M) {
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+.header {
+  display: flex;
+  font-size: 1.5em;
+  p {
+    margin: 0 0.25em 0 0;
+    padding-bottom: 0.3em;
+  }
+  @include MQ(M) {
+    margin: 0 1em 0 0;
+    font-size: 1em;
+    p {
+      margin: 0 0.25em 0 0;
+      padding-top: 0;
+      padding-bottom: 0.5em;
+    }
+  }
+  &:hover {
+    color: $dark-gray;
+  }
+}
+
+.dropDown {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  transform: translate3d(0, -50%, 0);
+  transition: all 0.5s ease;
+}
+
+.dropDownOpen {
+  display: flex;
+  flex-direction: column;
+  @include MQ(M) {
+    position: absolute;
+  }
+  visibility: visible;
+  top: 143%;
+  opacity: 1;
+  z-index: 5;
+  background: $deskNavBgColour;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  box-shadow: 0 -2px 0 rgba(0,0,0,.12);
+  a {
+    margin: 0;
+    box-shadow: 0 2px 0 rgba(0,0,0,.12);
+    padding: 1em 0.25em 0.75em 0.25em;
+    @include MQ(M) {
+      padding: 1em 0.25em 0.5em 0.25em;
+    }
+    text-decoration: none;
+    color: $link-color;
+    font-size: 1em;
+    &:hover {
+      color: $dark-gray;
+    }
+  }
+}
+.activeLink {
+  box-shadow: 0 6px 0 rgba(0,0,0,.1);
+}

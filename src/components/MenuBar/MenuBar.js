@@ -2,32 +2,64 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import sty from './MenuBar.scss'
 import MenuButton from '../../components/MenuButton/MenuButton.js'
-// import TiThMenu from 'react-icons/lib/ti/th-menu'
+import DropDown from 'components/DropDown/DropDown'
 
 export default class MenuBar extends Component {
-  state = {
-    mobileNavStatus: false
+  static propTypes = {
+    mobileNavIsOpen: React.PropTypes.bool.isRequired,
+    toggleMenu: React.PropTypes.func.isRequired,
+    menuLinks: React.PropTypes.array.isRequired,
+    dropDownLinks: React.PropTypes.array.isRequired,
+    dropDownActivate: React.PropTypes.func.isRequired,
+    dropDownStatus: React.PropTypes.bool.isRequired
   }
   render() {
+    const { dropDownLinks, dropDownActivate, dropDownStatus } = this.props
     return (
       <div className={sty.container}>
-        <div className={sty.brand}>Kevin Truong</div>
+        <div className={sty.brand}>
+          <Link to='/'>Kevin Truong</Link>
+        </div>
         <nav role='navigation' className={sty.navigation}>
-          <Link to='/quotes'>Quotes</Link>
-          <Link to='/pomoTimer'>Pomodoro Timer</Link>
-          <Link to='/about'>About</Link>
+          <DropDown
+            dropDownLinks={dropDownLinks}
+            dropDownStatus={dropDownStatus}
+            dropDownActivate={dropDownActivate}
+          />
+          {this.renderMenuLinks()}
         </nav>
-        <nav role='navigation' className={sty.mobileNav}>
-          <MenuButton navStatus={this.state.mobileNavStatus} onClick={this.handleMenuClick}/>
-        </nav>
+        <div className={sty.mobileNavTrigger}>
+          <MenuButton navStatus={this.props.mobileNavIsOpen} onClick={this.handleMenuClick}/>
+        </div>
       </div>
     )
   }
 
+  renderMenuLinks = () => {
+    const { menuLinks } = this.props
+    return (
+      menuLinks.map((link, index) =>
+        <Link
+          to={`/${link}`}
+          activeClassName={sty.activeLink}
+          key={index}
+          onClick={this.handleLinkClick}
+        >
+          {link}
+        </Link>
+      )
+    )
+  }
+
+  // toggle sidebar on click of hamburger menu
   handleMenuClick = () => {
-    this.setState({
-      mobileNavStatus: !this.state.mobileNavStatus
-    })
-    console.log('clicked')
+    this.props.toggleMenu()
+  }
+
+  // close dropdown on closing sidebar or navigating to new links
+  handleLinkClick = () => {
+    if (this.props.dropDownStatus === true) {
+      this.props.dropDownActivate()
+    }
   }
 }

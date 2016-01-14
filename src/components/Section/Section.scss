@@ -1,0 +1,59 @@
+@import 'base';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 3.5em 1em;
+  background-color: $bg-color;
+}
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  h2 {
+    margin: 0;
+    font-size: 2em;
+  }
+  color: $sectionHeaderTextColor;
+}
+
+.text {
+  width: 400px;
+  margin: 0 auto;
+  font-size: 20px;
+  text-align: justify;
+  line-height: 29px;
+  @include MQ(M) {
+    width: 450px;
+  }
+}
+
+.separator {
+  color: $mediumGray;
+  margin: 1.5em auto;
+  position: relative;
+  z-index: 3;
+  width: 12em;
+}
+
+.lineSeparator {
+  &:before {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+  }
+  &:after {
+    display: block;
+    border: 1px solid $mediumGray;
+    width: 40%;
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    right: 5%;
+  }
+}

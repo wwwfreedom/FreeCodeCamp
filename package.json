@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
+  "name": "FreeCodeCampZiplinesRepo",
   "version": "1.0.0",
-  "description": "Get started with React, Redux, and React-Router!",
+  "description": "A repository for all ziplines projects from Free Code Camp",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
@@ -18,20 +18,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/wwwfreedom/FreeCodeCamp"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "Kevin Truong",
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.1",
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
     "history": "^1.17.0",
+    "jquery": "^2.2.0",
+    "lodash": "^3.10.1",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.5",
     "react-dom": "^0.14.0",
+    "react-icons": "^1.0.3",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.1",
+    "react-textfit": "^0.1.6",
     "redux": "^3.0.0",
     "redux-actions": "^0.9.0",
     "redux-simple-router": "^1.0.0",
@@ -84,6 +88,7 @@
     "phantomjs-polyfill": "0.0.1",
     "postcss-loader": "^0.8.0",
     "react-addons-test-utils": "^0.14.0",
+    "react-shallow-testutils": "^0.7.1",
     "redux-devtools": "^3.0.0",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",

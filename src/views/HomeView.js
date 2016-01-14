@@ -1,44 +1,65 @@
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { actions as counterActions } from '../redux/modules/counter'
-import styles from './HomeView.scss'
+import React, { Component, PropTypes } from 'react'
+import sty from './HomeView.scss'
+import { actions as homeViewActions } from '../redux/modules/homeView.js'
+import Header from 'components/Header/Header'
+import Section from 'components/Section/Section'
+import Portfolio from 'components/Portfolio/Portfolio'
+import Contact from 'components/Contact/Contact'
+import Footer from 'components/Footer/Footer'
 
-// We define mapStateToProps where we'd normally use
-// the @connect decorator so the data requirements are clear upfront, but then
-// export the decorated component after the main class definition so
-// the component can be tested w/ and w/o being connected.
-// See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  headerImage: state.homeView.headerImage,
+  headerText: state.homeView.headerText,
+  headerParagraph: state.homeView.headerParagraph,
+  aboutSectionTitle: state.homeView.section.about.title,
+  aboutSectionText: state.homeView.section.about.text,
+  portfolio: state.homeView.portfolio,
+  contact: state.homeView.contact
 })
-export class HomeView extends React.Component {
+
+export class HomeView extends Component {
   static propTypes = {
-    counter: React.PropTypes.number.isRequired,
-    doubleAsync: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    headerImage: React.PropTypes.string.isRequired,
+    headerText: React.PropTypes.string.isRequired,
+    headerParagraph: React.PropTypes.string.isRequired,
+    aboutSectionText: React.PropTypes.string.isRequired,
+    aboutSectionTitle: React.PropTypes.string.isRequired,
+    portfolio: React.PropTypes.array.isRequired,
+    contact: React.PropTypes.object.isRequired,
+    contactNameSet: PropTypes.func.isRequired,
+    contactEmailSet: PropTypes.func.isRequired,
+    contactMessageSet: PropTypes.func.isRequired,
+    contactFormSubmit: PropTypes.func.isRequired
   }
 
-  render () {
+  render() {
+    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
     return (
-      <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>
-          Sample Counter:&nbsp;
-          <span className={styles['counter--green']}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
-        <hr />
-        <Link to='/about'>Go To About View</Link>
+      <div className={sty.container}>
+        <Header
+          headerText={headerText}
+          headerImage={headerImage}
+          headerParagraph={headerParagraph}
+        />
+        <Section
+          text={aboutSectionText}
+          title={aboutSectionTitle}
+        />
+        <Portfolio
+          portfolio={portfolio}
+        />
+        <Contact
+          contact={contact}
+          contactNameSet={contactNameSet}
+          contactEmailSet={contactEmailSet}
+          contactMessageSet={contactMessageSet}
+          contactFormSubmit={contactFormSubmit}
+        />
+        <Footer />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, counterActions)(HomeView)
+export default connect(mapStateToProps, homeViewActions)(HomeView)
