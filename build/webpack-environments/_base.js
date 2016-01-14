@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config from '../../config'
 import _debug from 'debug'
+import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
 
 const paths = config.utils_paths
 const debug = _debug('app:webpack:_base')
@@ -36,6 +37,7 @@ const webpackConfig = {
     new webpack.DefinePlugin(config.globals),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
+    new BrowserSyncPlugin({proxy: 'localhost:3000'}),
     new HtmlWebpackPlugin({
       template: paths.client('index.html'),
       hash: false,
