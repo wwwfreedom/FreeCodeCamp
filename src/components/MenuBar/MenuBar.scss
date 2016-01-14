@@ -12,7 +12,9 @@
   box-shadow: 0 0 10px 0 rgba(0,0,0,.12);
   // to make the menubar persistent always showing
   z-index: 4;
-  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   @include MQ(M) {
     padding: 0 2em;
