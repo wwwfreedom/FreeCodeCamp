@@ -20,6 +20,9 @@ body {
   font-family: 'Lato', serif;
   /*max-width: 960px;*/
   overflow-y: scroll;
+  //this stop horizontal scrolling
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   ::-webkit-scrollbar {
     display: none;
   }
