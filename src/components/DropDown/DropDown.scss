@@ -72,13 +72,18 @@
     position: absolute;
   }
   visibility: visible;
-  top: 143%;
+  top: 130%;
   opacity: 1;
   z-index: 5;
   background: $deskNavBgColour;
   transform: translate3d(0, 0, 0);
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
   box-shadow: 0 -2px 0 rgba(0,0,0,.12);
+  a:first-child {
+    @include MQ(M) {
+      padding: 1.1em 0.25em 0.5em 0.75em;
+    }
+  }
   a {
     margin: 0;
     box-shadow: 0 2px 0 rgba(0,0,0,.12);
