@@ -3,13 +3,12 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  text-align: center;
   color: $headerTextColor;
   width: 100%;
   height: $menuBarHeight;
   background: #00237E;
   a {
-    // text-decoration: none;
     color: $headerTextColor;
   }
 }

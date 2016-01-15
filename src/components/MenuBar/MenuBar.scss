@@ -54,6 +54,8 @@
   display: none;
   @include MQ(M) {
     display: flex;
+    // minor adjustment to get the links to display smack bang center
+    padding-top: 6px;
     justify-content: center;
     align-contents: center;
     font-size: 1.2em;

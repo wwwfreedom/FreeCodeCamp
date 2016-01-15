@@ -3,6 +3,7 @@
 $mapHeight: 200px;
 $inputColor: #fff;
 $inputTextAreaMargin: 0.5em;
+$inputWidth: 250px;
 
 .container {
   display: flex;
@@ -68,7 +69,7 @@ $inputTextAreaMargin: 0.5em;
   display:flex;
   flex-direction: column;
   justify-content: center;
-  width: 400px;
+  // width: 400px;
   margin: 0 auto;
   @include MQ(SM) {
     width: 450px;
@@ -87,7 +88,7 @@ $inputTextAreaMargin: 0.5em;
   }
   input {
     display: block;
-    width: 300px;
+    width: $inputWidth;
     @include MQ(SM) {
       width: 350px;
     }
@@ -108,7 +109,7 @@ $inputTextAreaMargin: 0.5em;
     transition-duration: 0.25s;
     &:focus {
       background-color: $inputColor;
-      width: 350px;
+      width: 300px;
       @include MQ(SM) {
         width: 400px;
       }
@@ -135,7 +136,7 @@ $inputTextAreaMargin: 0.5em;
     }
   }
   textarea {
-    width: 300px;
+    width: $inputWidth;
     @include MQ(SM) {
       width: 350px;
     }
@@ -155,7 +156,7 @@ $inputTextAreaMargin: 0.5em;
     transition-duration: 0.25s;
     &:focus {
       background-color: $inputColor;
-      width: 350px;
+      width: 300px;
       @include MQ(SM) {
         width: 400px;
       }
