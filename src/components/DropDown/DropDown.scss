@@ -26,14 +26,21 @@
 
 .header {
   display: flex;
-  font-size: 1.5em;
+  padding-top: 0.3em;
   p {
     margin: 0 0.25em 0 0;
     padding-bottom: 0.3em;
   }
+  @include MQ(SM) {
+    @media only screen and (orientation: landscape) {
+      font-size: 1em;
+    }
+    font-size: 1.5em;
+  }
   @include MQ(M) {
     margin: 0 1em 0 0;
     font-size: 1em;
+    padding-top: 0;
     p {
       margin: 0 0.25em 0 0;
       padding-top: 0;
@@ -75,9 +82,9 @@
   a {
     margin: 0;
     box-shadow: 0 2px 0 rgba(0,0,0,.12);
-    padding: 1em 0.25em 0.75em 0.25em;
+    padding: 1em 0.25em 0.75em 0.75em;
     @include MQ(M) {
-      padding: 1em 0.25em 0.5em 0.25em;
+      padding: 1em 0.25em 0.5em 0.75em;
     }
     text-decoration: none;
     color: $link-color;
