@@ -11,7 +11,7 @@
   background: $deskNavBgColour;
   box-shadow: 0 0 10px 0 rgba(0,0,0,.12);
   // to make the menubar persistent always showing
-  z-index: 4;
+  z-index: 10;
   position: fixed;
   width: 100%;
   @include MQ(M) {
@@ -23,7 +23,7 @@
 }
 
 .brand {
-  font-size: 1.5em;
+  font-size: 1em;
   a {
     text-decoration: none;
     text-transform: uppercase;
@@ -34,7 +34,7 @@
       transition: all 0.5s;
     }
   }
-  @include MQ(M) {
+  @include MQ(SM) {
     font-size: 1.5em;
   }
 }
@@ -44,6 +44,7 @@
 }
 
 .mobileNavTrigger {
+  z-index: 999;
   @include MQ(M) {
     display: none;
   }
