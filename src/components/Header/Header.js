@@ -9,6 +9,7 @@ export default class Header extends Component {
   }
   render() {
     const { headerImage, headerText, headerParagraph } = this.props
+    console.log(headerImage)
     var style = {
       backgroundImage: `url('${headerImage}')`
     }

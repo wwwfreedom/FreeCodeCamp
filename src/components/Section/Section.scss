@@ -19,13 +19,16 @@
 }
 
 .text {
-  width: 400px;
-  margin: 0 auto;
-  font-size: 20px;
-  text-align: justify;
-  line-height: 29px;
-  @include MQ(M) {
+  margin: 0 1em;
+  line-height: 1.5em;
+  font-family: 'Merriweather', serif;
+  text-align: center;
+  @include MQ(SM) {
+    margin: 0 auto;
+    font-size: 20px;
     width: 450px;
+    line-height: 29px;
+    text-align: center;
   }
 }
 

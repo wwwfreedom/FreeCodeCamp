@@ -19,6 +19,7 @@
 
 .innerContainer {
   margin: 0 auto;
+  width: 100%;
 }
 
 .content {
@@ -33,6 +34,7 @@
   }
   @include MQ(L) {
     max-width: 1170px;
+    margin: 3.5em auto;
     width: 1170px;
   }
 }
@@ -42,12 +44,16 @@
   border: 1px solid #dfdfdf;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
-  width: 400px;
+  @include MQ(SM) {
+    width: 400px;
+    margin: 0 auto;
+  }
   @include MQ(M) {
     width: 450px;
   }
   @include MQ(L) {
     width: 550px;
+    margin: 0;
   }
   img {
     max-width: 100%;
@@ -154,11 +160,14 @@
 .description {
   // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
   font-family: 'Merriweather', serif;
-  width: 400px;
   margin: 3em auto;
   font-size: 1em;
   // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
-  line-height: 24px;
+  line-height: 1.5em;
+  @include MQ(SM) {
+    width: 400px;
+    // margin: 0 0 2em 0;
+  }
   @include MQ(M) {
     width: 450px;
     margin: 0 0 2em 0;
