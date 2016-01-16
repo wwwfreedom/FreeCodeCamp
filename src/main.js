@@ -5,9 +5,11 @@ import { syncReduxAndRouter } from 'redux-simple-router'
 import routes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
+import useScroll from 'scroll-behavior/lib/useStandardScroll'
 
 // const history = createBrowserHistory()
-const history = createHashHistory()
+// const history = createHashHistory()
+const history = useScroll(createHashHistory)()
 const store = configureStore(window.__INITIAL_STATE__)
 
 syncReduxAndRouter(history, store, (state) => state.router)

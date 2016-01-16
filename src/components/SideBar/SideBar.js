@@ -31,6 +31,12 @@ export default class SideBar extends Component {
         <div className={sty.mobileNavOffTrigger} onClick={this.handleClick}></div>
         <div className={menu}>
           <nav role='navigation' className={sty.menuContent}>
+            <Link
+              to='/'
+              onClick={this.handleClick}
+            >
+             Home
+            </Link>
             <DropDown
               dropDownLinks={dropDownLinks}
               dropDownStatus={dropDownStatus}

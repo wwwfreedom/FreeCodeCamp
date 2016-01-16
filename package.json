@@ -1,6 +1,6 @@
 {
   "name": "FreeCodeCampZiplinesRepo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A repository for all ziplines projects from Free Code Camp",
   "main": "index.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "redux-actions": "^0.9.0",
     "redux-simple-router": "^1.0.0",
     "redux-thunk": "^1.0.0",
+    "scroll-behavior": "^0.3.0",
     "yargs": "^3.18.0"
   },
   "devDependencies": {
