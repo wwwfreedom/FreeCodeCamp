@@ -19,12 +19,13 @@ export class AboutView extends Component {
   }
 
   render () {
-    const { title, introText, image } = this.props
+    const { introText, image } = this.props
     return (
       <div className={sty.container}>
         <Header
           headerText="I'm Kevin"
           headerImage={image}
+          separator={false}
         />
         <Section
           title='Bonjour'
