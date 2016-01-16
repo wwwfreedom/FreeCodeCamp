@@ -3,10 +3,8 @@ import React, { Component, PropTypes } from 'react'
 import sty from './HomeView.scss'
 import { actions as homeViewActions } from '../redux/modules/homeView.js'
 import Header from 'components/Header/Header'
-import Section from 'components/Section/Section'
 import Portfolio from 'components/Portfolio/Portfolio'
 import Contact from 'components/Contact/Contact'
-import Footer from 'components/Footer/Footer'
 
 const mapStateToProps = (state) => ({
   headerImage: state.homeView.headerImage,
@@ -23,8 +21,6 @@ export class HomeView extends Component {
     headerImage: React.PropTypes.string.isRequired,
     headerText: React.PropTypes.string.isRequired,
     headerParagraph: React.PropTypes.string.isRequired,
-    aboutSectionText: React.PropTypes.string.isRequired,
-    aboutSectionTitle: React.PropTypes.string.isRequired,
     portfolio: React.PropTypes.array.isRequired,
     contact: React.PropTypes.object.isRequired,
     contactNameSet: PropTypes.func.isRequired,
@@ -34,18 +30,15 @@ export class HomeView extends Component {
   }
 
   render() {
-    const { headerImage, headerText, headerParagraph, aboutSectionText, aboutSectionTitle, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
-    console.log(headerImage)
+    const { headerImage, headerText, headerParagraph, portfolio, contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props
+    const separator = true
     return (
       <div className={sty.container}>
         <Header
           headerText={headerText}
           headerImage={headerImage}
           headerParagraph={headerParagraph}
-        />
-        <Section
-          text={aboutSectionText}
-          title={aboutSectionTitle}
+          separator={separator}
         />
         <Portfolio
           portfolio={portfolio}
@@ -57,7 +50,6 @@ export class HomeView extends Component {
           contactMessageSet={contactMessageSet}
           contactFormSubmit={contactFormSubmit}
         />
-        <Footer />
       </div>
     )
   }
