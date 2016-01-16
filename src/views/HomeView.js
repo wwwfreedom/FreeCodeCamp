@@ -43,10 +43,6 @@ export class HomeView extends Component {
           headerImage={headerImage}
           headerParagraph={headerParagraph}
         />
-        <Section
-          text={aboutSectionText}
-          title={aboutSectionTitle}
-        />
         <Portfolio
           portfolio={portfolio}
         />
