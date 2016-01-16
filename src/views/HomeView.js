@@ -5,7 +5,6 @@ import { actions as homeViewActions } from '../redux/modules/homeView.js'
 import Header from 'components/Header/Header'
 import Portfolio from 'components/Portfolio/Portfolio'
 import Contact from 'components/Contact/Contact'
-import Footer from 'components/Footer/Footer'
 
 const mapStateToProps = (state) => ({
   headerImage: state.homeView.headerImage,
@@ -51,7 +50,6 @@ export class HomeView extends Component {
           contactMessageSet={contactMessageSet}
           contactFormSubmit={contactFormSubmit}
         />
-        <Footer />
       </div>
     )
   }

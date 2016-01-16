@@ -1,5 +1,6 @@
 import '../styles/core.scss'
 import Navigation from '../containers/Navigation/Navigation.js'
+import Footer from 'components/Footer/Footer'
 import sty from './CoreLayout.scss'
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
@@ -17,6 +18,7 @@ function CoreLayout ({ children }) {
       <div className={sty.viewContainer}>
         {children}
       </div>
+      <Footer />
     </div>
   )
 }
