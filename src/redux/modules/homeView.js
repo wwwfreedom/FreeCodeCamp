@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions'
-import escaperoomsa from '../../../src/static/images/Escape Room SA.png'
 /**
  * Constants
  */
@@ -28,16 +27,16 @@ const initialState = {
     {
       title: 'Escape Room SA',
       link: 'http://escaperoomsa.com.au/',
-      image: escaperoomsa,
-      introText: 'A mobile optimize custom design business website',
-      description: "I build this website for my business partner. The business has three requirements. Number one was accesibility, I custom design the website to display responsively across a variaty of devices. Number two was customer engagement, I added inbuilt mailing list sign up and custom contact form. The final requirement was performance, I optimize the website build process and was able to have average load time around 3 seconds on most modern devices."
+      image: 'http://i.imgur.com/HQmLQbA.png',
+      introText: 'A mobile optimizes custom design business website',
+      description: "The website number one feature was accessibility, it was designed to display responsively across a variety of devices. It featured inbuilt mailing list sign up and custom contact form. The website build process was optimized to achieve average load time around three seconds on most modern devices."
     },
     {
       title: 'Pomo Time',
       link: 'pomoTime',
       image: 'http://lorempixel.com/image_output/sports-q-c-640-480-8.jpg',
       introText: 'A simple pomodoro timer built with React.js',
-      description: "I build this application as a zipline project for Free Code Camp. The project requirement from Free Code Camp is to make a functional pomodoro timer. The focus of this app in on simplicity and displaying useful metric to keep the user motivated. "
+      description: "I build this application as a zipline project for Free Code Camp. The project requirement from Free Code Camp is to make a functional Pomodoro timer. The focus of this app in on simplicity and displaying useful metric to keep the user motivated."
     }
   ]
 }
