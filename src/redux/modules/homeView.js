@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-
+import escaperoomsa from '../../../src/static/images/Escape Room SA.png'
 /**
  * Constants
  */
@@ -28,7 +28,7 @@ const initialState = {
     {
       title: 'Escape Room SA',
       link: 'http://escaperoomsa.com.au/',
-      image: 'http://lorempixel.com/image_output/animals-q-c-640-480-3.jpg',
+      image: escaperoomsa,
       introText: 'A mobile optimize custom design business website',
       description: "I build this website for my business partner. The business has three requirements. Number one was accesibility, I custom design the website to display responsively across a variaty of devices. Number two was customer engagement, I added inbuilt mailing list sign up and custom contact form. The final requirement was performance, I optimize the website build process and was able to have average load time around 3 seconds on most modern devices."
     },

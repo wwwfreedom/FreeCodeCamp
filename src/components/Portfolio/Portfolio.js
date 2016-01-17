@@ -1,6 +1,7 @@
 import sty from './Portfolio.scss'
 import { Link } from 'react-router'
 import * as _ from 'lodash'
+// import escaperoomsa from '../../../src/'
 
 export default function Portfolio ({portfolio}) {
   return (
