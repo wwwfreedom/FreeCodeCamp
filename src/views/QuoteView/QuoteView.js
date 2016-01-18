@@ -43,7 +43,7 @@ export class QuoteView extends Component {
             transitionEnterTimeout={300}
             transitionLeaveTimeout={200}
             >
-            <div key={quote.text} >
+            <div>
               <p>"{quote.text}"</p>
               <p className="author">-{quote.author}.</p>
             </div>
@@ -69,6 +69,8 @@ export class QuoteView extends Component {
     let re = new RegExp('xphoto-unavailable')
     if (re.test(imageNoSpace) === false) {
       return <img key={text} src={imageNoSpace}/>
+    } else {
+      return <div className={sty.fillerDiv}></div>
     }
   }
 }
