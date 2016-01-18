@@ -19,10 +19,10 @@ export const quoteGetNoDupes = () => {
     let currentQuote = getState().QuoteView.quote.text
     let nextQuote = randomQuote(quotes)
     if (currentQuote === nextQuote.text) {
-      console.log('duplicate', currentQuote, nextQuote)
+      // console.log('duplicate', currentQuote, nextQuote)
       nextQuote = randomQuote(quotes)
     } else {
-      console.log(currentQuote !== nextQuote)
+      // console.log(currentQuote !== nextQuote)
       dispatch(quoteGet(nextQuote))
     }
   }
@@ -48,5 +48,4 @@ export const QuoteView = handleActions({
   QUOTE_GET: (state, { payload }) => Object.assign({}, state, {
     quote: payload
   })
-
 }, initialState)

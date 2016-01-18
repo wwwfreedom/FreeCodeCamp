@@ -1,0 +1,108 @@
+@import 'base';
+
+.btn {
+  position: relative;
+  display: block;
+  width: 250px;
+  padding: 10px 10px;
+  margin: 0 1em;
+
+  background-color: #fff;
+  border: 1px solid #ccc;
+
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transform-style: flat;
+  transition: all 250ms ease-out;
+
+  &:before,
+  &:after {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      transition: all 250ms ease-out;
+  }
+}
+/* Paper effect – slightly raised off background */
+.paper {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+  border-color: #dedede;
+}
+.paperRaise {
+  composes: btn;
+  composes: paper;
+  &:before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    border: 1px solid #fff;
+
+    &:before {
+      box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  margin: 0 auto;
+  height: -webkit-calc(100% - 0px);
+  .intro {
+    display: flex;
+    flex-direction: column;
+    h2 {
+      margin: 1em;
+      text-align: center;
+    }
+    p {
+      margin: 0em 1em;
+      text-align: center;
+    }
+  }
+  .uiInput {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5em;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  .quoteContent {
+    margin: 1em 1em 1em 2em;
+    font-size: 1.1em;
+    text-align: justified;
+    .author {
+      font-style: normal;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+
+  .quoteImage {
+    display: flex;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 2em;
+    // @include MQ(M) {
+    //   margin-bottom: 6em;
+    // }
+    img {
+      border-radius: 5px;
+      box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+      border-color: #dedede;
+      margin: 0 auto;
+    }
+  }
+}
+

@@ -6,6 +6,12 @@
 // Just remove them if they're not what you want
 html {
   box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html,
@@ -19,14 +25,12 @@ body {
   background: $altBgColor;
   font-family: 'Lato', serif;
   /*max-width: 960px;*/
-  overflow-y: scroll;
-  //this stop horizontal scrolling
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   -webkit-font-smoothing: antialiased;
+  // use media query to enable overflow-y below for screen size bigger than the ipad to stop the jerky repaint of the nav bar when user scroll to far up on chrome
+  @media all and (min-width: 1025px) {
+    overflow-y: scroll;
+  }
+  //this stop horizontal scrolling
 }
 
 #test {
