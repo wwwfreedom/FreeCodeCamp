@@ -61,25 +61,25 @@
     display: flex;
     flex-direction: column;
     h2 {
-      margin: 1em;
+      margin: 1em 1em 0 1em;
       text-align: center;
     }
-    p {
-      font-family: 'Merriweather', serif;
-      margin: 0em 1em;
-      text-align: center;
-      @include MQ(SM) {
-        width: 450px;
-        margin: 0em auto;
-        line-height: 25px;
-      }
-      @include MQ(M) {
-        width: 500px;
-      }
-      @include MQ(L) {
-        width: 900px;
-      }
-    }
+    // p {
+    //   font-family: 'Merriweather', serif;
+    //   margin: 0em 1em;
+    //   text-align: center;
+    //   @include MQ(SM) {
+    //     width: 450px;
+    //     margin: 0em auto;
+    //     line-height: 25px;
+    //   }
+    //   @include MQ(M) {
+    //     width: 500px;
+    //   }
+    //   @include MQ(L) {
+    //     width: 900px;
+    //   }
+    // }
   }
   .uiInput {
     display: flex;
@@ -98,12 +98,11 @@
     // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
     line-height: 1.5em;
     @include MQ(SM) {
-      width: 400px;
+      width: 450px;
       margin: 1em auto;
-      // margin: 0 0 2em 0;
     }
     @include MQ(M) {
-      width: 450px;
+      width: 500px;
     }
     @include MQ(L) {
       width: 650px;

@@ -21,7 +21,6 @@ export class QuoteView extends Component {
       <div className={sty.container}>
         <div className={sty.intro}>
           <h2>Funny Quote Generator</h2>
-          <p>These are the top 100 funny quotes I've found on the internet. If you find it funny share it with your friends </p>
         </div>
         <div className={sty.uiInput}>
           <a
