@@ -5,12 +5,14 @@ import { generalUi } from './modules/generalUi.js'
 import { homeView } from './modules/homeView.js'
 import { aboutView } from './modules/aboutView.js'
 import { contactView } from './modules/contactView.js'
+import { QuoteView } from './modules/QuoteView.js'
 
 export default combineReducers({
   generalUi,
   homeView,
   aboutView,
   contactView,
+  QuoteView,
   counter,
   router
 })

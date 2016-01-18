@@ -25,7 +25,7 @@ export default function DropDown ({dropDownLinks, dropDownActivate, dropDownStat
       <div className={dropDown}>
         {dropDownLinks.map((link, index) =>
           <Link
-            to={`/${link}`}
+            to={`/${link.replace(/ +/g, "")}`}
             key={index}
             onClick={dropDownActivate}
             activeClassName={sty.activeLink}

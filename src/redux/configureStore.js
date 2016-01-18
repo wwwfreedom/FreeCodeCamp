@@ -1,14 +1,17 @@
 import thunk from 'redux-thunk'
 import rootReducer from './rootReducer'
+import createLogger from 'redux-logger'
 import {
   applyMiddleware,
   compose,
   createStore
 } from 'redux'
 
+const logger = createLogger()
+
 export default function configureStore (initialState) {
   let createStoreWithMiddleware
-  const middleware = applyMiddleware(thunk)
+  const middleware = applyMiddleware(thunk, logger)
 
   // turning this devtool off when using browsersync for multiple devices css style development. turn back on when you need to play around redux state
   // if (__DEBUG__) {

@@ -1,0 +1,20 @@
+.enter {
+  opacity: 0.01;
+}
+.enterActive {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+.leave {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  opacity: 1;
+  position:absolute;
+}
+.leaveActive {
+  opacity: 0;
+  transition: opacity .2s ease-in;
+}
+.appear {}
+.appearActive {}
