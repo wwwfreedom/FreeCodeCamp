@@ -9,11 +9,13 @@ import CoreLayout from 'layouts/CoreLayout'
 import HomeView from 'views/HomeView'
 import AboutView from 'views/AboutView'
 import ContactView from 'views/ContactView'
+import QuoteView from 'views/QuoteView/QuoteView'
 
 export default (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/about' component={AboutView} />
     <Route path='/contact' component={ContactView} />
+    <Route path='/quoteGenerator' component={QuoteView} />
   </Route>
 )
