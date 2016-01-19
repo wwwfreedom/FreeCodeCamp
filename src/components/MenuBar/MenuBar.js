@@ -14,7 +14,7 @@ export default class MenuBar extends Component {
     dropDownStatus: React.PropTypes.bool.isRequired
   }
   render() {
-    const { dropDownLinks, dropDownActivate, dropDownStatus } = this.props
+    const { dropDownLinks, dropDownActivate, dropDownStatus, toggleMenu, mobileNavIsOpen } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.brand}>
@@ -25,6 +25,8 @@ export default class MenuBar extends Component {
             dropDownLinks={dropDownLinks}
             dropDownStatus={dropDownStatus}
             dropDownActivate={dropDownActivate}
+            toggleMenu={toggleMenu}
+            mobileNavIsOpen={mobileNavIsOpen}
           />
           {this.renderMenuLinks()}
         </nav>

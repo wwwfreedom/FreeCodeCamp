@@ -13,18 +13,16 @@ export const QUOTE_GET = 'QUOTE_GET'
 
 export const quoteGet = createAction(QUOTE_GET, value => value)
 
-// return quote that not the same consecutively (thunk action)
-export const quoteGetNoDupes = () => {
-  return (dispatch, getState) => {
-    let currentQuote = getState().QuoteView.quote.text
-    let nextQuote = randomQuote(quotes)
-    if (currentQuote === nextQuote.text) {
-      // console.log('duplicate', currentQuote, nextQuote)
-      nextQuote = randomQuote(quotes)
-    } else {
-      // console.log(currentQuote !== nextQuote)
-      dispatch(quoteGet(nextQuote))
-    }
+// return quote that's not the same consecutively (thunk action)
+export const quoteGetNoDupes = () => (dispatch, getState) => {
+  let currentQuote = getState().QuoteView.quote.text
+  let nextQuote = randomQuote(quotes)
+  if (currentQuote === nextQuote.text) {
+    // console.log('duplicate', currentQuote, nextQuote)
+    nextQuote = randomQuote(quotes)
+  } else {
+    // console.log(currentQuote !== nextQuote)
+    dispatch(quoteGet(nextQuote))
   }
 }
 

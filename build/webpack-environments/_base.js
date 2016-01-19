@@ -52,7 +52,11 @@ const webpackConfig = {
   ],
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    // required for enzyme to work properly
+    alias: {
+      'sinon': 'sinon/pkg/sinon'
+    }
   },
   module: {
     preLoaders: [
