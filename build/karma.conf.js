@@ -8,6 +8,7 @@ debug('Create configuration.')
 const karmaConfig = {
   basePath: '../', // project root in relation to bin/karma.js
   files: [
+    'node_modules/babel-polyfill/dist/polyfill.js',
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     {
       pattern: `./${config.dir_test}/**/*.js`,
@@ -19,16 +20,30 @@ const karmaConfig = {
   singleRun: !argv.watch,
   frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
   preprocessors: {
-    [`${config.dir_test}/**/*.js`]: ['webpack']
+    [`${config.dir_test}/**/*.js`]: ['webpack', 'sourcemap']
   },
   reporters: ['spec'],
   browsers: ['PhantomJS'],
   webpack: {
     devtool: 'inline-source-map',
-    resolve: webpackConfig.resolve,
+    resolve: {
+      ...webpackConfig.resolve,
+      alias: {
+        'sinon': 'sinon/pkg/sinon'
+      }
+    },
     plugins: webpackConfig.plugins
       .filter(plugin => !plugin.__KARMA_IGNORE__),
+    externals: {
+      'jsdom': 'window',
+      'cheerio': 'window',
+      'react/lib/ExecutionEnvironment': true,
+      'react/lib/ReactContext': 'window'
+    },
     module: {
+      noParse: [
+        /node_modules\/sinon\//
+      ],
       loaders: webpackConfig.module.loaders
     },
     sassLoader: webpackConfig.sassLoader
