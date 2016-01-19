@@ -1,6 +1,6 @@
 {
   "name": "FreeCodeCampZiplinesRepo",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A repository for all ziplines projects from Free Code Camp",
   "main": "index.js",
   "scripts": {
