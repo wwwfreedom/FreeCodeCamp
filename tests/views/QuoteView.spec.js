@@ -67,6 +67,5 @@ describe('(View) QuoteView', function () {
     expect(newWrapper.find(`.${sty.fillerDiv}`)).to.have.length(1)
     // make sure no img is rendered
     expect(newWrapper.find('img')).to.have.length(0)
-    // console.log(util.inspect())
   })
 })
