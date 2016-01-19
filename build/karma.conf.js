@@ -1,3 +1,4 @@
+//add extra config setting according to this https://github.com/davezuko/react-redux-starter-kit/issues/328 for enzyme to work
 import { argv } from 'yargs'
 import config from '../config'
 import webpackConfig from './webpack.config'
