@@ -2,16 +2,19 @@ import React, { Component, PropTypes } from 'react'
 import sty from './Timer.scss'
 import TimeDisplay from 'components/PomoTime/TimeDisplay/TimeDisplay'
 // import moment from 'moment'
-import FaPlay from 'react-icons/lib/fa/play'
-import FaPause from 'react-icons/lib/fa/pause'
-import FaClose from 'react-icons/lib/fa/close'
-import FaCog from 'react-icons/lib/fa/cog'
+import MdPause from 'react-icons/lib/md/pause'
+import MdClose from 'react-icons/lib/md/close'
+import MdSettings from 'react-icons/lib/md/settings'
+import MdPlayArrow from 'react-icons/lib/md/play-arrow'
 
 export default class Timer extends Component {
   static propTypes = {
     timer: PropTypes.object.isRequired,
     work: PropTypes.object.isRequired,
-    rest: PropTypes.object.isRequired
+    rest: PropTypes.object.isRequired,
+    countDownStart: PropTypes.func.isRequired,
+    countDownPause: PropTypes.func.isRequired,
+    countDownReset: PropTypes.func.isRequired
   }
   state = {
   }
@@ -68,13 +71,13 @@ export default class Timer extends Component {
     if (timer.status === 'active' || timer.status === 'pause') {
       return (
         <div className={sty.iconSettings}>
-          <FaClose onClick={this.handleReset}/>
+          <MdClose onClick={this.handleReset}/>
         </div>
       )
     } else {
       return (
         <div className={sty.iconSettings}>
-          <FaCog onClick={this.activateSettings}/>
+          <MdSettings onClick={this.activateSettings}/>
         </div>
       )
     }
@@ -85,13 +88,13 @@ export default class Timer extends Component {
     if (timer.status === 'notActive' || timer.status === 'pause') {
       return (
         <div className={sty.icons}>
-          <FaPlay onClick={this.handleStart}/>
+          <MdPlayArrow onClick={this.handleStart}/>
         </div>
       )
     } else {
       return (
         <div className={sty.icons}>
-          <FaPause onClick={this.handlePause}/>
+          <MdPause onClick={this.handlePause}/>
         </div>
       )
     }
@@ -106,15 +109,15 @@ export default class Timer extends Component {
   }
 
   handleReset = () => {
-    console.log('reseting')
+    this.props.countDownReset()
   }
 
   handlePause = () => {
-    console.log('pause')
+    this.props.countDownPause()
   }
 
   handleStart = () => {
-    console.log('start')
+    this.props.countDownStart()
   }
 
   activateSettings = () => {

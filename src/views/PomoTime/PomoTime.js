@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-// import { actions as PomoTimeActions } from
+import { actions as PomoTimeActions } from 'redux/modules/PomoTime.js'
 import sty from './PomoTime.scss'
 import Title from 'components/PomoTime/Title/Title'
 import Timer from 'components/PomoTime/Timer/Timer'
@@ -17,17 +17,27 @@ export class PomoTime extends Component {
     pomoTime: PropTypes.object,
     timer: PropTypes.object,
     work: PropTypes.object,
-    rest: PropTypes.object
+    rest: PropTypes.object,
+    countDownStart: PropTypes.func.isRequired,
+    countDownPause: PropTypes.func.isRequired,
+    countDownReset: PropTypes.func.isRequired
   }
   render() {
-    const { pomoTime, timer, work, rest } = this.props
+    const { timer, work, rest, countDownStart, countDownPause, countDownReset } = this.props
     return (
       <div className={sty.container}>
         <Title timer={timer.currentType}/>
-        <Timer timer={timer} work={work} rest={rest} />
+        <Timer
+          timer={timer}
+          work={work}
+          rest={rest}
+          countDownStart={countDownStart}
+          countDownPause={countDownPause}
+          countDownReset={countDownReset}
+         />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps)(PomoTime)
+export default connect(mapStateToProps, PomoTimeActions)(PomoTime)

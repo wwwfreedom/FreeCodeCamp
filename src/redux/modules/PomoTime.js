@@ -17,6 +17,14 @@ export const COUNTDOWN_RESET = 'COUNTDOWN_RESET'
  */
 
 export const countDownStart = createAction(COUNTDOWN_START)
+export const countDownPause = createAction(COUNTDOWN_PAUSE)
+export const countDownReset = createAction(COUNTDOWN_RESET)
+
+export const actions = {
+  countDownStart,
+  countDownPause,
+  countDownReset
+}
 
 /**
  * Reducer
@@ -55,5 +63,24 @@ const initialState = {
 }
 
 export const PomoTime = handleActions({
-  COUNTDOWN_START: (state) => state
+  COUNTDOWN_START: (state) => Object.assign({}, state, {
+    timer: {
+      ...state.timer,
+      status: 'active'
+    }
+  }),
+
+  COUNTDOWN_PAUSE: (state) => Object.assign({}, state, {
+    timer: {
+      ...state.timer,
+      status: 'pause'
+    }
+  }),
+
+  COUNTDOWN_RESET: (state) => Object.assign({}, state, {
+    timer: {
+      ...state.timer,
+      status: 'notActive'
+    }
+  })
 }, initialState)
