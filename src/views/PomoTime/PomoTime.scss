@@ -6,9 +6,9 @@
   // text-align: center;
   width: 100%;
   // this is so the height fill the windows height
-  @include MQ(SM) {
-    height: calc(100vh - #{$menuBarHeight * 2});
-  }
+  // @include MQ(SM) {
+    height: calc(100vh - #{$menuBarHeight});
+  // }
   font-family: 'Lato', serif;
   background: #e43a15; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #e43a15 , #e65245);
