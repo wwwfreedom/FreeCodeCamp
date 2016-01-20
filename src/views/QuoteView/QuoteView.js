@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { actions as QuoteViewActions } from 'redux/modules/QuoteView.js'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import sty from './QuoteView.scss'
@@ -60,7 +61,6 @@ export class QuoteView extends Component {
       </div>
     )
   }
-
   renderImage = (image, text) => {
     // strip image links of spaces
     var imageNoSpace = image.replace(/ +/g, "")
