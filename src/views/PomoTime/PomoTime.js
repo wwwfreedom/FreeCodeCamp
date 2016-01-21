@@ -20,20 +20,27 @@ export class PomoTime extends Component {
     rest: PropTypes.object,
     countDownStart: PropTypes.func.isRequired,
     countDownPause: PropTypes.func.isRequired,
-    countDownReset: PropTypes.func.isRequired
+    countDownReset: PropTypes.func.isRequired,
+    workTimeIncrease: PropTypes.func.isRequired,
+    restTimeIncrease: PropTypes.func.isRequired,
+    distractionTimeIncrease: PropTypes.func.isRequired,
+    timerProgressSet: PropTypes.func.isRequired,
+    settingOpen: PropTypes.func.isRequired,
+    settingClose: PropTypes.func.isRequired,
+    timerTypeSet: PropTypes.func.isRequired,
+    settingToggle: PropTypes.func.isRequired,
+    statDistractionSet: PropTypes.func.isRequired,
+    statWorkCompleteSet: PropTypes.func.isRequired,
+    statRestCompleteSet: PropTypes.func.isRequired
   }
+
   render() {
-    const { timer, work, rest, countDownStart, countDownPause, countDownReset } = this.props
+    const { timer } = this.props
     return (
       <div className={sty.container}>
         <Title timer={timer.currentType}/>
         <Timer
-          timer={timer}
-          work={work}
-          rest={rest}
-          countDownStart={countDownStart}
-          countDownPause={countDownPause}
-          countDownReset={countDownReset}
+          {...this.props}
          />
       </div>
     )
