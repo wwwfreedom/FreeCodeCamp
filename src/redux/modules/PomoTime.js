@@ -54,7 +54,7 @@ export const actions = {
   timerTypeSet,
   statDistractionSet,
   statRestCompleteSet,
-  statWorkCompleteSet,
+  statWorkCompleteSet
 }
 
 /**
@@ -90,6 +90,9 @@ const initialState = {
     restCompleted: 0,
     workCompleted: 0,
     distractionOccurence: 0
+  },
+  goals: {
+    daily: 10
   }
 }
 

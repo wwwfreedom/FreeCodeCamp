@@ -7,7 +7,6 @@ import MdClose from 'react-icons/lib/md/close'
 import MdSettings from 'react-icons/lib/md/settings'
 import MdPlayArrow from 'react-icons/lib/md/play-arrow'
 
-
 function minToMs (min) {
   return moment.duration(min, 'minutes').asMilliseconds()
 }

@@ -1,0 +1,22 @@
+$dark-red: #9b2010;
+$base-red: #fe4730;
+
+.radialProgress {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: relative;
+}
+
+.radialProgressBackGround {
+  // color of the bar background
+  stroke: rgba($dark-red,.35)
+}
+
+.radialProgressBar {
+  stroke: #fff;
+  // making the tip of the progress round
+  stroke-linecap: round;
+  // this to make the increase in the progress bar looking nice
+  transition: stroke-dashoffset 1s ease-in-out;
+}
