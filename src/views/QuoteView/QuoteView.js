@@ -44,7 +44,7 @@ export class QuoteView extends Component {
             >
             <div>
               <p>"{quote.text}"</p>
-              <p className="author">-{quote.author}.</p>
+              <p className={sty.author}>-{quote.author}.</p>
             </div>
           </ReactCSSTransitionGroup>
         </div>
