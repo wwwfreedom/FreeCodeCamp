@@ -6,6 +6,7 @@ import Title from 'components/PomoTime/Title/Title'
 import Timer from 'components/PomoTime/Timer/Timer'
 import InfoPanel from 'components/PomoTime/InfoPanel/InfoPanel'
 import SettingsPanel from 'components/PomoTime/SettingsPanel/SettingsPanel'
+import AudioPlayer from 'components/PomoTime/AudioPlayer/AudioPlayer'
 
 const mapStateToProps = (state) => ({
   settings: state.PomoTime.settings,
@@ -22,11 +23,12 @@ export class PomoTime extends Component {
     rest: PropTypes.object.isRequired,
     stats: PropTypes.object.isRequired,
     goals: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired
+    settings: PropTypes.object.isRequired,
+    alarmSoundPlayOff: PropTypes.func.isRequired
   }
 
   render() {
-    const { timer, settings, stats, goals } = this.props
+    const { timer, settings, stats, goals, alarmSoundPlayOff } = this.props
     return (
       <div className={sty.container}>
         <Title timer={timer.currentType}/>
@@ -41,7 +43,13 @@ export class PomoTime extends Component {
             />
           : <SettingsPanel
               {...this.props}
-            />}
+            />
+        }
+        <AudioPlayer
+          source={settings.alarmSoundSource}
+          isPlaying={timer.alarmSoundPlayingStatus}
+          onEnd={alarmSoundPlayOff}
+        />
       </div>
     )
   }

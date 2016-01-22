@@ -61,7 +61,11 @@ export default class Timer extends Component {
         </div>
         {this.renderSettingButton()}
         {this.renderButtons()}
-
+        <div
+          className={sty.fakeClick}
+          id='fakeClick'
+          onClick={this.handleFakeClick}
+        ></div>
         <svg width={diameter} height={diameter} style={{transform: 'rotate(270deg)'}} >
             <circle
               className={sty.radialProgressBackGround}
@@ -235,7 +239,7 @@ export default class Timer extends Component {
   }
 
   doCountDown = () => {
-    const { timer, work, rest, timerProgressSet, workTimeIncrease, restTimeIncrease, countDownReset, timerTypeSet, statWorkCompleteSet, statRestCompleteSet, settings } = this.props
+    const { timer, work, rest, timerProgressSet, workTimeIncrease, restTimeIncrease, countDownReset, timerTypeSet, statWorkCompleteSet, statRestCompleteSet, settings, alarmSoundPlayOn } = this.props
 
     // minus 1000ms from the current active workDuration which has the length of the timer in milliseconds update the state with the new time
     var currentTotalDuration = moment.duration(this.state.duration - 1000, 'ms')
@@ -296,11 +300,18 @@ export default class Timer extends Component {
           if (timer.currentType === 'rest') {
             options.body = "Let's get back to work"
             var n = new window.Notification('Break time is over', options)
+            console.log(n)
           } else {
             options.body = "Awesome! You complete a pomodoro session, take a break"
-            var n = new window.Notification('Work Time is over', options)
+            var n2 = new window.Notification('Work Time is over', options)
+            console.log(n2)
           }
         }, 200)
+      }
+
+      // logic to play alarm sound
+      if (settings.alarmMute === false) {
+        alarmSoundPlayOn()
       }
     }
   }

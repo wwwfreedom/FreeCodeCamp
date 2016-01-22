@@ -36,11 +36,16 @@ export const REST_TIME_INCREASE = 'REST_TIME_INCREASE'
 export const SETTING_ALARM_AUDIO_TOGGLE = 'SETTING_ALARM_AUDIO_TOGGLE'
 export const SETTING_AUTO_BREAK_TOGGLE = 'SETTING_AUTO_BREAK_TOGGLE'
 export const SETTING_ALARM_NOTIFICATION_TOGGLE = 'SETTING_ALARM_NOTIFICATION_TOGGLE'
-// export const ALARM_AUDIO_OFF = 'ALARM_AUDIO_OFF'
+
+export const ALARM_SOUND_PLAY_ON = 'ALARM_SOUND_PLAY_ON'
+export const ALARM_SOUND_PLAY_OFF = 'ALARM_SOUND_PLAY_OFF'
 
 /**
  * Actions
  */
+
+export const alarmSoundPlayOff = createAction(ALARM_SOUND_PLAY_OFF)
+export const alarmSoundPlayOn = createAction(ALARM_SOUND_PLAY_ON)
 
 export const settingAutoBreakToggle = createAction(SETTING_AUTO_BREAK_TOGGLE)
 export const settingAlarmAudioToggle = createAction(SETTING_ALARM_AUDIO_TOGGLE)
@@ -149,7 +154,9 @@ export const actions = {
   goalChange,
   settingAlarmNotificationToggle,
   settingAlarmAudioToggle,
-  settingAutoBreakToggle
+  settingAutoBreakToggle,
+  alarmSoundPlayOff,
+  alarmSoundPlayOn
 }
 
 /**
@@ -172,14 +179,16 @@ const initialState = {
   timer: {
     status: 'notActive',
     currentType: 'work',
-    progress: 0
+    progress: 0,
+    alarmSoundPlayingStatus: false
   },
   settings: {
     toggleStatus: false,
     alarmMute: false,
     dailyGoal: 5,
     autoBreak: false,
-    alarmNotify: false
+    alarmNotify: false,
+    alarmSoundSource: 'http://soundbible.com/mp3/A-Tone-His_Self-1266414414.mp3'
   },
   stats: {
     restCompleted: 0,
@@ -273,6 +282,21 @@ export const PomoTime = handleActions({
     timer: {
       ...state.timer,
       currentType: payload
+    }
+  }),
+
+  // turn off the alarm in Audio player component
+  ALARM_SOUND_PLAY_OFF: (state) => Object.assign({}, state, {
+    timer: {
+      ...state.timer,
+      alarmSoundPlayingStatus: false
+    }
+  }),
+
+  ALARM_SOUND_PLAY_ON: (state) => Object.assign({}, state, {
+    timer: {
+      ...state.timer,
+      alarmSoundPlayingStatus: true
     }
   }),
 
