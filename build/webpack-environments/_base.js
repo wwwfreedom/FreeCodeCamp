@@ -97,7 +97,8 @@ const webpackConfig = {
         test: /\.css$/,
         loaders: [
           'style',
-          CSS_LOADER,
+          'css?sourceMap',
+          // CSS_LOADER,
           'postcss'
         ]
       },

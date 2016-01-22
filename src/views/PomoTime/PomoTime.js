@@ -5,6 +5,7 @@ import sty from './PomoTime.scss'
 import Title from 'components/PomoTime/Title/Title'
 import Timer from 'components/PomoTime/Timer/Timer'
 import InfoPanel from 'components/PomoTime/InfoPanel/InfoPanel'
+import SettingsPanel from 'components/PomoTime/SettingsPanel/SettingsPanel'
 
 const mapStateToProps = (state) => ({
   settings: state.PomoTime.settings,
@@ -36,7 +37,9 @@ export class PomoTime extends Component {
     settingToggle: PropTypes.func.isRequired,
     statDistractionSet: PropTypes.func.isRequired,
     statWorkCompleteSet: PropTypes.func.isRequired,
-    statRestCompleteSet: PropTypes.func.isRequired
+    statRestCompleteSet: PropTypes.func.isRequired,
+    timerDurationChange: PropTypes.func.isRequired,
+    goalChange: PropTypes.func.isRequired
   }
 
   render() {
@@ -53,7 +56,9 @@ export class PomoTime extends Component {
               stats={stats}
               goals={goals}
             />
-          : <settingsDisplay />}
+          : <SettingsPanel
+              {...this.props}
+            />}
       </div>
     )
   }
