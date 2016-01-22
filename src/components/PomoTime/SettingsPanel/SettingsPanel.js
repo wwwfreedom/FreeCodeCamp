@@ -89,6 +89,7 @@ export default class SettingsPanel extends Component {
                 />
                 <span>Auto Start</span>
               </div>
+              {this.renderAlarmMuteSwitch()}
               {this.renderNotificationSwitch()}
             </div>
         </div>
@@ -107,31 +108,38 @@ export default class SettingsPanel extends Component {
     })
   }
 
+  renderAlarmMuteSwitch = () => {
+    if (this.state.mobileAndTabletBrowser === true) {
+      return
+    } else {
+      return (
+        <div className={sty.switch}>
+          <Switch
+            className={sty.switchButton}
+            checked={this.props.settings.alarmMute}
+            onChange={this.props.settingAlarmAudioToggle}
+            uncheckedColor={'#9b2010'}
+          />
+          <span>Mute</span>
+        </div>
+      )
+    }
+  }
+
   // hide these feature switch on mobile and tablet and only display on desktop. Reason is autoplaying and notification support is not widely supported yet
   renderNotificationSwitch = () => {
     if (this.state.mobileAndTabletBrowser === true) {
       return
     } else {
       return (
-        <div>
-          <div className={sty.switch}>
-            <Switch
-              className={sty.switchButton}
-              checked={this.props.settings.alarmMute}
-              onChange={this.props.settingAlarmAudioToggle}
-              uncheckedColor={'#9b2010'}
-            />
-            <span>Mute</span>
-          </div>
-          <div className={sty.switch}>
-            <Switch
-              className={sty.switchButton}
-              checked={this.props.settings.alarmNotify}
-              onChange={this.activateAlarmNotification}
-              uncheckedColor={'#9b2010'}
-            />
-            <span>Notification</span>
-          </div>
+        <div className={sty.switch}>
+          <Switch
+            className={sty.switchButton}
+            checked={this.props.settings.alarmNotify}
+            onChange={this.activateAlarmNotification}
+            uncheckedColor={'#9b2010'}
+          />
+          <span>Notification</span>
         </div>
       )
     }

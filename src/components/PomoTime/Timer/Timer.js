@@ -66,7 +66,6 @@ export default class Timer extends Component {
         </div>
         {this.renderSettingButton()}
         {this.renderButtons()}
-
         <svg width={diameter} height={diameter} style={{transform: 'rotate(270deg)'}} >
             <circle
               className={sty.radialProgressBackGround}
@@ -156,7 +155,7 @@ export default class Timer extends Component {
   }
   // adjust the svg circle cicumference for small and big viewport
   dynamicDiameter = () => {
-    if (this.state.windowWidth <= 320) {
+    if (this.state.windowWidth <= 568) {
       return 270
     } else {
       return 360
