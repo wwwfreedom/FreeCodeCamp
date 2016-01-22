@@ -166,7 +166,7 @@ export const actions = {
 const initialState = {
   work: {
     totalTime: 0,
-    durationInMinute: 1
+    durationInMinute: 25
   },
   rest: {
     totalTime: 0,

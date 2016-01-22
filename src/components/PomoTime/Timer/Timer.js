@@ -21,7 +21,6 @@ export default class Timer extends Component {
     countDownStart: PropTypes.func.isRequired,
     countDownPause: PropTypes.func.isRequired,
     countDownReset: PropTypes.func.isRequired,
-    settingOpen: PropTypes.func.isRequired,
     settingClose: PropTypes.func.isRequired,
     settingToggle: PropTypes.func.isRequired,
     timerProgressSet: PropTypes.func.isRequired,
@@ -107,17 +106,17 @@ export default class Timer extends Component {
     })
   }
 
-  // add in logic to detect resize to adjust the svg diameter to suit the viewport
-  handleResize = (e) => {
-    this.setState({windowWidth: window.innerWidth})
-  }
-
   componentDidMount() {
     window.addEventListener('resize', this.handleResize)
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
+  }
+
+  // add in logic to detect resize to adjust the svg diameter to suit the viewport
+  handleResize = (e) => {
+    this.setState({windowWidth: window.innerWidth})
   }
 
   renderSettingButton = () => {
@@ -153,6 +152,7 @@ export default class Timer extends Component {
       )
     }
   }
+
   // adjust the svg circle cicumference for small and big viewport
   dynamicDiameter = () => {
     if (this.state.windowWidth <= 568) {
@@ -311,11 +311,11 @@ export default class Timer extends Component {
           }
           // logic to make sure the right message body get send in the notification
           if (timer.currentType === 'rest') {
-            options.body = "Let's get back to work"
+            options.body = "Let's get back to work."
             var n = new window.Notification('Break time is over', options)
             console.log(n)
           } else {
-            options.body = "Awesome! You complete a pomodoro session, take a break"
+            options.body = "Awesome! You completed a Pomodoro session, take a break."
             var n2 = new window.Notification('Work Time is over', options)
             console.log(n2)
           }

@@ -22,20 +22,21 @@ export default class SettingsPanel extends Component {
     const {timerDurationChange, work, rest, goalChange, goals, settingAutoBreakToggle, settings} = this.props
     return (
       <div className={sty.container}>
+
         <div className={sty.rowWrap}>
           <div className={sty.setting}>
             <div className={sty.header}> <h4>Work</h4> </div>
             <div className={sty.content}>
               <span
                 className={sty.buttonWrap}
-                onClick={() => timerDurationChange('work', 'decrease', 1)}
+                onClick={() => timerDurationChange('work', 'decrease', 5)}
               >
                 <FaMinus />
               </span>
               <span className={sty.number}><p>{work.durationInMinute}</p></span>
               <span
                 className={sty.buttonWrap}
-                onClick={() => timerDurationChange('work', 'increase', 1)}
+                onClick={() => timerDurationChange('work', 'increase', 5)}
               >
                 <FaPlus />
               </span>
@@ -60,6 +61,7 @@ export default class SettingsPanel extends Component {
             </div>
           </div>
         </div>
+
         <div className={sty.rowWrap}>
           <div className={sty.setting}>
             <div className={sty.header}> <h4>Daily Goal</h4> </div>
