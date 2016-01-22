@@ -31,7 +31,12 @@ export default class Timer extends Component {
     timerTypeSet: PropTypes.func.isRequired,
     statDistractionSet: PropTypes.func.isRequired,
     statWorkCompleteSet: PropTypes.func.isRequired,
-    statRestCompleteSet: PropTypes.func.isRequired
+    statRestCompleteSet: PropTypes.func.isRequired,
+    alarmSoundPlayOn: PropTypes.func.isRequired
+  }
+
+  state = {
+    windowWidth: window.innerWidth
   }
 
   render() {
@@ -61,11 +66,7 @@ export default class Timer extends Component {
         </div>
         {this.renderSettingButton()}
         {this.renderButtons()}
-        <div
-          className={sty.fakeClick}
-          id='fakeClick'
-          onClick={this.handleFakeClick}
-        ></div>
+
         <svg width={diameter} height={diameter} style={{transform: 'rotate(270deg)'}} >
             <circle
               className={sty.radialProgressBackGround}
@@ -107,6 +108,19 @@ export default class Timer extends Component {
     })
   }
 
+  // add in logic to detect resize to adjust the svg diameter to suit the viewport
+  handleResize = (e) => {
+    this.setState({windowWidth: window.innerWidth})
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
   renderSettingButton = () => {
     const { timer, settingToggle } = this.props
     if (timer.status === 'active' || timer.status === 'pause') {
@@ -142,7 +156,7 @@ export default class Timer extends Component {
   }
   // adjust the svg circle cicumference for small and big viewport
   dynamicDiameter = () => {
-    if (window.innerWidth <= 320) {
+    if (this.state.windowWidth <= 320) {
       return 270
     } else {
       return 360
