@@ -70,12 +70,13 @@
 .miscContent {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 165px;
   margin: 0.5em;
   font-size: 0.85em;
   @include MQ(SM) {
     width: 235px;
-    margin: 0.5em 0;
+    margin: 0;
     padding-left: 1em;
     font-size: 1em;
   }

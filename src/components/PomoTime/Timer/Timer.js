@@ -6,6 +6,7 @@ import MdPause from 'react-icons/lib/md/pause'
 import MdClose from 'react-icons/lib/md/close'
 import MdSettings from 'react-icons/lib/md/settings'
 import MdPlayArrow from 'react-icons/lib/md/play-arrow'
+import img from '../../../static/images/ion-ios-timer-outline_96_0_ffffff_fe4730.png'
 
 function minToMs (min) {
   return moment.duration(min, 'minutes').asMilliseconds()
@@ -16,6 +17,7 @@ export default class Timer extends Component {
     timer: PropTypes.object.isRequired,
     work: PropTypes.object.isRequired,
     rest: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
     countDownStart: PropTypes.func.isRequired,
     countDownPause: PropTypes.func.isRequired,
     countDownReset: PropTypes.func.isRequired,
@@ -30,11 +32,6 @@ export default class Timer extends Component {
     statDistractionSet: PropTypes.func.isRequired,
     statWorkCompleteSet: PropTypes.func.isRequired,
     statRestCompleteSet: PropTypes.func.isRequired
-  }
-
-  state = {
-    minutes: 0,
-    seconds: 0
   }
 
   render() {
@@ -89,6 +86,7 @@ export default class Timer extends Component {
     </div>
     )
   }
+
   componentWillMount() {
     // set the duration to the state accoring to the current timer active and the default length of their corresponding length.
     const { timer, work, rest } = this.props
@@ -104,6 +102,7 @@ export default class Timer extends Component {
       }
     })
   }
+
   renderSettingButton = () => {
     const { timer, settingToggle } = this.props
     if (timer.status === 'active' || timer.status === 'pause') {
@@ -236,7 +235,7 @@ export default class Timer extends Component {
   }
 
   doCountDown = () => {
-    const { timer, work, rest, timerProgressSet, workTimeIncrease, restTimeIncrease, countDownReset, timerTypeSet, statWorkCompleteSet, statRestCompleteSet } = this.props
+    const { timer, work, rest, timerProgressSet, workTimeIncrease, restTimeIncrease, countDownReset, timerTypeSet, statWorkCompleteSet, statRestCompleteSet, settings } = this.props
 
     // minus 1000ms from the current active workDuration which has the length of the timer in milliseconds update the state with the new time
     var currentTotalDuration = moment.duration(this.state.duration - 1000, 'ms')
@@ -277,10 +276,32 @@ export default class Timer extends Component {
       console.log('stopping timer')
       // stop the workTimer
       clearInterval(this.Timer)
+
+      // if user activate Auto Start then restart the countDown for them add a slight delay to make the transition a bit smooth
+      if (settings.autoBreak === true) {
+        setTimeout(() => {
+          this.handleStart()
+        }, 200)
+      }
+
+      // if alarm notification is on then do send notification when timer is finished
+      if (settings.alarmNotify === true) {
+        // add 1s delay to get the timing right for the apperance of the notification
+        setTimeout(() => {
+          var options = {
+            body: '',
+            icon: img
+          }
+          // logic to make sure the right message body get send in the notification
+          if (timer.currentType === 'rest') {
+            options.body = "Let's get back to work"
+            var n = new window.Notification('Break time is over', options)
+          } else {
+            options.body = "Awesome! You complete a pomodoro session, take a break"
+            var n = new window.Notification('Work Time is over', options)
+          }
+        }, 200)
+      }
     }
-  }
-
-  settingToggle = () => {
-
   }
 }

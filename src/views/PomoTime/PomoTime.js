@@ -19,27 +19,10 @@ const mapStateToProps = (state) => ({
 export class PomoTime extends Component {
   static propTypes = {
     timer: PropTypes.object.isRequired,
-    work: PropTypes.object.isRequired,
     rest: PropTypes.object.isRequired,
     stats: PropTypes.object.isRequired,
     goals: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    countDownStart: PropTypes.func.isRequired,
-    countDownPause: PropTypes.func.isRequired,
-    countDownReset: PropTypes.func.isRequired,
-    workTimeIncrease: PropTypes.func.isRequired,
-    restTimeIncrease: PropTypes.func.isRequired,
-    distractionTimeIncrease: PropTypes.func.isRequired,
-    timerProgressSet: PropTypes.func.isRequired,
-    settingOpen: PropTypes.func.isRequired,
-    settingClose: PropTypes.func.isRequired,
-    timerTypeSet: PropTypes.func.isRequired,
-    settingToggle: PropTypes.func.isRequired,
-    statDistractionSet: PropTypes.func.isRequired,
-    statWorkCompleteSet: PropTypes.func.isRequired,
-    statRestCompleteSet: PropTypes.func.isRequired,
-    timerDurationChange: PropTypes.func.isRequired,
-    goalChange: PropTypes.func.isRequired
+    settings: PropTypes.object.isRequired
   }
 
   render() {
