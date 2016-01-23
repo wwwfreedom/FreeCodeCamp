@@ -34,7 +34,7 @@ const initialState = {
     {
       title: 'Pomo Time',
       link: 'pomoTime',
-      image: 'http://lorempixel.com/image_output/sports-q-c-640-480-8.jpg',
+      image: 'http://i.imgur.com/vvEZbX8.png',
       introText: 'A simple pomodoro timer built with React.js',
       description: "I build this application as a zipline project for Free Code Camp. The project requirement from Free Code Camp is to make a functional Pomodoro timer. The focus of this app in on simplicity and displaying useful metric to keep the user motivated."
     }

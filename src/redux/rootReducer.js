@@ -6,6 +6,7 @@ import { homeView } from './modules/homeView.js'
 import { aboutView } from './modules/aboutView.js'
 import { contactView } from './modules/contactView.js'
 import { QuoteView } from './modules/QuoteView.js'
+import { PomoTime } from './modules/PomoTime.js'
 
 export default combineReducers({
   generalUi,
@@ -13,6 +14,7 @@ export default combineReducers({
   aboutView,
   contactView,
   QuoteView,
+  PomoTime,
   counter,
   router
 })

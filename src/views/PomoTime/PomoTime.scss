@@ -1,0 +1,18 @@
+@import 'base';
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  // apply height to whole viewport starting from height 806px onward
+  @media only screen and (min-height: 806px) and (max-height: 10000px ) {
+    height: calc(100vh - #{$menuBarHeight});
+  }
+  font-family: 'Lato', serif;
+  background: #e43a15; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #e43a15 , #e65245);
+  background: linear-gradient(to left, #e43a15 , #e65245);
+  color: $headerTextColor;
+  text-shadow: rgba(255,255,255,0.7) 0 0 1ex;
+  letter-spacing: 0.1em;
+}

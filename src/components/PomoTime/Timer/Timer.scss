@@ -1,0 +1,78 @@
+@import 'base';
+$dark-red: #9b2010;
+$base-red: #fe4730;
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.radialProgress {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: relative;
+  padding-top: 2em;
+}
+
+.time {
+  display: flex;
+  top: 40%;
+  left: 50%;
+  position: absolute;
+  font-size: 3em;
+  font-weight: 300;
+  @include MQ(SM) {
+    font-size: 4em;
+  }
+  width: 4em;
+  // need the transform translate to position the box size of .time in the center
+  transform: translate(-39%, -50%);
+}
+
+// this is css to position close and setting icons
+.iconSettings {
+  z-index: 9999;
+  position: absolute;
+  top: 0%;
+  left: 90%;
+  // transform: translate(-80%, -50%);
+  font-size: 2em;
+  cursor: pointer;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+    transition: all 1s ease;
+  }
+}
+
+.icons {
+  z-index: 9999;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5em;
+  cursor: pointer;
+}
+
+.radialProgress {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: relative;
+  padding-top: 2em;
+}
+
+.radialProgressBackGround {
+  // color of the bar background
+  stroke: rgba($dark-red,.35)
+}
+
+.radialProgressBar {
+  stroke: #fff;
+  // making the tip of the progress round
+  stroke-linecap: round;
+  // this to make the increase in the progress bar looking nice
+  transition: stroke-dashoffset 0.3s ease-in-out;
+}

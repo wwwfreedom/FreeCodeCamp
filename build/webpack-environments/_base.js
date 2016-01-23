@@ -86,6 +86,7 @@ const webpackConfig = {
       },
       {
         test: /\.scss$/,
+        include: paths.client(),
         loaders: [
           'style',
           CSS_LOADER,
@@ -93,11 +94,33 @@ const webpackConfig = {
           'sass'
         ]
       },
+      // global scss import from node module without use of css-module
+      {
+        test: /\.scss$/,
+        include: paths.base('node_modules'),
+        loaders: [
+          'style',
+          'css?sourceMap',
+          'postcss',
+          'sass'
+        ]
+      },
       {
         test: /\.css$/,
+        include: paths.client(),
         loaders: [
           'style',
           CSS_LOADER,
+          'postcss'
+        ]
+      },
+      // global css import from node module without use of css-module
+      {
+        test: /\.css$/,
+        include: paths.base('node_modules'),
+        loaders: [
+          'style',
+          'css?sourceMap',
           'postcss'
         ]
       },

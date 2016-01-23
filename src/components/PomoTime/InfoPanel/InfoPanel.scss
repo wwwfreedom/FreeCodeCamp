@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+
+}
+
+.rowWrap {
+  display: flex;
+  // only apply to right border to the first child of the div.timerSettings
+  .setting:first-child {
+    border-right: 1px solid #fff;
+  }
+  justify-content: center;
+  // border: 1px solid #fff;
+}
+
+.setting {
+  margin-bottom: 1em;
+  width: 235px;
+}
+
+.header {
+  h4 {
+    margin: 0.75em auto 1em auto;
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.2em;
+    user-select: none;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1.5em;
+  margin-bottom: 1em;
+  position: relative;
+}
+
+.number {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.7em;
+  user-select: none;
+}
+
+.firstNumber {
+  font-size: 3em;
+}
