@@ -1,0 +1,93 @@
+@import 'base';
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+}
+
+.rowWrap {
+  display: flex;
+  // only apply to right border to the first child of the div.timerSettings
+  .setting:first-child {
+    border-right: 1px solid #fff;
+  }
+  justify-content: center;
+}
+
+.setting {
+  margin-bottom: 1em;
+  width: 180px;
+  @include MQ(SM) {
+    width: 235px;
+  }
+}
+
+.header {
+  text-align: center;
+  font-size: 1.2em;
+  h4 {
+    margin: 1em;
+    font-weight: 300;
+    user-select: none;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 .5em;
+  @include MQ(SM) {
+    padding: 0 1.5em;
+  }
+  margin-bottom: 1em;
+}
+
+.buttonWrap {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 0.25em;
+  cursor: pointer;
+  opacity: 0.5;
+  &:hover {
+      opacity: 1;
+      transition: all .5s ease;
+    }
+}
+
+.number {
+  text-align: center;
+  font-size: 2em;
+  p {
+    margin: 0;
+  }
+  @include MQ(SM) {
+    font-size: 2.5em;
+  }
+  user-select: none;
+}
+
+.miscContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 165px;
+  margin: 0.5em;
+  font-size: 0.85em;
+  @include MQ(SM) {
+    width: 235px;
+    margin: 0;
+    padding-left: 1em;
+    font-size: 1em;
+  }
+  .switch {
+    display: flex;
+    margin: 0.5em 0;
+  }
+  span {
+    margin-left: 0.5em;
+    @include MQ(SM) {
+      margin-left: 1em;
+    }
+  }
+}
