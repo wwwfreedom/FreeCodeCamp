@@ -113,10 +113,10 @@ export default class AudioPlayer extends Component {
     var isPlaying = this.props.isPlaying
 
     node.pause()
-    this.props.onTimeUpdate({
-      currentTime: 0,
-      trackDuration: node.duration
-    })
+    // this.props.onTimeUpdate({
+    //   currentTime: 0,
+    //   trackDuration: node.duration
+    // })
 
     node.load()
     if (isPlaying) {
