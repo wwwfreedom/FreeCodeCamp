@@ -1,14 +1,21 @@
 @import 'base';
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 65px;
-  height: 65px;
-  text-align: center;
   font-family: lato, serif;
   font-weight: 300;
   font-size: 2em;
-  @include materialShadow(1);
+  input {
+    margin: 0;
+    text-align: center;
+    width: 65px;
+    height: 65px;
+    background: $altBgColor;
+    border-radius: 0px;
+    border: 1px solid $lightGray;
+    outline: none;
+    @include materialShadow(1);
+    &:focus {
+      background: #fff;
+    }
+  }
 }
