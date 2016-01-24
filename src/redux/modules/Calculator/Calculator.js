@@ -48,16 +48,22 @@ export const calcButtonClick = (value) => (dispatch, getState) => {
 }
 
 export const calcAdd = () => (dispatch, getState) => {
+  let currentMethod = getState().Calculator.methods
+
+  // if user press + button again just return
+  if (currentMethod === 'add') {
+    return
+  }
   dispatch(calcNumberSave())
   dispatch(calcInputClear())
   dispatch(calcMethodSet('add'))
-  // this is important to make sure that after the user select a method then the next time they enter a numbers the output should be clear and display the new numbers
+  // this is important to make sure that after the user select a methods then the next time they enter a numbers the output should be clear and display the new numbers
   dispatch(calcOutputShouldClear(true))
 }
 
 export const calcResultGet = () => (dispatch, getState) => {
   dispatch(calcNumberSave())
-  let currentMethod = getState().Calculator.method
+  let currentMethod = getState().Calculator.methods
   let numberArr = getState().Calculator.numbers
   let result
   dispatch(calcMethodClear())
@@ -86,9 +92,10 @@ export const actions = {
 var initialState = {
   input: '',
   numbers: [],
-  method: '',
+  methods: '',
   expressions: [],
   outputClear: false,
+  result: 0,
   output: ''
 }
 
@@ -102,11 +109,11 @@ export const Calculator = handleActions({
   }),
 
   CALC_METHOD_SET: (state, {payload}) => Object.assign({}, state, {
-    method: payload
+    methods: payload
   }),
 
   CALC_METHOD_CLEAR: (state) => Object.assign({}, state, {
-    method: ''
+    methods: ''
   }),
 
   CALC_NUMBER_SAVE: (state) => Object.assign({}, state, {
