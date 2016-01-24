@@ -17,41 +17,41 @@ export class Calculator extends Component {
     calcButtonClick: PropTypes.func.isRequired
   }
   render() {
-    const { number, answer, calcButtonClick } = this.props
+    const { answer, calcButtonClick } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>
           <AnswerPanel answer={answer}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={number} onClick={calcButtonClick}/>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
+          <Button value={'C'} onClick={calcButtonClick}/>
+          <Button value={' '} onClick={calcButtonClick}/>
+          <Button value={'%'} onClick={calcButtonClick}/>
+          <Button value={'÷'} onClick={calcButtonClick}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
+          <Button value={'7'} onClick={calcButtonClick}/>
+          <Button value={'8'} onClick={calcButtonClick}/>
+          <Button value={'9'} onClick={calcButtonClick}/>
+          <Button value={'×'} onClick={calcButtonClick}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
+          <Button value={'4'} onClick={calcButtonClick}/>
+          <Button value={'5'} onClick={calcButtonClick}/>
+          <Button value={'6'} onClick={calcButtonClick}/>
+          <Button value={'−'} onClick={calcButtonClick}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
+          <Button value={'1'} onClick={calcButtonClick}/>
+          <Button value={'2'} onClick={calcButtonClick}/>
+          <Button value={'3'} onClick={calcButtonClick}/>
+          <Button value={'+'} onClick={calcButtonClick}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
-          <Button value={number}/>
+          <Button value={'0'} onClick={calcButtonClick}/>
+          <Button value={' '} onClick={calcButtonClick}/>
+          <Button value={'.'} onClick={calcButtonClick}/>
+          <Button value={'='} onClick={calcButtonClick}/>
         </div>
       </div>
     )
