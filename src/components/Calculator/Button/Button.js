@@ -13,5 +13,6 @@ export default function Button ({value, background}) {
 }
 
 Button.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.number.isRequired,
+  background: PropTypes.string
 }
