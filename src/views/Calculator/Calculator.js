@@ -26,7 +26,7 @@ export class Calculator extends Component {
         </div>
         <div className={sty.rowWrap}>
           <Button value={'C'} onClick={calcClear}/>
-          <Button value={' '} onClick={calcButtonClick}/>
+          <Button value={' '} />
           <Button value={'%'} onClick={calcButtonClick}/>
           <Button value={'÷'} onClick={calcButtonClick}/>
         </div>
