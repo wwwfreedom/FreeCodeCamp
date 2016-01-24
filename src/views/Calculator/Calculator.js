@@ -6,26 +6,26 @@ import Button from 'components/Calculator/Button/Button'
 import AnswerPanel from 'components/Calculator/AnswerPanel/AnswerPanel'
 
 const mapStateToProps = (state) => ({
-  number: state.Calculator.number,
-  answer: state.Calculator.answer
+  output: state.Calculator.output
 })
 
 export class Calculator extends Component {
   static propTypes = {
-    number: PropTypes.number.isRequired,
-    answer: PropTypes.string.isRequired,
+    output: PropTypes.string.isRequired,
     calcButtonClick: PropTypes.func.isRequired,
-    calcClear: PropTypes.func.isRequired
+    calcOutputClear: PropTypes.func.isRequired,
+    calcAdd: PropTypes.func.isRequired,
+    calcResultGet: PropTypes.func.isRequired
   }
   render() {
-    const { answer, calcButtonClick, calcClear } = this.props
+    const { output, calcButtonClick, calcOutputClear, calcAdd, calcResultGet } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>
-          <AnswerPanel answer={answer}/>
+          <AnswerPanel answer={output}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={'C'} onClick={calcClear}/>
+          <Button value={'C'} onClick={calcOutputClear}/>
           <Button value={' '} />
           <Button value={'%'} onClick={calcButtonClick}/>
           <Button value={'÷'} onClick={calcButtonClick}/>
@@ -46,13 +46,13 @@ export class Calculator extends Component {
           <Button value={'1'} onClick={calcButtonClick}/>
           <Button value={'2'} onClick={calcButtonClick}/>
           <Button value={'3'} onClick={calcButtonClick}/>
-          <Button value={'+'} onClick={calcButtonClick}/>
+          <Button value={'+'} onClick={calcAdd}/>
         </div>
         <div className={sty.rowWrap}>
           <Button value={'0'} onClick={calcButtonClick}/>
-          <Button value={' '} onClick={calcButtonClick}/>
+          <Button value={' '} />
           <Button value={'.'} onClick={calcButtonClick}/>
-          <Button value={'='} onClick={calcButtonClick}/>
+          <Button value={'='} onClick={calcResultGet}/>
         </div>
       </div>
     )
