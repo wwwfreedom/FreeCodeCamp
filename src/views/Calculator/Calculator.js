@@ -14,17 +14,18 @@ export class Calculator extends Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
     answer: PropTypes.string.isRequired,
-    calcButtonClick: PropTypes.func.isRequired
+    calcButtonClick: PropTypes.func.isRequired,
+    calcClear: PropTypes.func.isRequired
   }
   render() {
-    const { answer, calcButtonClick } = this.props
+    const { answer, calcButtonClick, calcClear } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>
           <AnswerPanel answer={answer}/>
         </div>
         <div className={sty.rowWrap}>
-          <Button value={'C'} onClick={calcButtonClick}/>
+          <Button value={'C'} onClick={calcClear}/>
           <Button value={' '} onClick={calcButtonClick}/>
           <Button value={'%'} onClick={calcButtonClick}/>
           <Button value={'÷'} onClick={calcButtonClick}/>
