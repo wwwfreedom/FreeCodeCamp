@@ -1,0 +1,14 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 65px;
+  height: 65px;
+  text-align: center;
+  font-family: lato, serif;
+  font-weight: 300;
+  font-size: 2em;
+  @include materialShadow(1);
+}

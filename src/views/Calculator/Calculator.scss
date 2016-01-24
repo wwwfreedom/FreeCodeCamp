@@ -1,3 +1,12 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin: 0 auto;
+}
 
+.rowWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
