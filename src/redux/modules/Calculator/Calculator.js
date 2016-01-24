@@ -20,7 +20,8 @@ export const actions = {
 var initialState = {
   number: 0,
   variable: 'x',
-  expressions: []
+  expressions: [],
+  answer: 'test'
 }
 
 export const Calculator = handleActions({
