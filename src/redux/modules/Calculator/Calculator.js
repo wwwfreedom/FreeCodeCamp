@@ -22,8 +22,7 @@ export const CALC_EQUAL_VARIABLE_SET = 'CALC_EQUAL_VARIABLE_SET'
 export const CALC_EQUAL_PREV_METHOD_SET = 'CALC_EQUAL_PREV_METHOD_SET'
 export const CALC_EQUAL_RESULT_SET = 'CALC_EQUAL_RESULT_SET'
 
-export const CALC_RESULT_GET = 'CALC_RESULT_GET'
-// work on this tomorrow and work on chaining results, fix decimal number addition
+// work on this tomorrow and work on chaining results, fix decimal number addition= test for when the . button is press then use parseFloat
 export const CALC_RESET = 'CALC_RESET'
 
 /**

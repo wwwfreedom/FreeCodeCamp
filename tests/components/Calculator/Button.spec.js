@@ -24,6 +24,7 @@ describe('(Component) Calculator Button', () => {
   })
 
   it('Should have a span with the right value', () => {
-    expect(wrapper.find('span').text()).to.eql('1')
+    // console.log(util.inspect(wrapper.find('input')))
+    expect(wrapper.find('input').prop('value')).to.eql(1)
   })
 })
