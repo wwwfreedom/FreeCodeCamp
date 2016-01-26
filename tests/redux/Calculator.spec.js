@@ -1,4 +1,4 @@
-import { Calculator, CALC_OUTPUT_CLEAR, calcOutputClear, CALC_OUTPUT_SET, calcOutputSet, CALC_OUTPUT_UPDATE, calcOutputUpdate, CALC_OUTPUT_SHOULD_CLEAR, calcOutputShouldClear, CALC_INPUT_CLEAR, calcInputClear, CALC_INPUT_UPDATE, calcInputUpdate, CALC_NUMBER_SAVE, calcNumberSave, CALC_NUMBER_CLEAR, calcNumberClear, CALC_METHOD_SET, calcMethodSet, CALC_METHOD_CLEAR, calcMethodClear, CALC_EQUAL_ACTIVE_SET, calcEqualActiveSet, CALC_EQUAL_VARIABLE_SET, calcEqualVariableSet, CALC_EQUAL_PREV_METHOD_SET, calcEqualPrevMethodSet, CALC_EQUAL_RESULT_SET, calcEqualResultSet, calcAdd, calcButtonClick, calcResultGet } from 'redux/modules/Calculator/Calculator.js'
+import { Calculator, CALC_OUTPUT_CLEAR, calcOutputClear, CALC_OUTPUT_SET, calcOutputSet, CALC_OUTPUT_UPDATE, calcOutputUpdate, CALC_OUTPUT_SHOULD_CLEAR, calcOutputShouldClear, CALC_INPUT_CLEAR, calcInputClear, CALC_INPUT_UPDATE, calcInputUpdate, CALC_NUMBER_SAVE, calcNumberSave, CALC_NUMBER_CLEAR, calcNumberClear, CALC_METHOD_SET, calcMethodSet, CALC_METHOD_CLEAR, calcMethodClear, CALC_EQUAL_ACTIVE_SET, calcEqualActiveSet, CALC_EQUAL_VARIABLE_SET, calcEqualVariableSet, CALC_EQUAL_PREV_METHOD_SET, calcEqualPrevMethodSet, CALC_EQUAL_RESULT_SET, calcEqualResultSet, calcAdd, calcButtonClick, calcResultGet, calcEqualResultUpdate, CALC_EQUAL_RESULT_UPDATE, calcReset } from 'redux/modules/Calculator/Calculator.js'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 const middlewares = [ thunk ]
@@ -17,7 +17,7 @@ describe('(Redux) Calculator ', () => {
         active: false,
         prevMethod: '',
         variable: 0,
-        result: 0
+        result: 1
       },
       outputClear: false,
       output: 'test'
@@ -77,6 +77,10 @@ describe('(Redux) Calculator ', () => {
 
     it('should set equal result on calling calcEqualResultSet', () => {
       expect(Calculator(initialState, calcEqualResultSet(5))).to.eql(Object.assign({}, initialState, {equal: {...initialState.equal, result: 5}}))
+    })
+
+    it('should update equal result on calling calcEqualResultUpdate', () => {
+      expect(Calculator(initialState, calcEqualResultUpdate(2))).to.eql(Object.assign({}, initialState, {equal: {...initialState.equal, result: 3}}))
     })
   })
 
@@ -168,6 +172,12 @@ describe('(Redux) Calculator ', () => {
         expect(calcEqualResultSet(5)).to.eql({type: CALC_EQUAL_RESULT_SET, payload: 5})
       })
     })
+
+    describe('calcEqualResultUpdate', () => {
+      it('should create a CALC_EQUAL_RESULT_UPDATE action', () => {
+        expect(calcEqualResultUpdate(5)).to.eql({type: CALC_EQUAL_RESULT_UPDATE, payload: 5})
+      })
+    })
   })
 
   /**
@@ -231,7 +241,7 @@ describe('(Redux) Calculator ', () => {
     })
 
     describe('calcResultGet', () => {
-      let initialStateForFirstPressEqualButton = {
+      let mockStateForFirstPressOfEqualButton = {
         input: '2',
         numbers: [1, 2],
         methods: {
@@ -247,12 +257,28 @@ describe('(Redux) Calculator ', () => {
         output: 'test'
       }
 
+      let mockStateForSubsequentPressOfEqualButton = {
+        input: '2',
+        numbers: [1, 2],
+        methods: {
+          current: ''
+        },
+        equal: {
+          active: true,
+          prevMethod: 'add',
+          variable: 2,
+          result: 5
+        },
+        outputClear: false,
+        output: 'test'
+      }
+
       it('should return a function', () => {
         expect(calcResultGet()).to.be.a('function')
       })
 
       it('should dispatch these actions on calling calcResultGet', (done) => {
-        const mockState = { Calculator: initialStateForFirstPressEqualButton }
+        const mockState = { Calculator: mockStateForFirstPressOfEqualButton }
         const expectedActions = [
           calcNumberSave(),
           calcMethodClear(),
@@ -270,6 +296,48 @@ describe('(Redux) Calculator ', () => {
         const store = mockStore(mockState, expectedActions, done)
         store.dispatch(calcResultGet())
       })
+
+      it('should dispatch these actions on subsequent call of calcResultGet i.e. when user press = button again', (done) => {
+        const mockState = { Calculator: mockStateForSubsequentPressOfEqualButton }
+        const expectedActions = [
+          calcNumberSave(),
+          calcMethodClear(),
+          calcEqualActiveSet(true),
+          calcEqualResultUpdate(2),
+          calcOutputSet(5),
+          calcInputClear(),
+          calcNumberClear(),
+          calcOutputShouldClear(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcResultGet())
+      })
     })
+
+    describe('calcReset', () => {
+      it('should return a function', () => {
+        expect(calcReset()).to.be.a('function')
+      })
+
+      it('should dispatch these actions on calling calcReset', (done) => {
+        const mockState = { Calculator: {} }
+        const expectedActions = [
+          calcOutputClear(),
+          calcInputClear(),
+          calcNumberClear(),
+          calcMethodClear(),
+          calcOutputShouldClear(false),
+          calcEqualActiveSet(false),
+          calcEqualResultSet(0),
+          calcEqualVariableSet(0),
+          calcEqualPrevMethodSet('')
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcReset())
+      })
+    })
+
   })
 })

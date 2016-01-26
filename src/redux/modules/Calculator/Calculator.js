@@ -21,6 +21,7 @@ export const CALC_EQUAL_ACTIVE_SET = 'CALC_EQUAL_ACTIVE_SET'
 export const CALC_EQUAL_VARIABLE_SET = 'CALC_EQUAL_VARIABLE_SET'
 export const CALC_EQUAL_PREV_METHOD_SET = 'CALC_EQUAL_PREV_METHOD_SET'
 export const CALC_EQUAL_RESULT_SET = 'CALC_EQUAL_RESULT_SET'
+export const CALC_EQUAL_RESULT_UPDATE = 'CALC_EQUAL_RESULT_UPDATE'
 
 // work on this tomorrow and work on chaining results, fix decimal number addition= test for when the . button is press then use parseFloat
 export const CALC_RESET = 'CALC_RESET'
@@ -40,12 +41,25 @@ export const calcOutputShouldClear = createAction(CALC_OUTPUT_SHOULD_CLEAR, valu
 export const calcEqualActiveSet = createAction(CALC_EQUAL_ACTIVE_SET, value => value)
 export const calcEqualPrevMethodSet = createAction(CALC_EQUAL_PREV_METHOD_SET, method => method)
 export const calcEqualResultSet = createAction(CALC_EQUAL_RESULT_SET, value => value)
+export const calcEqualResultUpdate = createAction(CALC_EQUAL_RESULT_UPDATE, value => value)
 export const calcEqualVariableSet = createAction(CALC_EQUAL_VARIABLE_SET, value => value)
 
 export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
 export const calcMethodClear = createAction(CALC_METHOD_CLEAR)
 export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
 export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
+
+export const calcReset = () => (dispatch, getState) => {
+  dispatch(calcOutputClear())
+  dispatch(calcInputClear())
+  dispatch(calcNumberClear())
+  dispatch(calcMethodClear())
+  dispatch(calcOutputShouldClear(false))
+  dispatch(calcEqualActiveSet(false))
+  dispatch(calcEqualResultSet(0))
+  dispatch(calcEqualVariableSet(0))
+  dispatch(calcEqualPrevMethodSet(''))
+}
 
 export const calcButtonClick = (value) => (dispatch, getState) => {
   let shouldClearOutput = getState().Calculator.outputClear
@@ -102,7 +116,7 @@ export const calcResultGet = () => (dispatch, getState) => {
     // let prevResult = getState().Calculator.equal.result
     let variable = getState().Calculator.equal.variable
     if (prevMethod === 'add') {
-      dispatch(calcEqualResultSet(variable))
+      dispatch(calcEqualResultUpdate(variable))
       dispatch(calcOutputSet(getState().Calculator.equal.result))
       dispatch(calcInputClear())
       dispatch(calcNumberClear())
@@ -113,7 +127,7 @@ export const calcResultGet = () => (dispatch, getState) => {
 
 export const actions = {
   calcButtonClick,
-  calcOutputClear,
+  calcReset,
   calcAdd,
   calcResultGet
 }
@@ -139,7 +153,6 @@ var initialState = {
     result: 0
   },
   outputClear: false,
-  result: 0,
   output: ''
 }
 
@@ -174,6 +187,13 @@ export const Calculator = handleActions({
   }),
 
   CALC_EQUAL_RESULT_SET: (state, {payload}) => Object.assign({}, state, {
+    equal: {
+      ...state.equal,
+      result: payload
+    }
+  }),
+
+  CALC_EQUAL_RESULT_UPDATE: (state, {payload}) => Object.assign({}, state, {
     equal: {
       ...state.equal,
       result: state.equal.result + payload
