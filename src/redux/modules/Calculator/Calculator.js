@@ -20,8 +20,8 @@ export const CALC_INPUT_CLEAR = 'CALC_INPUT_CLEAR'
 export const CALC_INPUT_UPDATE = 'CALC_INPUT_UPDATE'
 export const CALC_INPUT_SET = 'CALC_INPUT_SET'
 
-export const CALC_ADD = 'CALC_ADD'
 export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
+export const CALC_MINUS_ACTIVE_SET = 'CALC_MINUS_ACTIVE_SET'
 export const CALC_DOT_ACTIVE_SET = 'CALC_DOT_ACTIVE_SET'
 
 export const CALC_NUMBER_SAVE = 'CALC_NUMBER_SAVE'
@@ -58,13 +58,14 @@ export const calcEqualResultSet = createAction(CALC_EQUAL_RESULT_SET, value => v
 export const calcEqualResultUpdate = createAction(CALC_EQUAL_RESULT_UPDATE, value => value)
 export const calcEqualVariableSet = createAction(CALC_EQUAL_VARIABLE_SET, value => value)
 export const calcAddActiveSet = createAction(CALC_ADD_ACTIVE_SET, value => value)
+export const calcDotActiveSet = createAction(CALC_DOT_ACTIVE_SET, value => value)
+export const calcMinusActiveSet = createAction(CALC_MINUS_ACTIVE_SET, value => value)
 
 export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
 export const calcMethodClear = createAction(CALC_METHOD_CLEAR)
 export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
 export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
 export const calcNumberSet = createAction(CALC_NUMBER_SET)
-export const calcDotActiveSet = createAction(CALC_DOT_ACTIVE_SET, value => value)
 
 export const calcReset = () => (dispatch, getState) => {
   dispatch(calcInputSet('0'))
@@ -77,6 +78,7 @@ export const calcReset = () => (dispatch, getState) => {
   dispatch(calcEqualVariableSet(0))
   dispatch(calcEqualPrevMethodSet(''))
   dispatch(calcAddActiveSet(false))
+  dispatch(calcDotActiveSet(false))
 }
 
 export const calcDotButtonClick = (value) => (dispatch, getState) => {
@@ -165,6 +167,49 @@ export const calcAdd = () => (dispatch, getState) => {
   }
 }
 
+export const calcMinus = (value) => (dispatch, getState) => {
+  let numbersLength = getState().Calculator.numbers.length
+
+  //  when minus is active and there's no input then return
+  if (getState().Calculator.minus.active === true) {
+    if (getState().Calculator.input === '') {
+      return
+    }
+  }
+  // if there's input then do minus
+  if (getState().Calculator.input.length !== 0) {
+    dispatch(calcMinusActiveSet(true))
+    // dispatch the right numberSave according to dot active status
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('minus'))
+    // this is important to make sure that after the user select a methods then the next time they enter a numbers the output should be clear and display the new numbers
+    dispatch(calcOutputShouldClear(true))
+    // for use case of this series of inputs (1 - 2 = - 1 =) should output 4
+  } else if (getState().Calculator.output.length !== 0) {
+    dispatch(calcMinusActiveSet(true))
+    // dispatch the right numberSave according to dot active status
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcInputSet(getState().Calculator.output))
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('minus'))
+  } else {
+    return
+  }
+
+  // if user press - button again when there's at least one number saved already
+  if (numbersLength === 1) {
+    dispatch(calcResultGet('minus'))
+    return
+  }
+}
+
 export const calcResultGet = (method) => (dispatch, getState) => {
   let currentMethod = getState().Calculator.methodActive
   dispatch(calcMethodClear())
@@ -221,8 +266,31 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcAddActiveSet(false))
       dispatch(calcOutputShouldClear(true))
     }
+
+    // logic to do the actual minus calculation
+    if (getState().Calculator.minus.active === true) {
+      let numberArr = getState().Calculator.numbers
+      let result
+      result = numberArr[0] - numberArr[1]
+      // store second variable, methods and result to use for calculation if the user press = again
+      dispatch(calcEqualVariableSet(numberArr[1].toString()))
+      dispatch(calcEqualPrevMethodSet('minus'))
+      dispatch(calcEqualResultSet(result.toString()))
+      // set calc equal active to false to avoid double calculation
+      dispatch(calcEqualActiveSet(false))
+      if (isDecimalNumber(result)) {
+        dispatch(calcOutputSet(result.toFixed(1)))
+      } else {
+        dispatch(calcOutputSet(result.toString()))
+      }
+      dispatch(calcInputClear())
+      dispatch(calcNumberClear())
+      dispatch(calcMinusActiveSet(false))
+      dispatch(calcOutputShouldClear(true))
+    }
   }
 
+  // logic to do calculation when = is press again
   if (method === 'equalAgain') {
     if (getState().Calculator.equal.prevMethod === 'add') {
       let prevResult = getState().Calculator.equal.result
@@ -232,6 +300,17 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcInputSet(variable))
       dispatch(calcNumberSave())
       dispatch(calcAddActiveSet(true))
+      dispatch(calcResultGet('equal'))
+    }
+
+    if (getState().Calculator.equal.prevMethod === 'minus') {
+      let prevResult = getState().Calculator.equal.result
+      let variable = getState().Calculator.equal.variable
+      dispatch(calcInputSet(prevResult))
+      dispatch(calcNumberSave())
+      dispatch(calcInputSet(variable))
+      dispatch(calcNumberSave())
+      dispatch(calcMinusActiveSet(true))
       dispatch(calcResultGet('equal'))
     }
   }
@@ -285,7 +364,8 @@ export const actions = {
   calcReset,
   calcAdd,
   calcEqual,
-  calcDotButtonClick
+  calcDotButtonClick,
+  calcMinus
 }
 
 /**
@@ -297,6 +377,9 @@ var initialState = {
   numbers: [],
   methodActive: '',
   add: {
+    active: false
+  },
+  minus: {
     active: false
   },
   equal: {
@@ -316,6 +399,13 @@ export const Calculator = handleActions({
   CALC_ADD_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
     add: {
       ...state.add,
+      active: payload
+    }
+  }),
+
+  CALC_MINUS_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
+    minus: {
+      ...state.minus,
       active: payload
     }
   }),
