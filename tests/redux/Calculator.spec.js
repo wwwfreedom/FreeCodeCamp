@@ -10,8 +10,9 @@ describe('(Redux) Calculator ', () => {
     let initialState = {
       input: '2',
       numbers: [1],
-      methods: {
-        current: ''
+      methodActive: '',
+      add: {
+        active: false
       },
       equal: {
         active: false,
@@ -56,11 +57,11 @@ describe('(Redux) Calculator ', () => {
     })
 
     it('should set right method on calling calcMethodSet', () => {
-      expect(Calculator(initialState, calcMethodSet('add'))).to.eql(Object.assign({}, initialState, {methods: {current: 'add'}}))
+      expect(Calculator(initialState, calcMethodSet('add'))).to.eql(Object.assign({}, initialState, {methodActive: 'add'}))
     })
 
     it('should set right method on calling calcMethodClear', () => {
-      expect(Calculator(initialState, calcMethodClear())).to.eql(Object.assign({}, initialState, {methods: {current: ''}}))
+      expect(Calculator(initialState, calcMethodClear())).to.eql(Object.assign({}, initialState, {methodActive: ''}))
     })
 
     it('should set equal to active on calling calcEqualActiveSet', () => {
@@ -244,8 +245,9 @@ describe('(Redux) Calculator ', () => {
       let mockStateForFirstPressOfEqualButton = {
         input: '2',
         numbers: [1, 2],
-        methods: {
-          current: 'add'
+        methodActive: 'add',
+        add: {
+          active: false
         },
         equal: {
           active: false,
@@ -260,8 +262,9 @@ describe('(Redux) Calculator ', () => {
       let mockStateForSubsequentPressOfEqualButton = {
         input: '2',
         numbers: [1, 2],
-        methods: {
-          current: ''
+        methodActive: '',
+        add: {
+          active: false
         },
         equal: {
           active: true,

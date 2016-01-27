@@ -15,10 +15,10 @@ export class Calculator extends Component {
     calcButtonClick: PropTypes.func.isRequired,
     calcReset: PropTypes.func.isRequired,
     calcAdd: PropTypes.func.isRequired,
-    calcResultGet: PropTypes.func.isRequired
+    calcEqual: PropTypes.func.isRequired
   }
   render() {
-    const { output, calcButtonClick, calcReset, calcAdd, calcResultGet } = this.props
+    const { output, calcButtonClick, calcReset, calcAdd, calcEqual } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>
@@ -52,7 +52,7 @@ export class Calculator extends Component {
           <Button value={'0'} onClick={calcButtonClick}/>
           <Button value={' '} />
           <Button value={'.'} onClick={calcButtonClick}/>
-          <Button value={'='} onClick={calcResultGet}/>
+          <Button value={'='} onClick={calcEqual}/>
         </div>
       </div>
     )

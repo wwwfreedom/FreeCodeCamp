@@ -10,9 +10,13 @@ export const CALC_OUTPUT_UPDATE = 'CALC_OUTPUT_UPDATE'
 export const CALC_OUTPUT_SHOULD_CLEAR = 'CALC_OUTPUT_SHOULD_CLEAR'
 export const CALC_INPUT_CLEAR = 'CALC_INPUT_CLEAR'
 export const CALC_INPUT_UPDATE = 'CALC_INPUT_UPDATE'
+export const CALC_INPUT_SET = 'CALC_INPUT_SET'
 
 export const CALC_ADD = 'CALC_ADD'
+export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
+
 export const CALC_NUMBER_SAVE = 'CALC_NUMBER_SAVE'
+export const CALC_NUMBER_SET = 'CALC_NUMBER_SET'
 export const CALC_NUMBER_CLEAR = 'CALC_NUMBER_CLEAR'
 export const CALC_METHOD_SET = 'CALC_METHOD_SET'
 export const CALC_METHOD_CLEAR = 'CALC_METHOD_CLEAR'
@@ -32,6 +36,7 @@ export const CALC_RESET = 'CALC_RESET'
 
 export const calcInputClear = createAction(CALC_INPUT_CLEAR)
 export const calcInputUpdate = createAction(CALC_INPUT_UPDATE, value => value)
+export const calcInputSet = createAction(CALC_INPUT_SET, value => value)
 
 export const calcOutputClear = createAction(CALC_OUTPUT_CLEAR)
 export const calcOutputSet = createAction(CALC_OUTPUT_SET, value => value)
@@ -43,15 +48,17 @@ export const calcEqualPrevMethodSet = createAction(CALC_EQUAL_PREV_METHOD_SET, m
 export const calcEqualResultSet = createAction(CALC_EQUAL_RESULT_SET, value => value)
 export const calcEqualResultUpdate = createAction(CALC_EQUAL_RESULT_UPDATE, value => value)
 export const calcEqualVariableSet = createAction(CALC_EQUAL_VARIABLE_SET, value => value)
+export const calcAddActiveSet = createAction(CALC_ADD_ACTIVE_SET, value => value)
 
 export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
 export const calcMethodClear = createAction(CALC_METHOD_CLEAR)
 export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
+export const calcNumberSet = createAction(CALC_NUMBER_SET)
 export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
 
 export const calcReset = () => (dispatch, getState) => {
-  dispatch(calcOutputClear())
-  dispatch(calcInputClear())
+  dispatch(calcInputSet('0'))
+  dispatch(calcOutputSet('0'))
   dispatch(calcNumberClear())
   dispatch(calcMethodClear())
   dispatch(calcOutputShouldClear(false))
@@ -59,69 +66,156 @@ export const calcReset = () => (dispatch, getState) => {
   dispatch(calcEqualResultSet(0))
   dispatch(calcEqualVariableSet(0))
   dispatch(calcEqualPrevMethodSet(''))
+  dispatch(calcAddActiveSet(false))
 }
 
 export const calcButtonClick = (value) => (dispatch, getState) => {
   let shouldClearOutput = getState().Calculator.outputClear
 
+  // check to force only one 0
+  if (getState().Calculator.input === '0') {
+    if (value === '0') {
+      return
+    }
+  }
+
   if (shouldClearOutput === true) {
     dispatch(calcOutputClear())
+    dispatch(calcInputClear())
     dispatch(calcOutputShouldClear(false))
   }
-  dispatch(calcOutputUpdate(value))
-  dispatch(calcInputUpdate(value))
+
+  // overwrite exisiting default 0 then update otherwise update normally
+  if (getState().Calculator.input === '0') {
+    dispatch(calcInputSet(value))
+    dispatch(calcOutputSet(value))
+  } else {
+    dispatch(calcOutputUpdate(value))
+    dispatch(calcInputUpdate(value))
+  }
 }
 
 export const calcAdd = () => (dispatch, getState) => {
-  let currentMethod = getState().Calculator.methods.current
+  let numbersLength = getState().Calculator.numbers.length
 
-  // if user press + button again just return
-  if (currentMethod === 'add') {
+  //  when add is active and there's no input then return
+  if (getState().Calculator.add.active === true) {
+    if (getState().Calculator.input === '') {
+      return
+    }
+  }
+  console.log(getState().Calculator.input.length !== 0)
+  // if there's input then do add
+  if (getState().Calculator.input.length !== 0) {
+    dispatch(calcAddActiveSet(true))
+    // dispatch(calcEqualActiveSet(false))
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('add'))
+    // this is important to make sure that after the user select a methods then the next time they enter a numbers the output should be clear and display the new numbers
+    dispatch(calcOutputShouldClear(true))
+    // for use case of this series of inputs (1 + 2 = + 1 =) should output 4
+  } else if (getState().Calculator.output.length !== 0) {
+    dispatch(calcAddActiveSet(true))
+    dispatch(calcInputSet(getState().Calculator.output))
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('add'))
+  } else {
     return
   }
-  dispatch(calcNumberSave())
-  dispatch(calcInputClear())
-  dispatch(calcMethodSet('add'))
-  dispatch(calcEqualActiveSet(false))
-  // this is important to make sure that after the user select a methods then the next time they enter a numbers the output should be clear and display the new numbers
-  dispatch(calcOutputShouldClear(true))
+
+  // if user press + button again when there's at least one number saved already
+  if (numbersLength === 1) {
+    dispatch(calcResultGet('add'))
+    return
+  }
 }
 
-export const calcResultGet = () => (dispatch, getState) => {
-  dispatch(calcNumberSave())
-  let currentMethod = getState().Calculator.methods.current
-  let numberArr = getState().Calculator.numbers
-  let result
+export const calcResultGet = (method) => (dispatch, getState) => {
+  let currentMethod = getState().Calculator.methodActive
   dispatch(calcMethodClear())
   dispatch(calcEqualActiveSet(true))
 
-  if (currentMethod === 'add') {
+  // logic for chaining add functions
+  if (method === 'add') {
+    // this add the second number
+    dispatch(calcNumberSave())
+    let numberArr = getState().Calculator.numbers
+    let result
     result = numberArr[0] + numberArr[1]
     // store second variable, methods and result to use for calculation if the user press = again
     dispatch(calcEqualVariableSet(numberArr[1]))
     dispatch(calcEqualPrevMethodSet(currentMethod))
     dispatch(calcEqualResultSet(result))
-    // import set calc equal active to false to avoid double calculation
+    // set calc equal active to false to avoid double calculation
     dispatch(calcEqualActiveSet(false))
 
     dispatch(calcOutputSet(result))
     dispatch(calcInputClear())
     dispatch(calcNumberClear())
+    // set the input back to the result for chaining of addition
+    dispatch(calcNumberSet(result))
     dispatch(calcOutputShouldClear(true))
+    // dispatch(calcAddActiveSet(false))
   }
 
-  // logic to calculate if the use press = again.
-  if (getState().Calculator.equal.active === true) {
-    let prevMethod = getState().Calculator.equal.prevMethod
-    // let prevResult = getState().Calculator.equal.result
-    let variable = getState().Calculator.equal.variable
-    if (prevMethod === 'add') {
-      dispatch(calcEqualResultUpdate(variable))
-      dispatch(calcOutputSet(getState().Calculator.equal.result))
+  if (method === 'equal') {
+    if (getState().Calculator.add.active === true) {
+      let numberArr = getState().Calculator.numbers
+      let result
+      result = numberArr[0] + numberArr[1]
+      // store second variable, methods and result to use for calculation if the user press = again
+      dispatch(calcEqualVariableSet(numberArr[1]))
+      dispatch(calcEqualPrevMethodSet('add'))
+      dispatch(calcEqualResultSet(result))
+      // set calc equal active to false to avoid double calculation
+      dispatch(calcEqualActiveSet(false))
+      dispatch(calcOutputSet(result))
       dispatch(calcInputClear())
       dispatch(calcNumberClear())
+      dispatch(calcAddActiveSet(false))
       dispatch(calcOutputShouldClear(true))
     }
+  }
+  // logic to calculate if the use press = again.
+  // if (getState().Calculator.equal.active === true) {
+  //   let prevMethod = getState().Calculator.equal.prevMethod
+  //   // let prevResult = getState().Calculator.equal.result
+  //   let variable = getState().Calculator.equal.variable
+  //   if (prevMethod === 'add') {
+  //     dispatch(calcNumberSave())
+  //     dispatch(calcEqualResultUpdate(variable))
+  //     dispatch(calcOutputSet(getState().Calculator.equal.result))
+  //     dispatch(calcInputClear())
+  //     dispatch(calcInputSet(getState().Calculator.equal.result).toString())
+  //     dispatch(calcNumberClear())
+  //     dispatch(calcOutputShouldClear(true))
+  //     dispatch(calcAddActiveSet(false))
+  //   }
+  // }
+}
+
+export const calcEqual = () => (dispatch, getState) => {
+  dispatch(calcMethodSet('equal'))
+  dispatch(calcOutputShouldClear(true))
+
+  // save number if there's already one number and that input is not empty
+  if (getState().Calculator.numbers.length === 1 && getState().Calculator.input !== '') {
+    // this add the second number
+    dispatch(calcNumberSave())
+  }
+  // to take into account use case where series of input is (+ =) should return 0, (+ 1) should return 1
+  if (getState().Calculator.numbers.length === 1 && getState().Calculator.input === '') {
+    dispatch(calcInputSet('0'))
+    dispatch(calcNumberSave())
+  }
+
+  // do equal only when there's two numbers saved up
+  if (getState().Calculator.numbers.length === 2) {
+    dispatch(calcResultGet('equal'))
+  } else {
+    return
   }
 }
 
@@ -129,7 +223,7 @@ export const actions = {
   calcButtonClick,
   calcReset,
   calcAdd,
-  calcResultGet
+  calcEqual
 }
 
 /**
@@ -137,14 +231,11 @@ export const actions = {
  */
 
 var initialState = {
-  input: '',
+  input: '0',
   numbers: [],
-  methods: {
-    current: '',
-    add: {
-      // result: 0,
-      variable: 0
-    }
+  methodActive: '',
+  add: {
+    active: false
   },
   equal: {
     active: false,
@@ -153,22 +244,14 @@ var initialState = {
     result: 0
   },
   outputClear: false,
-  output: ''
+  output: '0'
 }
 
 export const Calculator = handleActions({
-  CALC_INPUT_CLEAR: (state) => Object.assign({}, state, {
-    input: ''
-  }),
-
-  CALC_INPUT_UPDATE: (state, {payload}) => Object.assign({}, state, {
-    input: state.input.concat(payload)
-  }),
-
-  CALC_METHOD_SET: (state, {payload}) => Object.assign({}, state, {
-    methods: {
-      ...state.methods,
-      current: payload
+  CALC_ADD_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
+    add: {
+      ...state.add,
+      active: payload
     }
   }),
 
@@ -207,11 +290,24 @@ export const Calculator = handleActions({
     }
   }),
 
+  CALC_INPUT_CLEAR: (state) => Object.assign({}, state, {
+    input: ''
+  }),
+
+  CALC_INPUT_SET: (state, {payload}) => Object.assign({}, state, {
+    input: payload
+  }),
+
+  CALC_INPUT_UPDATE: (state, {payload}) => Object.assign({}, state, {
+    input: state.input.concat(payload)
+  }),
+
+  CALC_METHOD_SET: (state, {payload}) => Object.assign({}, state, {
+    methodActive: payload
+  }),
+
   CALC_METHOD_CLEAR: (state) => Object.assign({}, state, {
-    methods: {
-      ...state.methods,
-      current: ''
-    }
+    methodActive: ''
   }),
 
   CALC_NUMBER_SAVE: (state) => Object.assign({}, state, {
@@ -220,6 +316,10 @@ export const Calculator = handleActions({
 
   CALC_NUMBER_CLEAR: (state) => Object.assign({}, state, {
     numbers: []
+  }),
+
+  CALC_NUMBER_SET: (state, {payload}) => Object.assign({}, state, {
+    numbers: [payload]
   }),
 
   CALC_OUTPUT_CLEAR: (state) => Object.assign({}, state, {
