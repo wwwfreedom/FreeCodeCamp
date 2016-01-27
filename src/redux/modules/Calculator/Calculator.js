@@ -104,7 +104,6 @@ export const calcAdd = () => (dispatch, getState) => {
       return
     }
   }
-  console.log(getState().Calculator.input.length !== 0)
   // if there's input then do add
   if (getState().Calculator.input.length !== 0) {
     dispatch(calcAddActiveSet(true))
@@ -178,22 +177,19 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcOutputShouldClear(true))
     }
   }
-  // logic to calculate if the use press = again.
-  // if (getState().Calculator.equal.active === true) {
-  //   let prevMethod = getState().Calculator.equal.prevMethod
-  //   // let prevResult = getState().Calculator.equal.result
-  //   let variable = getState().Calculator.equal.variable
-  //   if (prevMethod === 'add') {
-  //     dispatch(calcNumberSave())
-  //     dispatch(calcEqualResultUpdate(variable))
-  //     dispatch(calcOutputSet(getState().Calculator.equal.result))
-  //     dispatch(calcInputClear())
-  //     dispatch(calcInputSet(getState().Calculator.equal.result).toString())
-  //     dispatch(calcNumberClear())
-  //     dispatch(calcOutputShouldClear(true))
-  //     dispatch(calcAddActiveSet(false))
-  //   }
-  // }
+
+  if (method === 'equalAgain') {
+    if (getState().Calculator.equal.prevMethod === 'add') {
+      let prevResult = getState().Calculator.equal.result
+      let variable = getState().Calculator.equal.variable
+      dispatch(calcInputSet(prevResult))
+      dispatch(calcNumberSave())
+      dispatch(calcInputSet(variable))
+      dispatch(calcNumberSave())
+      dispatch(calcAddActiveSet(true))
+      dispatch(calcResultGet('equal'))
+    }
+  }
 }
 
 export const calcEqual = () => (dispatch, getState) => {
@@ -204,16 +200,26 @@ export const calcEqual = () => (dispatch, getState) => {
   if (getState().Calculator.numbers.length === 1 && getState().Calculator.input !== '') {
     // this add the second number
     dispatch(calcNumberSave())
+    console.log('first number save')
   }
-  // to take into account use case where series of input is (+ =) should return 0, (+ 1) should return 1
-  if (getState().Calculator.numbers.length === 1 && getState().Calculator.input === '') {
+  // for use case where series of input is (+ =) should return 0, (+ 1) should return 1 subsequent press of equal should increase by 1
+  if (getState().Calculator.numbers.length === 1 && getState().Calculator.input === '' && getState().Calculator.numbers[0] === 0) {
     dispatch(calcInputSet('0'))
+    dispatch(calcNumberSave())
+  }
+
+  // for use case where series of input (2 + =) should return 4 and variable as 4. subsequent press of equal should increase by 2
+  if (getState().Calculator.numbers.length === 1 && getState().Calculator.input === '' && getState().Calculator.numbers[0] !== 0) {
+    let variable = getState().Calculator.output.toString()
+    dispatch(calcInputSet(variable))
     dispatch(calcNumberSave())
   }
 
   // do equal only when there's two numbers saved up
   if (getState().Calculator.numbers.length === 2) {
     dispatch(calcResultGet('equal'))
+  } else if (getState().Calculator.input === '' && getState().Calculator.numbers.length === 0) {
+    dispatch(calcResultGet('equalAgain'))
   } else {
     return
   }
