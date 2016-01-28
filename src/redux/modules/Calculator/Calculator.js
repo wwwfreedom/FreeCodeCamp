@@ -4,8 +4,31 @@ import { createAction, handleActions } from 'redux-actions'
  * Util functions
  */
 
+// return true for case like 1.021 and false for 1 or 1.0
 function isDecimalNumber (value) {
   return (!isNaN(value) && value.toString().indexOf('.') !== -1)
+}
+
+// calculate longest decimal length given an array of two numbers
+function decimalLength (arrOfNum) {
+  var decimalTest = () => {
+    var testArr = arrOfNum.map((num) => isDecimalNumber(num))
+    if (testArr[0] === true || testArr[1] === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+  // get abolute number without the signs
+  var stripNumOfNegativeSign = arrOfNum.map((num) => Math.abs(num))
+  var arrOfNumInStringLength = stripNumOfNegativeSign.map((num) => num.toString().length)
+  var longestNumber = Math.max(arrOfNumInStringLength[0], arrOfNumInStringLength[1])
+
+  if (decimalTest() === true) {
+    return longestNumber - 2
+  } else {
+    return 0
+  }
 }
 
 /**
@@ -223,6 +246,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     }
     dispatch(calcNumberSave())
     let numberArr = getState().Calculator.numbers
+    let decimal = decimalLength(numberArr)
     let result
     result = numberArr[0] + numberArr[1]
     // store second variable, methods and result to use for calculation if the user press = again
@@ -233,7 +257,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcEqualActiveSet(false))
     // check for decimal number to return result of whole interger in format of 1 instead of 1.0
     if (isDecimalNumber(result)) {
-      dispatch(calcOutputSet(result.toFixed(1)))
+      dispatch(calcOutputSet(result.toFixed(decimal)))
     } else {
       dispatch(calcOutputSet(result.toString()))
     }
@@ -248,6 +272,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
   if (method === 'equal') {
     if (getState().Calculator.add.active === true) {
       let numberArr = getState().Calculator.numbers
+      let decimal = decimalLength(numberArr)
       let result
       result = numberArr[0] + numberArr[1]
       // store second variable, methods and result to use for calculation if the user press = again
@@ -257,7 +282,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       // set calc equal active to false to avoid double calculation
       dispatch(calcEqualActiveSet(false))
       if (isDecimalNumber(result)) {
-        dispatch(calcOutputSet(result.toFixed(1)))
+        dispatch(calcOutputSet(result.toFixed(decimal)))
       } else {
         dispatch(calcOutputSet(result.toString()))
       }
@@ -270,6 +295,8 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     // logic to do the actual minus calculation
     if (getState().Calculator.minus.active === true) {
       let numberArr = getState().Calculator.numbers
+      let decimal = decimalLength(numberArr)
+      console.log(decimal)
       let result
       result = numberArr[0] - numberArr[1]
       // store second variable, methods and result to use for calculation if the user press = again
@@ -279,7 +306,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       // set calc equal active to false to avoid double calculation
       dispatch(calcEqualActiveSet(false))
       if (isDecimalNumber(result)) {
-        dispatch(calcOutputSet(result.toFixed(1)))
+        dispatch(calcOutputSet(result.toFixed(decimal)))
       } else {
         dispatch(calcOutputSet(result.toString()))
       }
