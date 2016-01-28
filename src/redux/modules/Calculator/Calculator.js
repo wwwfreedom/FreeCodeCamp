@@ -35,60 +35,67 @@ function decimalLength (arrOfNum) {
  * Constants
  */
 
-export const CALC_OUTPUT_CLEAR = 'CALC_OUTPUT_CLEAR'
-export const CALC_OUTPUT_SET = 'CALC_OUTPUT_SET'
-export const CALC_OUTPUT_UPDATE = 'CALC_OUTPUT_UPDATE'
-export const CALC_OUTPUT_SHOULD_CLEAR = 'CALC_OUTPUT_SHOULD_CLEAR'
-export const CALC_INPUT_CLEAR = 'CALC_INPUT_CLEAR'
-export const CALC_INPUT_UPDATE = 'CALC_INPUT_UPDATE'
-export const CALC_INPUT_SET = 'CALC_INPUT_SET'
-
-export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
-export const CALC_MINUS_ACTIVE_SET = 'CALC_MINUS_ACTIVE_SET'
-export const CALC_DOT_ACTIVE_SET = 'CALC_DOT_ACTIVE_SET'
-
-export const CALC_NUMBER_SAVE = 'CALC_NUMBER_SAVE'
-export const CALC_NUMBER_SET = 'CALC_NUMBER_SET'
-export const CALC_NUMBER_CLEAR = 'CALC_NUMBER_CLEAR'
-export const CALC_METHOD_SET = 'CALC_METHOD_SET'
-export const CALC_METHOD_CLEAR = 'CALC_METHOD_CLEAR'
-
 export const CALC_EQUAL_ACTIVE_SET = 'CALC_EQUAL_ACTIVE_SET'
-export const CALC_EQUAL_VARIABLE_SET = 'CALC_EQUAL_VARIABLE_SET'
 export const CALC_EQUAL_PREV_METHOD_SET = 'CALC_EQUAL_PREV_METHOD_SET'
 export const CALC_EQUAL_RESULT_SET = 'CALC_EQUAL_RESULT_SET'
 export const CALC_EQUAL_RESULT_UPDATE = 'CALC_EQUAL_RESULT_UPDATE'
+export const CALC_EQUAL_VARIABLE_SET = 'CALC_EQUAL_VARIABLE_SET'
 
-// work on this tomorrow and work on chaining results, fix decimal number addition= test for when the . button is press then use parseFloat
+export const CALC_INPUT_CLEAR = 'CALC_INPUT_CLEAR'
+export const CALC_INPUT_SET = 'CALC_INPUT_SET'
+export const CALC_INPUT_UPDATE = 'CALC_INPUT_UPDATE'
+
+export const CALC_OUTPUT_CLEAR = 'CALC_OUTPUT_CLEAR'
+export const CALC_OUTPUT_SET = 'CALC_OUTPUT_SET'
+export const CALC_OUTPUT_SHOULD_CLEAR = 'CALC_OUTPUT_SHOULD_CLEAR'
+export const CALC_OUTPUT_UPDATE = 'CALC_OUTPUT_UPDATE'
+
+export const CALC_METHOD_SET = 'CALC_METHOD_SET'
+export const CALC_METHOD_CLEAR = 'CALC_METHOD_CLEAR'
+
+export const CALC_NUMBER_CLEAR = 'CALC_NUMBER_CLEAR'
+export const CALC_NUMBER_SAVE = 'CALC_NUMBER_SAVE'
+export const CALC_NUMBER_SET = 'CALC_NUMBER_SET'
+
+export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
+export const CALC_DOT_ACTIVE_SET = 'CALC_DOT_ACTIVE_SET'
+export const CALC_MINUS_ACTIVE_SET = 'CALC_MINUS_ACTIVE_SET'
+
 export const CALC_RESET = 'CALC_RESET'
 
 /**
  * Actions
  */
 
-export const calcInputClear = createAction(CALC_INPUT_CLEAR)
-export const calcInputUpdate = createAction(CALC_INPUT_UPDATE, value => value)
-export const calcInputSet = createAction(CALC_INPUT_SET, value => value)
-
-export const calcOutputClear = createAction(CALC_OUTPUT_CLEAR)
-export const calcOutputSet = createAction(CALC_OUTPUT_SET, value => value)
-export const calcOutputUpdate = createAction(CALC_OUTPUT_UPDATE, value => value)
-export const calcOutputShouldClear = createAction(CALC_OUTPUT_SHOULD_CLEAR, value => value)
-
 export const calcEqualActiveSet = createAction(CALC_EQUAL_ACTIVE_SET, value => value)
 export const calcEqualPrevMethodSet = createAction(CALC_EQUAL_PREV_METHOD_SET, method => method)
 export const calcEqualResultSet = createAction(CALC_EQUAL_RESULT_SET, value => value)
 export const calcEqualResultUpdate = createAction(CALC_EQUAL_RESULT_UPDATE, value => value)
 export const calcEqualVariableSet = createAction(CALC_EQUAL_VARIABLE_SET, value => value)
+
+export const calcInputClear = createAction(CALC_INPUT_CLEAR)
+export const calcInputSet = createAction(CALC_INPUT_SET, value => value)
+export const calcInputUpdate = createAction(CALC_INPUT_UPDATE, value => value)
+
+export const calcOutputClear = createAction(CALC_OUTPUT_CLEAR)
+export const calcOutputSet = createAction(CALC_OUTPUT_SET, value => value)
+export const calcOutputShouldClear = createAction(CALC_OUTPUT_SHOULD_CLEAR, value => value)
+export const calcOutputUpdate = createAction(CALC_OUTPUT_UPDATE, value => value)
+
+export const calcMethodClear = createAction(CALC_METHOD_CLEAR)
+export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
+
+export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
+export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
+export const calcNumberSet = createAction(CALC_NUMBER_SET)
+
 export const calcAddActiveSet = createAction(CALC_ADD_ACTIVE_SET, value => value)
 export const calcDotActiveSet = createAction(CALC_DOT_ACTIVE_SET, value => value)
 export const calcMinusActiveSet = createAction(CALC_MINUS_ACTIVE_SET, value => value)
 
-export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
-export const calcMethodClear = createAction(CALC_METHOD_CLEAR)
-export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
-export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
-export const calcNumberSet = createAction(CALC_NUMBER_SET)
+/**
+ * Thunk Actions (asynchronous actions)
+ */
 
 export const calcReset = () => (dispatch, getState) => {
   dispatch(calcInputSet('0'))
@@ -110,7 +117,15 @@ export const calcDotButtonClick = (value) => (dispatch, getState) => {
     return
   }
 
-  if (getState().Calculator.input === '0') {
+  // clear the output and input if necessary
+  if (getState().Calculator.outputClear === true) {
+    dispatch(calcOutputClear())
+    dispatch(calcInputClear())
+    dispatch(calcOutputShouldClear(false))
+  }
+
+  // pad prececing zero for default input 0 or no input
+  if (getState().Calculator.input === '0' || getState().Calculator.input.length === 0) {
     dispatch(calcDotActiveSet(true))
     dispatch(calcInputSet('0.'))
     dispatch(calcOutputSet('0.'))
@@ -183,8 +198,9 @@ export const calcAdd = () => (dispatch, getState) => {
     return
   }
 
-  // if user press + button again when there's at least one number saved already
+  // if user press + button again when there's at least one number saved already. For use case (1 + 2 +)
   if (numbersLength === 1) {
+    console.log('numberasdfsdfasdfasdfsadfasd')
     dispatch(calcResultGet('add'))
     return
   }
