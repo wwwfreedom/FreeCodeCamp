@@ -269,7 +269,40 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcOutputShouldClear(true))
   }
 
+  // logic for chaining minus functions
+  if (method === 'minus') {
+    // this minus the second number
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave())
+    let numberArr = getState().Calculator.numbers
+    let decimal = decimalLength(numberArr)
+    let result
+    result = numberArr[0] - numberArr[1]
+    // store second variable, methods and result to use for calculation if the user press = again
+    dispatch(calcEqualVariableSet(numberArr[1].toString()))
+    dispatch(calcEqualPrevMethodSet(currentMethod))
+    dispatch(calcEqualResultSet(result.toString()))
+    // set calc equal active to false to avoid double calculation
+    dispatch(calcEqualActiveSet(false))
+    // check for decimal number to return result of whole interger in format of 1 instead of 1.0
+    if (isDecimalNumber(result)) {
+      dispatch(calcOutputSet(result.toFixed(decimal)))
+    } else {
+      dispatch(calcOutputSet(result.toString()))
+    }
+    dispatch(calcInputClear())
+    dispatch(calcNumberClear())
+    // set the input back to the result for chaining of addition
+    // potential problem here because if the result is a decimal number it might not get translated back properly
+    dispatch(calcNumberSet(result))
+    dispatch(calcOutputShouldClear(true))
+  }
+
+  // logic to compute on press of = button
   if (method === 'equal') {
+    // logic to do plus calculation
     if (getState().Calculator.add.active === true) {
       let numberArr = getState().Calculator.numbers
       let decimal = decimalLength(numberArr)
@@ -296,7 +329,6 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     if (getState().Calculator.minus.active === true) {
       let numberArr = getState().Calculator.numbers
       let decimal = decimalLength(numberArr)
-      console.log(decimal)
       let result
       result = numberArr[0] - numberArr[1]
       // store second variable, methods and result to use for calculation if the user press = again
