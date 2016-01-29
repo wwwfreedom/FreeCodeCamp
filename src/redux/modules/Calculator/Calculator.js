@@ -60,6 +60,8 @@ export const CALC_NUMBER_SET = 'CALC_NUMBER_SET'
 export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
 export const CALC_DOT_ACTIVE_SET = 'CALC_DOT_ACTIVE_SET'
 export const CALC_MINUS_ACTIVE_SET = 'CALC_MINUS_ACTIVE_SET'
+export const CALC_MINUS_CALLBACK_SET = 'CALC_MINUS_CALLBACK_SET'
+export const CALC_ADD_CALLBACK_SET = 'CALC_ADD_CALLBACK_SET'
 
 export const CALC_RESET = 'CALC_RESET'
 
@@ -92,6 +94,8 @@ export const calcNumberSet = createAction(CALC_NUMBER_SET)
 export const calcAddActiveSet = createAction(CALC_ADD_ACTIVE_SET, value => value)
 export const calcDotActiveSet = createAction(CALC_DOT_ACTIVE_SET, value => value)
 export const calcMinusActiveSet = createAction(CALC_MINUS_ACTIVE_SET, value => value)
+export const calcMinusCallbackSet = createAction(CALC_MINUS_CALLBACK_SET, value => value)
+export const calcAddCallbackSet = createAction(CALC_ADD_CALLBACK_SET, value => value)
 
 /**
  * Thunk Actions (asynchronous actions)
@@ -163,7 +167,29 @@ export const calcButtonClick = (value) => (dispatch, getState) => {
 }
 
 export const calcAdd = () => (dispatch, getState) => {
-  let numbersLength = getState().Calculator.numbers.length
+  // if user switch method then call equal and then set a call back to resume add operation below. For use case (1 - 2 + :: 3)
+  if (getState().Calculator.methodActive !== '') {
+    if (getState().Calculator.outputClear === false) {
+      if (getState().Calculator.add.active === false) {
+        if (getState().Calculator.methodActive !== 'add') {
+          dispatch(calcAddCallbackSet(true))
+          dispatch(calcEqual())
+          return
+        }
+      }
+    }
+  }
+
+    // logic to clear the number when user change their mind and switch method. Deal with use case (1 + - :: 1)
+
+  if (getState().Calculator.outputClear === true) {
+    if (getState().Calculator.add.active === false) {
+      if (getState().Calculator.methodActive !== 'add') {
+        dispatch(calcNumberClear())
+        dispatch(calcMinusActiveSet(false))
+      }
+    }
+  }
 
   //  when add is active and there's no input then return
   if (getState().Calculator.add.active === true) {
@@ -198,23 +224,44 @@ export const calcAdd = () => (dispatch, getState) => {
     return
   }
 
-  // if user press + button again when there's at least one number saved already. For use case (1 + 2 +)
-  if (numbersLength === 1) {
-    console.log('numberasdfsdfasdfasdfsadfasd')
+  // only call calcResultGet when there is two numbers. For use case (1 + 2 +)
+  if (getState().Calculator.numbers.length === 2) {
     dispatch(calcResultGet('add'))
     return
   }
 }
 
 export const calcMinus = (value) => (dispatch, getState) => {
-  let numbersLength = getState().Calculator.numbers.length
+  // if user switch method then call equal and then set a call back to resume minus operation below. For use case (1 + 2 - :: 3)
+  if (getState().Calculator.methodActive !== '') {
+    if (getState().Calculator.outputClear === false) {
+      if (getState().Calculator.minus.active === false) {
+        if (getState().Calculator.methodActive !== 'minus') {
+          dispatch(calcMinusCallbackSet(true))
+          dispatch(calcEqual())
+          return
+        }
+      }
+    }
+  }
 
-  //  when minus is active and there's no input then return
+  // logic to clear the number when user change their mind and switch method. Deal with use case (1 + - :: 1)
+  if (getState().Calculator.outputClear === true) {
+    if (getState().Calculator.minus.active === false) {
+      if (getState().Calculator.methodActive !== 'minus') {
+        dispatch(calcNumberClear())
+        dispatch(calcAddActiveSet(false))
+      }
+    }
+  }
+
+  // when minus is active and there's no input then return. For use case (+ +)
   if (getState().Calculator.minus.active === true) {
     if (getState().Calculator.input === '') {
       return
     }
   }
+
   // if there's input then do minus
   if (getState().Calculator.input.length !== 0) {
     dispatch(calcMinusActiveSet(true))
@@ -227,7 +274,7 @@ export const calcMinus = (value) => (dispatch, getState) => {
     dispatch(calcMethodSet('minus'))
     // this is important to make sure that after the user select a methods then the next time they enter a numbers the output should be clear and display the new numbers
     dispatch(calcOutputShouldClear(true))
-    // for use case of this series of inputs (1 - 2 = - 1 =) should output 4
+    // for use case of this series of inputs (1 - 2 = - 1 =) should output 4 or (1 + 2 - :: 3)
   } else if (getState().Calculator.output.length !== 0) {
     dispatch(calcMinusActiveSet(true))
     // dispatch the right numberSave according to dot active status
@@ -242,8 +289,8 @@ export const calcMinus = (value) => (dispatch, getState) => {
     return
   }
 
-  // if user press - button again when there's at least one number saved already
-  if (numbersLength === 1) {
+  // only call calcResultGet when there is two numbers. For use case (1 + 2 +)
+  if (getState().Calculator.numbers.length === 2) {
     dispatch(calcResultGet('minus'))
     return
   }
@@ -291,7 +338,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     if (getState().Calculator.dot.active === true) {
       dispatch(calcDotActiveSet(false))
     }
-    dispatch(calcNumberSave())
+    dispatch(calcNumberSave()) // this step could be reduntdant
     let numberArr = getState().Calculator.numbers
     let decimal = decimalLength(numberArr)
     let result
@@ -389,6 +436,21 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcResultGet('equal'))
     }
   }
+
+  // this gets run if their is a callback schedule, set the prevMethod to the correct method of the callback without this operation chaining will produce incorrect result. also reset the callback to default false
+  if (getState().Calculator.minus.callback === true) {
+    dispatch(calcMethodSet('minus'))
+    dispatch(calcEqualPrevMethodSet('minus'))
+    dispatch(calcMinusCallbackSet(false))
+    dispatch(calcMinus())
+  }
+
+  if (getState().Calculator.add.callback === true) {
+    dispatch(calcMethodSet('add'))
+    dispatch(calcEqualPrevMethodSet('add'))
+    dispatch(calcAddCallbackSet(false))
+    dispatch(calcAdd())
+  }
 }
 
 export const calcEqual = () => (dispatch, getState) => {
@@ -452,10 +514,12 @@ var initialState = {
   numbers: [],
   methodActive: '',
   add: {
-    active: false
+    active: false,
+    callback: false
   },
   minus: {
-    active: false
+    active: false,
+    callback: false
   },
   equal: {
     active: false,
@@ -478,10 +542,10 @@ export const Calculator = handleActions({
     }
   }),
 
-  CALC_MINUS_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
-    minus: {
-      ...state.minus,
-      active: payload
+  CALC_ADD_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
+    add: {
+      ...state.add,
+      callback: payload
     }
   }),
 
@@ -545,6 +609,20 @@ export const Calculator = handleActions({
 
   CALC_METHOD_CLEAR: (state) => Object.assign({}, state, {
     methodActive: ''
+  }),
+
+  CALC_MINUS_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
+    minus: {
+      ...state.minus,
+      active: payload
+    }
+  }),
+
+  CALC_MINUS_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
+    minus: {
+      ...state.minus,
+      callback: payload
+    }
   }),
 
   CALC_NUMBER_SAVE: (state) => Object.assign({}, state, {
