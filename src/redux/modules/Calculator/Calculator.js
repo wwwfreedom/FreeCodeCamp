@@ -11,6 +11,8 @@ function isDecimalNumber (value) {
 
 // calculate longest decimal length given an array of two numbers
 function decimalLength (arrOfNum) {
+  // need to deal with edge case where the number is 1.6000000000000001
+  // modify to take into account of this case (2.3 * 0.5 :: 1.15) instead of 1 decimal place. solution set min 2 decimal places when one or both numbers is a decimal
   var decimalTest = () => {
     var testArr = arrOfNum.map((num) => isDecimalNumber(num))
     if (testArr[0] === true || testArr[1] === true) {
@@ -52,6 +54,9 @@ export const CALC_INPUT_UPDATE = 'CALC_INPUT_UPDATE'
 export const CALC_METHOD_SET = 'CALC_METHOD_SET'
 export const CALC_METHOD_CLEAR = 'CALC_METHOD_CLEAR'
 
+export const CALC_MULTIPLY_ACTIVE_SET = 'CALC_MULTIPLY_ACTIVE_SET'
+export const CALC_MULTIPLY_CALLBACK_SET = 'CALC_MULTIPLY_CALLBACK_SET'
+
 export const CALC_NUMBER_CLEAR = 'CALC_NUMBER_CLEAR'
 export const CALC_NUMBER_SAVE = 'CALC_NUMBER_SAVE'
 export const CALC_NUMBER_SET = 'CALC_NUMBER_SET'
@@ -91,6 +96,9 @@ export const calcMethodSet = createAction(CALC_METHOD_SET, method => method)
 export const calcMinusActiveSet = createAction(CALC_MINUS_ACTIVE_SET, value => value)
 export const calcMinusCallbackSet = createAction(CALC_MINUS_CALLBACK_SET, value => value)
 
+export const calcMultiplyActiveSet = createAction(CALC_MULTIPLY_ACTIVE_SET, value => value)
+export const calcMultiplyCallbackSet = createAction(CALC_MULTIPLY_CALLBACK_SET, value => value)
+
 export const calcNumberClear = createAction(CALC_NUMBER_CLEAR)
 export const calcNumberSave = createAction(CALC_NUMBER_SAVE)
 export const calcNumberSet = createAction(CALC_NUMBER_SET)
@@ -115,9 +123,12 @@ export const calcReset = () => (dispatch, getState) => {
   dispatch(calcEqualVariableSet('0'))
   dispatch(calcEqualPrevMethodSet(''))
   dispatch(calcAddActiveSet(false))
-  dispatch(calcDotActiveSet(false))
   dispatch(calcAddCallbackSet(false))
+  dispatch(calcDotActiveSet(false))
+  dispatch(calcMinusActiveSet(false))
   dispatch(calcMinusCallbackSet(false))
+  dispatch(calcMultiplyActiveSet(false))
+  dispatch(calcMultiplyCallbackSet(false))
 }
 
 export const calcDotButtonClick = (value) => (dispatch, getState) => {
@@ -192,6 +203,7 @@ export const calcAdd = () => (dispatch, getState) => {
       if (getState().Calculator.methodActive !== 'add') {
         dispatch(calcNumberClear())
         dispatch(calcMinusActiveSet(false))
+        dispatch(calcMultiplyActiveSet(false))
       }
     }
   }
@@ -257,6 +269,7 @@ export const calcMinus = (value) => (dispatch, getState) => {
       if (getState().Calculator.methodActive !== 'minus') {
         dispatch(calcNumberClear())
         dispatch(calcAddActiveSet(false))
+        dispatch(calcMultiplyActiveSet(false))
       }
     }
   }
@@ -298,6 +311,74 @@ export const calcMinus = (value) => (dispatch, getState) => {
   // only call calcResultGet when there is two numbers. For use case (1 + 2 +)
   if (getState().Calculator.numbers.length === 2) {
     dispatch(calcResultGet('minus'))
+    return
+  }
+}
+
+/**
+ * Multiplication logic
+ */
+
+export const calcMultiply = (value) => (dispatch, getState) => {
+  // if user switch method then call equal and then set a call back to resume multiply operation below. For use case (1 * 2 - :: 2)
+  if (getState().Calculator.methodActive !== '') {
+    if (getState().Calculator.outputClear === false) {
+      if (getState().Calculator.multiply.active === false) {
+        if (getState().Calculator.methodActive !== 'multiply') {
+          dispatch(calcMultiplyCallbackSet(true))
+          dispatch(calcEqual())
+          return
+        }
+      }
+    }
+  }
+
+  // logic to clear the number when user change their mind and switch method. Deal with use case (1 * - :: 1)
+  if (getState().Calculator.outputClear === true) {
+    if (getState().Calculator.multiply.active === false) {
+      if (getState().Calculator.methodActive !== 'multiply') {
+        dispatch(calcNumberClear())
+        dispatch(calcAddActiveSet(false))
+        dispatch(calcMinusActiveSet(false))
+      }
+    }
+  }
+
+  // when multiply is active and there's no input then return. For use case (* *)
+  if (getState().Calculator.multiply.active === true) {
+    if (getState().Calculator.input === '') {
+      return
+    }
+  }
+
+  // if there's input then do multiply
+  if (getState().Calculator.input.length !== 0) {
+    dispatch(calcMultiplyActiveSet(true))
+    // dispatch the right numberSave according to dot active status
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('multiply'))
+    dispatch(calcOutputShouldClear(true))
+    // for use case of this series of inputs (1 * 2 :: 2 = :: 4) should output 4 or (1 * 2 - :: 2)
+  } else if (getState().Calculator.output.length !== 0) {
+    dispatch(calcMultiplyActiveSet(true))
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcInputSet(getState().Calculator.output))
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('multiply'))
+  } else {
+    return
+  }
+
+  // only call calcResultGet when there is two numbers. For use case (1 + 2 +)
+  if (getState().Calculator.numbers.length === 2) {
+    dispatch(calcResultGet('multiply'))
     return
   }
 }
@@ -368,6 +449,36 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcOutputShouldClear(true))
   }
 
+  // logic for chaining multiply functions
+  if (method === 'multiply') {
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave()) // this step could be reduntdant
+    let numberArr = getState().Calculator.numbers
+    let decimal = decimalLength(numberArr)
+    let result
+    result = numberArr[0] * numberArr[1]
+    // store second variable, methods and result to use for calculation if the user press = again
+    dispatch(calcEqualVariableSet(numberArr[1].toString()))
+    dispatch(calcEqualPrevMethodSet(currentMethod))
+    dispatch(calcEqualResultSet(result.toString()))
+    // set calc equal active to false to avoid double calculation
+    dispatch(calcEqualActiveSet(false))
+    // check for decimal number to return result of whole interger in format of 1 instead of 1.0
+    if (isDecimalNumber(result)) {
+      dispatch(calcOutputSet(result.toFixed(decimal)))
+    } else {
+      dispatch(calcOutputSet(result.toString()))
+    }
+    dispatch(calcInputClear())
+    dispatch(calcNumberClear())
+    // set the input back to the result for chaining of addition
+    // potential problem here because if the result is a decimal number it might not get translated back properly
+    dispatch(calcNumberSet(result))
+    dispatch(calcOutputShouldClear(true))
+  }
+
   // logic to compute on press of = button
   if (method === 'equal') {
     // logic to do plus calculation
@@ -415,6 +526,29 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcMinusActiveSet(false))
       dispatch(calcOutputShouldClear(true))
     }
+
+    // logic to do the actual multiply calculation
+    if (getState().Calculator.multiply.active === true) {
+      let numberArr = getState().Calculator.numbers
+      let decimal = decimalLength(numberArr)
+      let result
+      result = numberArr[0] * numberArr[1]
+      // store second variable, methods and result to use for calculation if the user press = again
+      dispatch(calcEqualVariableSet(numberArr[1].toString()))
+      dispatch(calcEqualPrevMethodSet('multiply'))
+      dispatch(calcEqualResultSet(result.toString()))
+      // set calc equal active to false to avoid double calculation
+      dispatch(calcEqualActiveSet(false))
+      if (isDecimalNumber(result)) {
+        dispatch(calcOutputSet(result.toFixed(decimal)))
+      } else {
+        dispatch(calcOutputSet(result.toString()))
+      }
+      dispatch(calcInputClear())
+      dispatch(calcNumberClear())
+      dispatch(calcMultiplyActiveSet(false))
+      dispatch(calcOutputShouldClear(true))
+    }
   }
 
   // logic to do calculation when = is press again
@@ -440,9 +574,27 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcMinusActiveSet(true))
       dispatch(calcResultGet('equal'))
     }
+
+    if (getState().Calculator.equal.prevMethod === 'multiply') {
+      let prevResult = getState().Calculator.equal.result
+      let variable = getState().Calculator.equal.variable
+      dispatch(calcInputSet(prevResult))
+      dispatch(calcNumberSave())
+      dispatch(calcInputSet(variable))
+      dispatch(calcNumberSave())
+      dispatch(calcMultiplyActiveSet(true))
+      dispatch(calcResultGet('equal'))
+    }
   }
 
   // this gets run if their is a callback schedule, set the prevMethod to the correct method of the callback without this operation chaining will produce incorrect result. also reset the callback to default false
+  if (getState().Calculator.add.callback === true) {
+    dispatch(calcMethodSet('add'))
+    dispatch(calcEqualPrevMethodSet('add'))
+    dispatch(calcAddCallbackSet(false))
+    dispatch(calcAdd())
+  }
+
   if (getState().Calculator.minus.callback === true) {
     dispatch(calcMethodSet('minus'))
     dispatch(calcEqualPrevMethodSet('minus'))
@@ -450,11 +602,11 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcMinus())
   }
 
-  if (getState().Calculator.add.callback === true) {
-    dispatch(calcMethodSet('add'))
-    dispatch(calcEqualPrevMethodSet('add'))
-    dispatch(calcAddCallbackSet(false))
-    dispatch(calcAdd())
+  if (getState().Calculator.multiply.callback === true) {
+    dispatch(calcMethodSet('multiply'))
+    dispatch(calcEqualPrevMethodSet('multiply'))
+    dispatch(calcMultiplyCallbackSet(false))
+    dispatch(calcMultiply())
   }
 }
 
@@ -507,7 +659,8 @@ export const actions = {
   calcAdd,
   calcEqual,
   calcDotButtonClick,
-  calcMinus
+  calcMinus,
+  calcMultiply
 }
 
 /**
@@ -523,6 +676,10 @@ var initialState = {
     callback: false
   },
   minus: {
+    active: false,
+    callback: false
+  },
+  multiply: {
     active: false,
     callback: false
   },
@@ -626,6 +783,20 @@ export const Calculator = handleActions({
   CALC_MINUS_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
     minus: {
       ...state.minus,
+      callback: payload
+    }
+  }),
+
+  CALC_MULTIPLY_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
+    multiply: {
+      ...state.multiply,
+      active: payload
+    }
+  }),
+
+  CALC_MULTIPLY_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
+    multiply: {
+      ...state.multiply,
       callback: payload
     }
   }),
