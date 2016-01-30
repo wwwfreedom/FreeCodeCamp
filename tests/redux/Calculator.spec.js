@@ -1,4 +1,4 @@
-import { Calculator, CALC_OUTPUT_CLEAR, calcOutputClear, CALC_OUTPUT_SET, calcOutputSet, CALC_OUTPUT_UPDATE, calcOutputUpdate, CALC_OUTPUT_SHOULD_CLEAR, calcOutputShouldClear, CALC_INPUT_CLEAR, calcInputClear, CALC_INPUT_UPDATE, calcInputUpdate, CALC_NUMBER_SAVE, calcNumberSave, CALC_NUMBER_CLEAR, calcNumberClear, CALC_METHOD_SET, calcMethodSet, CALC_METHOD_CLEAR, calcMethodClear, CALC_EQUAL_ACTIVE_SET, calcEqualActiveSet, CALC_EQUAL_VARIABLE_SET, calcEqualVariableSet, CALC_EQUAL_PREV_METHOD_SET, calcEqualPrevMethodSet, CALC_EQUAL_RESULT_SET, calcEqualResultSet, calcAdd, calcButtonClick, calcResultGet, calcEqualResultUpdate, CALC_EQUAL_RESULT_UPDATE, calcReset, CALC_INPUT_SET, calcInputSet, CALC_NUMBER_SET, calcNumberSet, calcAddActiveSet, CALC_ADD_ACTIVE_SET, calcDotActiveSet, CALC_DOT_ACTIVE_SET, calcMinusActiveSet, CALC_MINUS_ACTIVE_SET, calcMinusCallbackSet, CALC_MINUS_CALLBACK_SET, calcAddCallbackSet, CALC_ADD_CALLBACK_SET, calcEqual, calcMinus, calcDotButtonClick } from 'redux/modules/Calculator/Calculator.js'
+import { Calculator, CALC_OUTPUT_CLEAR, calcOutputClear, CALC_OUTPUT_SET, calcOutputSet, CALC_OUTPUT_UPDATE, calcOutputUpdate, CALC_OUTPUT_SHOULD_CLEAR, calcOutputShouldClear, CALC_INPUT_CLEAR, calcInputClear, CALC_INPUT_UPDATE, calcInputUpdate, CALC_NUMBER_SAVE, calcNumberSave, CALC_NUMBER_CLEAR, calcNumberClear, CALC_METHOD_SET, calcMethodSet, CALC_METHOD_CLEAR, calcMethodClear, CALC_EQUAL_ACTIVE_SET, calcEqualActiveSet, CALC_EQUAL_VARIABLE_SET, calcEqualVariableSet, CALC_EQUAL_PREV_METHOD_SET, calcEqualPrevMethodSet, CALC_EQUAL_RESULT_SET, calcEqualResultSet, calcAdd, calcButtonClick, calcResultGet, calcEqualResultUpdate, CALC_EQUAL_RESULT_UPDATE, calcReset, CALC_INPUT_SET, calcInputSet, CALC_NUMBER_SET, calcNumberSet, calcAddActiveSet, CALC_ADD_ACTIVE_SET, calcDotActiveSet, CALC_DOT_ACTIVE_SET, calcMinusActiveSet, CALC_MINUS_ACTIVE_SET, calcMinusCallbackSet, CALC_MINUS_CALLBACK_SET, calcAddCallbackSet, CALC_ADD_CALLBACK_SET, calcEqual, calcMinus, calcDotButtonClick, calcMultiplyActiveSet, CALC_MULTIPLY_ACTIVE_SET, calcMultiplyCallbackSet, CALC_MULTIPLY_CALLBACK_SET, calcMultiply } from 'redux/modules/Calculator/Calculator.js'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import util from 'util'
@@ -17,6 +17,10 @@ describe('(Redux) Calculator ', () => {
         callback: false
       },
       minus: {
+        active: false,
+        callback: false
+      },
+      multiply: {
         active: false,
         callback: false
       },
@@ -91,6 +95,14 @@ describe('(Redux) Calculator ', () => {
 
     it('should set minus callback property on calling calcMinusCallbackSet', () => {
       expect(Calculator(initialState, calcMinusCallbackSet(true))).to.eql(Object.assign({}, initialState, { minus: {...initialState.minus, callback: true} }))
+    })
+
+    it('should overwrite and set multiply active property on calling calcMultiplyActiveSet', () => {
+      expect(Calculator(initialState, calcMultiplyActiveSet(true))).to.eql(Object.assign({}, initialState, { multiply: {...initialState.multiply, active: true} }))
+    })
+
+    it('should set multiply callback property on calling calcMultiplyCallbackSet', () => {
+      expect(Calculator(initialState, calcMultiplyCallbackSet(true))).to.eql(Object.assign({}, initialState, { multiply: {...initialState.multiply, callback: true} }))
     })
 
     it('should set right numbers on calling calcNumberClear', () => {
@@ -205,6 +217,30 @@ describe('(Redux) Calculator ', () => {
       })
     })
 
+    describe('calcMinusActiveSet', () => {
+      it('should create a CALC_MINUS_ACTIVE_SET action', () => {
+        expect(calcMinusActiveSet(true)).to.eql({type: CALC_MINUS_ACTIVE_SET, payload: true})
+      })
+    })
+
+    describe('calcMinusCallbackSet', () => {
+      it('should create a CALC_MINUS_CALLBACK_SET action', () => {
+        expect(calcMinusCallbackSet(true)).to.eql({type: CALC_MINUS_CALLBACK_SET, payload: true})
+      })
+    })
+
+    describe('calcMultiplyActiveSet', () => {
+      it('should create a CALC_MULTIPLY_ACTIVE_SET action', () => {
+        expect(calcMultiplyActiveSet(true)).to.eql({type: CALC_MULTIPLY_ACTIVE_SET, payload: true})
+      })
+    })
+
+    describe('calcMultiplyCallbackSet', () => {
+      it('should create a CALC_MULTIPLY_CALLBACK_SET action', () => {
+        expect(calcMultiplyCallbackSet(true)).to.eql({type: CALC_MULTIPLY_CALLBACK_SET, payload: true})
+      })
+    })
+
     describe('calcNumberClear', () => {
       it('should create a CALC_NUMBER_CLEAR action', () => {
         expect(calcNumberClear()).to.eql({type: CALC_NUMBER_CLEAR, payload: undefined})
@@ -220,18 +256,6 @@ describe('(Redux) Calculator ', () => {
     describe('calcNumberSet', () => {
       it('should create a CALC_NUMBER_SET action', () => {
         expect(calcNumberSet()).to.eql({type: CALC_NUMBER_SET, payload: undefined})
-      })
-    })
-
-    describe('calcMinusActiveSet', () => {
-      it('should create a CALC_MINUS_ACTIVE_SET action', () => {
-        expect(calcMinusActiveSet(true)).to.eql({type: CALC_MINUS_ACTIVE_SET, payload: true})
-      })
-    })
-
-    describe('calcMinusCallbackSet', () => {
-      it('should create a CALC_MINUS_CALLBACK_SET action', () => {
-        expect(calcMinusCallbackSet(true)).to.eql({type: CALC_MINUS_CALLBACK_SET, payload: true})
       })
     })
 
@@ -617,6 +641,145 @@ describe('(Redux) Calculator ', () => {
       })
     })
 
+    describe('calcMultiply', () => {
+      let initialState = {
+        input: '2',
+        numbers: [1],
+        methodActive: '',
+        add: {
+          active: false,
+          callback: false
+        },
+        minus: {
+          active: false,
+          callback: false
+        },
+        multiply: {
+          active: false,
+          callback: false
+        },
+        equal: {
+          active: false,
+          prevMethod: '',
+          variable: '0',
+          result: '0'
+        },
+        dot: {
+          active: false
+        },
+        outputClear: false,
+        output: 'test'
+      }
+
+      it('should return a function', () => {
+        expect(calcMultiply()).to.be.a('function')
+      })
+
+      it('should dispatch these actions when there is input', (done) => {
+        const mockState = {Calculator: initialState}
+        const expectedActions = [
+          calcMultiplyActiveSet(true),
+          calcNumberSave(),
+          calcInputClear(),
+          calcMethodSet('multiply'),
+          calcOutputShouldClear(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+
+      it('should dispatch these actions when there is input and dot method is active', (done) => {
+        const mockState = {Calculator: Object.assign({}, initialState, {
+          dot: { active: true }
+        })}
+        const expectedActions = [
+          calcMultiplyActiveSet(true),
+          calcDotActiveSet(false),
+          calcNumberSave(),
+          calcInputClear(),
+          calcMethodSet('multiply'),
+          calcOutputShouldClear(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+
+      it('should dispatch these actions when there is output but no input for use case (1 * 2 = :: 2 - 1 = :: 2)', (done) => {
+        const mockState = {Calculator: Object.assign({}, initialState, {
+          input: '',
+          output: '2'
+        })}
+        const expectedActions = [
+          calcMultiplyActiveSet(true),
+          calcInputSet('2'),
+          calcNumberSave(),
+          calcInputClear(),
+          calcMethodSet('multiply')
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+
+      it('should dispatch these actions when there is output but no input and dot method is active. For use case (1 * 2 = :: 2 - 1 = :: 2)', (done) => {
+        const mockState = {Calculator: Object.assign({}, initialState, {
+          input: '',
+          output: '2',
+          dot: { active: true }
+        })}
+        const expectedActions = [
+          calcMultiplyActiveSet(true),
+          calcDotActiveSet(false),
+          calcInputSet('2'),
+          calcNumberSave(),
+          calcInputClear(),
+          calcMethodSet('multiply')
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+
+      it('should dispatch these actions for chaining calcMultiply for use case (1 * 2 + 2 :: 4', (done) => {
+        const mockState = {Calculator: Object.assign({}, initialState, {
+          input: '2',
+          numbers: [1],
+          multiply: { active: false, callback: false },
+          methodActive: 'add',
+          outputClear: false,
+          output: '2'
+        })}
+        const expectedActions = [
+          calcMultiplyCallbackSet(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+
+      it('should dispatch these actions for switch between methods for use case (1 * - :: 1', (done) => {
+        const mockState = {Calculator: Object.assign({}, initialState, {
+          input: '2',
+          numbers: [1],
+          multiply: { active: false, callback: false },
+          methodActive: 'add',
+          outputClear: true,
+          output: '2'
+        })}
+        // there should be more actions but already test above key actions tested only
+        const expectedActions = [
+          calcNumberClear(),
+          calcAddActiveSet(false),
+          calcMinusActiveSet(false)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcMultiply())
+      })
+    })
+
     describe('calcResultGet', () => {
       let mockStateForFirstPressOfEqualButton = {
         input: '2',
@@ -629,6 +792,10 @@ describe('(Redux) Calculator ', () => {
         minus: {
           active: false,
           calback: false
+        },
+        multiply: {
+          active: false,
+          callback: false
         },
         equal: {
           active: false,
@@ -654,6 +821,10 @@ describe('(Redux) Calculator ', () => {
         minus: {
           active: false,
           calback: false
+        },
+        multiply: {
+          active: false,
+          callback: false
         },
         equal: {
           active: true,
@@ -716,6 +887,29 @@ describe('(Redux) Calculator ', () => {
         store.dispatch(calcResultGet('minus'))
       })
 
+      it('should dispatch these actions on calling calcResultGet with "multiply" method', (done) => {
+        const mockState = { Calculator: Object.assign({}, mockStateForFirstPressOfEqualButton, {
+          methodActive: 'test'
+        }) }
+        const expectedActions = [
+          calcMethodClear(),
+          calcEqualActiveSet(true),
+          calcNumberSave(),
+          calcEqualVariableSet('2'),
+          calcEqualPrevMethodSet('test'),
+          calcEqualResultSet('2'),
+          calcEqualActiveSet(false),
+          calcOutputSet('2'),
+          calcInputClear(),
+          calcNumberClear(),
+          calcNumberSet(2),
+          calcOutputShouldClear(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcResultGet('multiply'))
+      })
+
       it('should dispatch these actions on calling calcResultGet with "equal" method when add method is active', (done) => {
         const mockState = { Calculator: Object.assign({}, mockStateForFirstPressOfEqualButton, {
           add: { ...mockStateForFirstPressOfEqualButton, active: true }
@@ -760,6 +954,28 @@ describe('(Redux) Calculator ', () => {
         store.dispatch(calcResultGet('equal'))
       })
 
+      it('should dispatch these actions on calling calcResultGet with "equal" method when multiply method is active', (done) => {
+        const mockState = { Calculator: Object.assign({}, mockStateForFirstPressOfEqualButton, {
+          multiply: { ...mockStateForFirstPressOfEqualButton, active: true }
+        }) }
+        const expectedActions = [
+          calcMethodClear(),
+          calcEqualActiveSet(true),
+          calcEqualVariableSet('2'),
+          calcEqualPrevMethodSet('multiply'),
+          calcEqualResultSet('2'),
+          calcEqualActiveSet(false),
+          calcOutputSet('2'),
+          calcInputClear(),
+          calcNumberClear(),
+          calcMultiplyActiveSet(false),
+          calcOutputShouldClear(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcResultGet('equal'))
+      })
+
       it('should dispatch these actions on subsequent call of calcResultGet i.e. when user press = button again. when prevMethod is add', (done) => {
         const mockState = { Calculator: mockStateForSubsequentPressOfEqualButton }
         const expectedActions = [
@@ -790,6 +1006,26 @@ describe('(Redux) Calculator ', () => {
           calcInputSet('2'),
           calcNumberSave(),
           calcMinusActiveSet(true)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcResultGet('equalAgain'))
+      })
+
+      it('should dispatch these actions on subsequent call of calcResultGet i.e. when user press = button again. when prevMethod is multiply', (done) => {
+        const mockState = { Calculator: Object.assign({}, mockStateForSubsequentPressOfEqualButton, {
+          equal: {...mockStateForSubsequentPressOfEqualButton.equal,
+            prevMethod: 'multiply'
+          }
+        }) }
+        const expectedActions = [
+          calcMethodClear(),
+          calcEqualActiveSet(true),
+          calcInputSet('5'),
+          calcNumberSave(),
+          calcInputSet('2'),
+          calcNumberSave(),
+          calcMultiplyActiveSet(true)
         ]
 
         const store = mockStore(mockState, expectedActions, done)
@@ -831,6 +1067,24 @@ describe('(Redux) Calculator ', () => {
         const store = mockStore(mockState, expectedActions, done)
         store.dispatch(calcResultGet())
       })
+
+      it('should dispatch these actions on call of calcResultGet when multiply callback prop is true', (done) => {
+        const mockState = { Calculator: Object.assign({}, mockStateForFirstPressOfEqualButton, {
+          multiply: {...mockStateForFirstPressOfEqualButton.multiply,
+            callback: true
+          }
+        }) }
+        const expectedActions = [
+          calcMethodClear(),
+          calcEqualActiveSet(true),
+          calcMethodSet('multiply'),
+          calcEqualPrevMethodSet('multiply'),
+          calcMultiplyCallbackSet(false)
+        ]
+
+        const store = mockStore(mockState, expectedActions, done)
+        store.dispatch(calcResultGet())
+      })
     })
 
     describe('calcReset', () => {
@@ -851,9 +1105,12 @@ describe('(Redux) Calculator ', () => {
           calcEqualVariableSet('0'),
           calcEqualPrevMethodSet(''),
           calcAddActiveSet(false),
-          calcDotActiveSet(false),
           calcAddCallbackSet(false),
-          calcMinusCallbackSet(false)
+          calcDotActiveSet(false),
+          calcMinusActiveSet(false),
+          calcMinusCallbackSet(false),
+          calcMultiplyActiveSet(false),
+          calcMultiplyCallbackSet(false)
         ]
 
         const store = mockStore(mockState, expectedActions, done)
