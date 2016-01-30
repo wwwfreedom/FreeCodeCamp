@@ -220,9 +220,9 @@ export const calcAdd = () => (dispatch, getState) => {
     if (getState().Calculator.add.active === false) {
       if (getState().Calculator.methodActive !== 'add') {
         dispatch(calcNumberClear())
+        dispatch(calcDivideActiveSet(false))
         dispatch(calcMinusActiveSet(false))
         dispatch(calcMultiplyActiveSet(false))
-        dispatch(calcDivideActiveSet(false))
       }
     }
   }
@@ -288,8 +288,8 @@ export const calcMinus = (value) => (dispatch, getState) => {
       if (getState().Calculator.methodActive !== 'minus') {
         dispatch(calcNumberClear())
         dispatch(calcAddActiveSet(false))
-        dispatch(calcMultiplyActiveSet(false))
         dispatch(calcDivideActiveSet(false))
+        dispatch(calcMultiplyActiveSet(false))
       }
     }
   }
@@ -429,7 +429,7 @@ export const calcDivide = (value) => (dispatch, getState) => {
         dispatch(calcNumberClear())
         dispatch(calcAddActiveSet(false))
         dispatch(calcMinusActiveSet(false))
-        dispatch(calcDivideActiveSet(false))
+        dispatch(calcMultiplyActiveSet(false))
       }
     }
   }
@@ -737,7 +737,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcNumberSave())
       dispatch(calcInputSet(variable))
       dispatch(calcNumberSave())
-      dispatch(calcMultiplyActiveSet(true))
+      dispatch(calcDivideActiveSet(true))
       dispatch(calcResultGet('equal'))
     }
   }
