@@ -23,6 +23,7 @@ export class Calculator extends Component {
   }
   render() {
     const { output, calcButtonClick, calcReset, calcAdd, calcEqual, calcDotButtonClick, calcMinus, calcMultiply, calcDivide } = this.props
+    const functionButton = true
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>
@@ -31,32 +32,32 @@ export class Calculator extends Component {
         <div className={sty.rowWrap}>
           <Button value={'C'} onClick={calcReset}/>
           <Button value={' '} />
-          <Button value={'%'} onClick={calcButtonClick}/>
-          <Button value={'÷'} onClick={calcDivide}/>
+          <Button value={' '} />
+          <Button value={'÷'} onClick={calcDivide} background={'#FBF9E0'}/>
         </div>
         <div className={sty.rowWrap}>
           <Button value={'7'} onClick={calcButtonClick}/>
           <Button value={'8'} onClick={calcButtonClick}/>
           <Button value={'9'} onClick={calcButtonClick}/>
-          <Button value={'×'} onClick={calcMultiply}/>
+          <Button value={'×'} onClick={calcMultiply} background={'#FBF9E0'}/>
         </div>
         <div className={sty.rowWrap}>
           <Button value={'4'} onClick={calcButtonClick}/>
           <Button value={'5'} onClick={calcButtonClick}/>
           <Button value={'6'} onClick={calcButtonClick}/>
-          <Button value={'−'} onClick={calcMinus}/>
+          <Button value={'−'} onClick={calcMinus} background={'#FBF9E0'}/>
         </div>
         <div className={sty.rowWrap}>
           <Button value={'1'} onClick={calcButtonClick}/>
           <Button value={'2'} onClick={calcButtonClick}/>
           <Button value={'3'} onClick={calcButtonClick}/>
-          <Button value={'+'} onClick={calcAdd}/>
+          <Button value={'+'} onClick={calcAdd} background={'#FBF9E0'}/>
         </div>
         <div className={sty.rowWrap}>
           <Button value={'0'} onClick={calcButtonClick}/>
           <Button value={' '} />
           <Button value={'.'} onClick={calcDotButtonClick}/>
-          <Button value={'='} onClick={calcEqual}/>
+          <Button value={'='} onClick={calcEqual} background={'#FBF9E0'}/>
         </div>
       </div>
     )

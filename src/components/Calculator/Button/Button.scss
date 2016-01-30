@@ -19,6 +19,7 @@
     @include materialShadow(1);
     &:focus {
       background: #fff;
+      font-weight: 400;
     }
   }
 }
