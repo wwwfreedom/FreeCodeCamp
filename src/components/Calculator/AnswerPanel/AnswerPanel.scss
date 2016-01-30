@@ -1,0 +1,15 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 260px;
+  height: 80px;
+  @include materialShadow(1);
+  span {
+    font-size: 2em;
+    padding-right: 0.5em;
+    overflow: scroll;
+  }
+}

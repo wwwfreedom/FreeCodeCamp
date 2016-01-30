@@ -1,0 +1,25 @@
+@import 'base';
+
+.container {
+  font-family: lato, serif;
+  font-weight: 300;
+  font-size: 2em;
+  margin: 0;
+  padding: 0;
+  input {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 65px;
+    height: 65px;
+    background: $altBgColor;
+    border-radius: 0px;
+    border: 1px solid $lightGray;
+    outline: none;
+    @include materialShadow(1);
+    &:focus {
+      background: #fff;
+      font-weight: 400;
+    }
+  }
+}
