@@ -1,0 +1,23 @@
+@import 'base';
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin: 0 auto;
+  h1 {
+    font-family: 'Lato', serif;
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: 1em;
+  }
+  @include MQ(SM) {
+    margin-top: 4em;
+    width: 600px;
+  }
+}
+
+.rowWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -11,13 +11,15 @@ import AboutView from 'views/AboutView'
 import ContactView from 'views/ContactView'
 import QuoteView from 'views/QuoteView/QuoteView'
 import PomoTime from 'views/PomoTime/PomoTime'
+import Calculator from 'views/Calculator/Calculator'
 
 export default (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/about' component={AboutView} />
     <Route path='/contact' component={ContactView} />
-    <Route path='/pomotime' component={PomoTime} />
     <Route path='/quoteGenerator' component={QuoteView} />
+    <Route path='/pomotime' component={PomoTime} />
+    <Route path='/Calculator' component={Calculator} />
   </Route>
 )
