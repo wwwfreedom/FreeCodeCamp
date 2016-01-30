@@ -10,12 +10,10 @@ function isDecimalNumber (value) {
 }
 
 // calculate longest decimal length given an array of two numbers
-function decimalLength (arrOfNum) {
-  // need to deal with edge case where the number is 1.6000000000000001
-  // modify to take into account of this case (2.3 * 0.5 :: 1.15) instead of 1 decimal place. solution set min 2 decimal places when one or both numbers is a decimal
+function decimalLength (arrOfNum, result) {
   var decimalTest = () => {
     var testArr = arrOfNum.map((num) => isDecimalNumber(num))
-    if (testArr[0] === true || testArr[1] === true) {
+    if (testArr[0] === true || testArr[1] === true || isDecimalNumber(result)) {
       return true
     } else {
       return false
@@ -27,7 +25,15 @@ function decimalLength (arrOfNum) {
   var longestNumber = Math.max(arrOfNumInStringLength[0], arrOfNumInStringLength[1])
 
   if (decimalTest() === true) {
-    return longestNumber - 2
+    if (isDecimalNumber(result)) {
+      let resultStringLength = result.toString().length - 2
+      // limit the maximum decimal length to 8
+      let maxResultNumber = Math.min(resultStringLength, 8)
+      return maxResultNumber
+    }
+    let number = longestNumber - 2
+    let maxNumber = Math.min(number, 8)
+    return maxNumber
   } else {
     return 0
   }
@@ -474,9 +480,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     }
     dispatch(calcNumberSave())
     let numberArr = getState().Calculator.numbers
-    let decimal = decimalLength(numberArr)
     let result
     result = numberArr[0] + numberArr[1]
+    let decimal = decimalLength(numberArr, result)
     // store second variable, methods and result to use for calculation if the user press = again
     dispatch(calcEqualVariableSet(numberArr[1].toString()))
     dispatch(calcEqualPrevMethodSet(currentMethod))
@@ -504,9 +510,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     }
     dispatch(calcNumberSave()) // this step could be reduntdant
     let numberArr = getState().Calculator.numbers
-    let decimal = decimalLength(numberArr)
     let result
     result = numberArr[0] - numberArr[1]
+    let decimal = decimalLength(numberArr, result)
     // store second variable, methods and result to use for calculation if the user press = again
     dispatch(calcEqualVariableSet(numberArr[1].toString()))
     dispatch(calcEqualPrevMethodSet(currentMethod))
@@ -534,9 +540,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     }
     dispatch(calcNumberSave()) // this step could be reduntdant
     let numberArr = getState().Calculator.numbers
-    let decimal = decimalLength(numberArr)
     let result
     result = numberArr[0] * numberArr[1]
+    let decimal = decimalLength(numberArr, result)
     // store second variable, methods and result to use for calculation if the user press = again
     dispatch(calcEqualVariableSet(numberArr[1].toString()))
     dispatch(calcEqualPrevMethodSet(currentMethod))
@@ -564,9 +570,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     }
     dispatch(calcNumberSave()) // this step could be reduntdant
     let numberArr = getState().Calculator.numbers
-    let decimal = decimalLength(numberArr)
     let result
     result = numberArr[0] / numberArr[1]
+    let decimal = decimalLength(numberArr, result)
     // store second variable, methods and result to use for calculation if the user press = again
     dispatch(calcEqualVariableSet(numberArr[1].toString()))
     dispatch(calcEqualPrevMethodSet(currentMethod))
@@ -575,6 +581,7 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcEqualActiveSet(false))
     // check for decimal number to return result of whole interger in format of 1 instead of 1.0
     if (isDecimalNumber(result)) {
+      console.log('calling toFixed')
       dispatch(calcOutputSet(result.toFixed(decimal)))
     } else {
       dispatch(calcOutputSet(result.toString()))
@@ -592,9 +599,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     // logic to do plus calculation
     if (getState().Calculator.add.active === true) {
       let numberArr = getState().Calculator.numbers
-      let decimal = decimalLength(numberArr)
       let result
       result = numberArr[0] + numberArr[1]
+      let decimal = decimalLength(numberArr, result)
       // store second variable, methods and result to use for calculation if the user press = again
       dispatch(calcEqualVariableSet(numberArr[1].toString()))
       dispatch(calcEqualPrevMethodSet('add'))
@@ -615,9 +622,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     // logic to do the actual minus calculation
     if (getState().Calculator.minus.active === true) {
       let numberArr = getState().Calculator.numbers
-      let decimal = decimalLength(numberArr)
       let result
       result = numberArr[0] - numberArr[1]
+      let decimal = decimalLength(numberArr, result)
       // store second variable, methods and result to use for calculation if the user press = again
       dispatch(calcEqualVariableSet(numberArr[1].toString()))
       dispatch(calcEqualPrevMethodSet('minus'))
@@ -638,9 +645,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     // logic to do the actual multiply calculation
     if (getState().Calculator.multiply.active === true) {
       let numberArr = getState().Calculator.numbers
-      let decimal = decimalLength(numberArr)
       let result
       result = numberArr[0] * numberArr[1]
+      let decimal = decimalLength(numberArr, result)
       // store second variable, methods and result to use for calculation if the user press = again
       dispatch(calcEqualVariableSet(numberArr[1].toString()))
       dispatch(calcEqualPrevMethodSet('multiply'))
@@ -661,9 +668,9 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     // logic to do the actual divide calculation
     if (getState().Calculator.divide.active === true) {
       let numberArr = getState().Calculator.numbers
-      let decimal = decimalLength(numberArr)
       let result
       result = numberArr[0] / numberArr[1]
+      let decimal = decimalLength(numberArr, result)
       // store second variable, methods and result to use for calculation if the user press = again
       dispatch(calcEqualVariableSet(numberArr[1].toString()))
       dispatch(calcEqualPrevMethodSet('divide'))
