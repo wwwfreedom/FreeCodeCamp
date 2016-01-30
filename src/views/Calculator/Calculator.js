@@ -25,6 +25,7 @@ export class Calculator extends Component {
     const { output, calcButtonClick, calcReset, calcAdd, calcEqual, calcDotButtonClick, calcMinus, calcMultiply, calcDivide } = this.props
     return (
       <div className={sty.container}>
+        <h1>FreeCodeCamp Calculator Zipline</h1>
         <div className={sty.rowWrap}>
           <AnswerPanel answer={output}/>
         </div>
