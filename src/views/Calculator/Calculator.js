@@ -23,7 +23,6 @@ export class Calculator extends Component {
   }
   render() {
     const { output, calcButtonClick, calcReset, calcAdd, calcEqual, calcDotButtonClick, calcMinus, calcMultiply, calcDivide } = this.props
-    const functionButton = true
     return (
       <div className={sty.container}>
         <div className={sty.rowWrap}>

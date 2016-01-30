@@ -20,7 +20,7 @@ describe('(Component) Calculator Button', () => {
   })
 
   it('Should have a style prop with correct value', () => {
-    expect(wrapper.props().style).to.eql({background: 'red'})
+    expect(wrapper.find('input').props().style).to.eql({background: 'red'})
   })
 
   it('Should have a span with the right value', () => {
