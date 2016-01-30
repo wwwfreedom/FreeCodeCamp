@@ -39,6 +39,8 @@ function decimalLength (arrOfNum) {
 
 export const CALC_ADD_ACTIVE_SET = 'CALC_ADD_ACTIVE_SET'
 export const CALC_ADD_CALLBACK_SET = 'CALC_ADD_CALLBACK_SET'
+export const CALC_DIVIDE_ACTIVE_SET = 'CALC_DIVIDE_ACTIVE_SET'
+export const CALC_DIVIDE_CALLBACK_SET = 'CALC_DIVIDE_CALLBACK_SET'
 export const CALC_DOT_ACTIVE_SET = 'CALC_DOT_ACTIVE_SET'
 
 export const CALC_EQUAL_ACTIVE_SET = 'CALC_EQUAL_ACTIVE_SET'
@@ -78,6 +80,8 @@ export const CALC_RESET = 'CALC_RESET'
 export const calcAddActiveSet = createAction(CALC_ADD_ACTIVE_SET, value => value)
 export const calcAddCallbackSet = createAction(CALC_ADD_CALLBACK_SET, value => value)
 
+export const calcDivideActiveSet = createAction(CALC_DIVIDE_ACTIVE_SET, value => value)
+export const calcDivideCallbackSet = createAction(CALC_DIVIDE_CALLBACK_SET, value => value)
 export const calcDotActiveSet = createAction(CALC_DOT_ACTIVE_SET, value => value)
 
 export const calcEqualActiveSet = createAction(CALC_EQUAL_ACTIVE_SET, value => value)
@@ -124,6 +128,8 @@ export const calcReset = () => (dispatch, getState) => {
   dispatch(calcEqualPrevMethodSet(''))
   dispatch(calcAddActiveSet(false))
   dispatch(calcAddCallbackSet(false))
+  dispatch(calcDivideActiveSet(false))
+  dispatch(calcDivideCallbackSet(false))
   dispatch(calcDotActiveSet(false))
   dispatch(calcMinusActiveSet(false))
   dispatch(calcMinusCallbackSet(false))
@@ -204,6 +210,7 @@ export const calcAdd = () => (dispatch, getState) => {
         dispatch(calcNumberClear())
         dispatch(calcMinusActiveSet(false))
         dispatch(calcMultiplyActiveSet(false))
+        dispatch(calcDivideActiveSet(false))
       }
     }
   }
@@ -270,6 +277,7 @@ export const calcMinus = (value) => (dispatch, getState) => {
         dispatch(calcNumberClear())
         dispatch(calcAddActiveSet(false))
         dispatch(calcMultiplyActiveSet(false))
+        dispatch(calcDivideActiveSet(false))
       }
     }
   }
@@ -340,6 +348,7 @@ export const calcMultiply = (value) => (dispatch, getState) => {
         dispatch(calcNumberClear())
         dispatch(calcAddActiveSet(false))
         dispatch(calcMinusActiveSet(false))
+        dispatch(calcDivideActiveSet(false))
       }
     }
   }
@@ -379,6 +388,75 @@ export const calcMultiply = (value) => (dispatch, getState) => {
   // only call calcResultGet when there is two numbers. For use case (1 + 2 +)
   if (getState().Calculator.numbers.length === 2) {
     dispatch(calcResultGet('multiply'))
+    return
+  }
+}
+
+/**
+ * Division logic
+ */
+
+export const calcDivide = (value) => (dispatch, getState) => {
+  // if user switch method then call equal and then set a call back to resume divide operation below. For use case (1 / 2 - :: 0.5)
+  if (getState().Calculator.methodActive !== '') {
+    if (getState().Calculator.outputClear === false) {
+      if (getState().Calculator.divide.active === false) {
+        if (getState().Calculator.methodActive !== 'divide') {
+          dispatch(calcDivideCallbackSet(true))
+          dispatch(calcEqual())
+          return
+        }
+      }
+    }
+  }
+
+  // logic to clear the number when user change their mind and switch method. Deal with use case (1 / - :: 1)
+  if (getState().Calculator.outputClear === true) {
+    if (getState().Calculator.divide.active === false) {
+      if (getState().Calculator.methodActive !== 'divide') {
+        dispatch(calcNumberClear())
+        dispatch(calcAddActiveSet(false))
+        dispatch(calcMinusActiveSet(false))
+        dispatch(calcDivideActiveSet(false))
+      }
+    }
+  }
+
+  // when divide is active and there's no input then return. For use case (* *)
+  if (getState().Calculator.divide.active === true) {
+    if (getState().Calculator.input === '') {
+      return
+    }
+  }
+
+  // if there's input then do divide
+  if (getState().Calculator.input.length !== 0) {
+    dispatch(calcDivideActiveSet(true))
+    // dispatch the right numberSave according to dot active status
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('divide'))
+    dispatch(calcOutputShouldClear(true))
+    // for use case of this series of inputs (1 / 2 :: 0.5 = :: 0.25) should output 0.25 or (1 / 2 - :: 0.5)
+  } else if (getState().Calculator.output.length !== 0) {
+    dispatch(calcDivideActiveSet(true))
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcInputSet(getState().Calculator.output))
+    dispatch(calcNumberSave())
+    dispatch(calcInputClear())
+    dispatch(calcMethodSet('divide'))
+  } else {
+    return
+  }
+
+  // only call calcResultGet when there is two numbers. For use case (1 / 2 /)
+  if (getState().Calculator.numbers.length === 2) {
+    dispatch(calcResultGet('divide'))
     return
   }
 }
@@ -479,6 +557,36 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcOutputShouldClear(true))
   }
 
+  // logic for chaining divide functions
+  if (method === 'divide') {
+    if (getState().Calculator.dot.active === true) {
+      dispatch(calcDotActiveSet(false))
+    }
+    dispatch(calcNumberSave()) // this step could be reduntdant
+    let numberArr = getState().Calculator.numbers
+    let decimal = decimalLength(numberArr)
+    let result
+    result = numberArr[0] / numberArr[1]
+    // store second variable, methods and result to use for calculation if the user press = again
+    dispatch(calcEqualVariableSet(numberArr[1].toString()))
+    dispatch(calcEqualPrevMethodSet(currentMethod))
+    dispatch(calcEqualResultSet(result.toString()))
+    // set calc equal active to false to avoid double calculation
+    dispatch(calcEqualActiveSet(false))
+    // check for decimal number to return result of whole interger in format of 1 instead of 1.0
+    if (isDecimalNumber(result)) {
+      dispatch(calcOutputSet(result.toFixed(decimal)))
+    } else {
+      dispatch(calcOutputSet(result.toString()))
+    }
+    dispatch(calcInputClear())
+    dispatch(calcNumberClear())
+    // set the input back to the result for chaining of addition
+    // potential problem here because if the result is a decimal number it might not get translated back properly
+    dispatch(calcNumberSet(result))
+    dispatch(calcOutputShouldClear(true))
+  }
+
   // logic to compute on press of = button
   if (method === 'equal') {
     // logic to do plus calculation
@@ -549,6 +657,29 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcMultiplyActiveSet(false))
       dispatch(calcOutputShouldClear(true))
     }
+
+    // logic to do the actual divide calculation
+    if (getState().Calculator.divide.active === true) {
+      let numberArr = getState().Calculator.numbers
+      let decimal = decimalLength(numberArr)
+      let result
+      result = numberArr[0] / numberArr[1]
+      // store second variable, methods and result to use for calculation if the user press = again
+      dispatch(calcEqualVariableSet(numberArr[1].toString()))
+      dispatch(calcEqualPrevMethodSet('divide'))
+      dispatch(calcEqualResultSet(result.toString()))
+      // set calc equal active to false to avoid double calculation
+      dispatch(calcEqualActiveSet(false))
+      if (isDecimalNumber(result)) {
+        dispatch(calcOutputSet(result.toFixed(decimal)))
+      } else {
+        dispatch(calcOutputSet(result.toString()))
+      }
+      dispatch(calcInputClear())
+      dispatch(calcNumberClear())
+      dispatch(calcDivideActiveSet(false))
+      dispatch(calcOutputShouldClear(true))
+    }
   }
 
   // logic to do calculation when = is press again
@@ -585,6 +716,17 @@ export const calcResultGet = (method) => (dispatch, getState) => {
       dispatch(calcMultiplyActiveSet(true))
       dispatch(calcResultGet('equal'))
     }
+
+    if (getState().Calculator.equal.prevMethod === 'divide') {
+      let prevResult = getState().Calculator.equal.result
+      let variable = getState().Calculator.equal.variable
+      dispatch(calcInputSet(prevResult))
+      dispatch(calcNumberSave())
+      dispatch(calcInputSet(variable))
+      dispatch(calcNumberSave())
+      dispatch(calcMultiplyActiveSet(true))
+      dispatch(calcResultGet('equal'))
+    }
   }
 
   // this gets run if their is a callback schedule, set the prevMethod to the correct method of the callback without this operation chaining will produce incorrect result. also reset the callback to default false
@@ -607,6 +749,13 @@ export const calcResultGet = (method) => (dispatch, getState) => {
     dispatch(calcEqualPrevMethodSet('multiply'))
     dispatch(calcMultiplyCallbackSet(false))
     dispatch(calcMultiply())
+  }
+
+  if (getState().Calculator.divide.callback === true) {
+    dispatch(calcMethodSet('divide'))
+    dispatch(calcEqualPrevMethodSet('divide'))
+    dispatch(calcDivideCallbackSet(false))
+    dispatch(calcDivide())
   }
 }
 
@@ -660,7 +809,8 @@ export const actions = {
   calcEqual,
   calcDotButtonClick,
   calcMinus,
-  calcMultiply
+  calcMultiply,
+  calcDivide
 }
 
 /**
@@ -680,6 +830,10 @@ var initialState = {
     callback: false
   },
   multiply: {
+    active: false,
+    callback: false
+  },
+  divide: {
     active: false,
     callback: false
   },
@@ -707,6 +861,20 @@ export const Calculator = handleActions({
   CALC_ADD_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
     add: {
       ...state.add,
+      callback: payload
+    }
+  }),
+
+  CALC_DIVIDE_ACTIVE_SET: (state, {payload}) => Object.assign({}, state, {
+    divide: {
+      ...state.divide,
+      active: payload
+    }
+  }),
+
+  CALC_DIVIDE_CALLBACK_SET: (state, {payload}) => Object.assign({}, state, {
+    divide: {
+      ...state.divide,
       callback: payload
     }
   }),
