@@ -170,6 +170,12 @@ export const calcDotButtonClick = (value) => (dispatch, getState) => {
 
 export const calcButtonClick = (value) => (dispatch, getState) => {
   let shouldClearOutput = getState().Calculator.outputClear
+  let inputLength = getState().Calculator.input.length
+
+  // return if input length exceed maximum
+  if (inputLength >= 9) {
+    return
+  }
 
   // check to force only one 0
   if (getState().Calculator.input === '0') {
