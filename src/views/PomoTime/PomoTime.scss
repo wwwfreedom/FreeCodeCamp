@@ -5,7 +5,7 @@
   justify-content: center;
   width: 100%;
   // apply height to whole viewport starting from height 806px onward
-  @media only screen and (min-height: 806px) and (max-height: 10000px ) {
+  @media only screen and (min-height: 876px) and (max-height: 10000px ) {
     height: calc(100vh - #{$menuBarHeight});
   }
   font-family: 'Lato', serif;
