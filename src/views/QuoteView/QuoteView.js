@@ -13,7 +13,7 @@ export class QuoteView extends Component {
   static propTypes = {
     quote: PropTypes.object.isRequired,
     quoteGetNoDupes: PropTypes.func.isRequired
-  }
+  };
 
   render () {
     const { quoteGetNoDupes, quote } = this.props

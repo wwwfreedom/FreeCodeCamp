@@ -16,7 +16,7 @@ export class AboutView extends Component {
     title: PropTypes.string.isRequired,
     introText: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired
-  }
+  };
 
   render () {
     const { introText, image } = this.props

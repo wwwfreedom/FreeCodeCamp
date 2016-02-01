@@ -21,7 +21,8 @@ export class Navigation extends Component {
     dropDownLinks: React.PropTypes.array.isRequired,
     dropDownActivate: React.PropTypes.func.isRequired,
     dropDownStatus: React.PropTypes.bool.isRequired
-  }
+  };
+
   render() {
     return (
       <div>

@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 export default class Weather extends Component {
   static propTypes = {
     location: PropTypes.string
-  }
+  };
   render() {
     const { location } = this.props
     return (
