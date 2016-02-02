@@ -1,6 +1,6 @@
 import sty from './Portfolio.scss'
 import { Link } from 'react-router'
-import * as _ from 'lodash'
+import { includes } from 'lodash'
 // import escaperoomsa from '../../../src/'
 
 export default function Portfolio ({portfolio}) {
@@ -42,7 +42,7 @@ function renderContent (portfolio) {
 function renderLinks (item) {
   // lesson: includes() es6 string method is awesome
   // test doesn't like includes so I'll implement lodash solution
-  if (_.includes(item.link, 'http:')) {
+  if (includes(item.link, 'http:')) {
     return (
       <a href={item.link} target='_blank' className={sty.link}> View Project</a>
     )
