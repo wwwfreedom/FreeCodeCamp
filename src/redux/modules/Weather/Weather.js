@@ -33,7 +33,8 @@ const initialState = {
     requestStatus: false,
     error: {
       status: false,
-      message: ''
+      message: '',
+      code: ''
     }
   }
 }
