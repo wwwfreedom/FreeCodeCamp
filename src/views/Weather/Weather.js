@@ -19,19 +19,23 @@ export default class Weather extends Component {
     locationReceive: PropTypes.func.isRequired,
     locationRequest: PropTypes.func.isRequired,
     locationError: PropTypes.func.isRequired,
-    notifSend: PropTypes.func.isRequired
+    notifSend: PropTypes.func.isRequired,
+    fetchWeatherIfNeeded: PropTypes.func.isRequired
   };
 
   render() {
     const { location } = this.props
     return (
       <div className={sty.container}>
+        {location.longitude} -
+        {location.latitude}
+        {location.error.message}
       </div>
     )
   }
 
   componentDidMount() {
-    const { locationReceive, locationRequest, locationError, notifSend } = this.props
+    const { locationReceive, locationRequest, locationError, notifSend, fetchWeatherIfNeeded } = this.props
 
     // if geolocation is available
     if ("geolocation" in window.navigator) {
@@ -39,6 +43,8 @@ export default class Weather extends Component {
       const geoSuccess = (position) => {
         locationReceive({latitude: position.coords.latitude, longitude: position.coords.longitude})
         locationRequest(false)
+        // then fetch weather
+        fetchWeatherIfNeeded()
       }
       // if there's error fire appropriate notification
       const geoError = (error) => {
