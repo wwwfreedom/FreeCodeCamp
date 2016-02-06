@@ -6,7 +6,8 @@ import sty from './Weather.scss'
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
 const mapStateToProps = (state) => ({
-  location: state.Weather.location
+  location: state.Weather.location,
+  weather: state.Weather.weather
 })
 
 const combineActions = Object.assign({}, WeatherActions, {
@@ -20,16 +21,20 @@ export default class Weather extends Component {
     locationRequest: PropTypes.func.isRequired,
     locationError: PropTypes.func.isRequired,
     notifSend: PropTypes.func.isRequired,
-    fetchWeatherIfNeeded: PropTypes.func.isRequired
+    fetchWeatherIfNeeded: PropTypes.func.isRequired,
+    weather: PropTypes.object.isRequired
   };
 
   render() {
-    const { location } = this.props
+    const { location, weather } = this.props
     return (
       <div className={sty.container}>
-        {location.longitude} -
-        {location.latitude}
-        {location.error.message}
+        <div>
+           <span className="conditions">&#xf00d;</span>
+           <span className="rain">&#xf002;</span>
+           <span className="rain">&#xf008;</span>
+           <span className="rain">&#xf02e;</span>
+        </div>
       </div>
     )
   }
