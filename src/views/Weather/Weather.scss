@@ -1,0 +1,47 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5em;
+  @media only screen and (min-height: 650px) and (max-height: 10000px ) {
+    height: calc(100vh - #{$menuBarHeight});
+    margin-top: 0;
+  }
+}
+
+.nameTemp {
+  display:flex;
+  flex-direction: column;
+  @include materialShadow(3);
+  background: #292929;
+  color: #fff;
+  padding: 1.5em;
+  padding-top: 2em;
+  width: 220px;
+  overflow: scroll;
+}
+
+.cityName {
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: 2em;
+}
+
+.statwrap {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  @include materialShadow(3);
+  padding: 1.5em;
+  width: 220px;
+  overflow: scroll;
+}
+
+.description {
+  margin-top: 1em;
+  font-size: 1.2em;
+}

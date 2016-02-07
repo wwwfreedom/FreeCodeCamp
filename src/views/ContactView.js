@@ -16,7 +16,7 @@ export class AboutView extends Component {
     contactEmailSet: PropTypes.func.isRequired,
     contactMessageSet: PropTypes.func.isRequired,
     contactFormSubmit: PropTypes.func.isRequired
-  }
+  };
 
   render () {
     const { contact, contactNameSet, contactEmailSet, contactMessageSet, contactFormSubmit } = this.props

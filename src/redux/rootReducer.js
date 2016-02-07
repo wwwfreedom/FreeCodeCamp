@@ -8,6 +8,9 @@ import { contactView } from './modules/contactView.js'
 import { QuoteView } from './modules/QuoteView.js'
 import { PomoTime } from './modules/PomoTime.js'
 import { Calculator } from './modules/Calculator/Calculator.js'
+import { Weather } from './modules/Weather/Weather.js'
+// import { reducer as notifReducer } from 're-notif'
+import notifs from './modules/Notification/reducers/notifs.js'
 
 export default combineReducers({
   generalUi,
@@ -17,6 +20,8 @@ export default combineReducers({
   QuoteView,
   PomoTime,
   Calculator,
+  notifs,
+  Weather,
   counter,
   router
 })
