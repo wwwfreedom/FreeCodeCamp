@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as WeatherActions } from 'redux/modules/Weather/Weather.js'
 import sty from './Weather.scss'
+import IconDisplay from 'components/Weather/IconDisplay.js'
 
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
@@ -29,11 +30,16 @@ export default class Weather extends Component {
     const { location, weather } = this.props
     return (
       <div className={sty.container}>
+        <div className={sty.temp}>
+          <span>{weather.stat.main.temp}</span>
+        </div>
+        <IconDisplay code={weather.stat.weather[0].id}/>
         <div>
-           <span className="conditions">&#xf00d;</span>
-           <span className="rain">&#xf002;</span>
-           <span className="rain">&#xf008;</span>
-           <span className="rain">&#xf02e;</span>
+           <span>&#xf00d;</span>
+           <span>&#xf002;</span>
+           <span>&#xf008;</span>
+           <span>afsdfas</span>
+           <i className="icon-clock"></i>
         </div>
       </div>
     )

@@ -95,7 +95,9 @@ const shouldFetchWeather = (state) => {
   if (state.weather.isFetching) {
     return false
   }
-  return state.weather.didRefresh
+  if (state.weather.didRefresh === false) {
+    return true
+  }
 }
 
 export const fetchWeatherIfNeeded = () => (dispatch, getState) => {
@@ -120,7 +122,40 @@ const initialState = {
     isFetching: false,
     didRefresh: false,
     lastUpdated: '',
-    stat: {},
+    stat: {
+      "weather": [
+        {
+          "id": 0,
+          "main": "Clear",
+          "description": "Sky is Clear"
+        }
+      ],
+      "main": {
+        "temp": '-',
+        "pressure": 1012,
+        "humidity": 69,
+        "temp_min": 25,
+        "temp_max": 25
+      },
+      "visibility": 10000,
+      "wind": {
+        "speed": 7.7,
+        "deg": 220
+      },
+      "clouds": {
+        "all": 0
+      },
+      "sys": {
+        "type": 1,
+        "id": 8204,
+        "message": 0.0128,
+        "country": "AU",
+        "sunrise": 1454702996,
+        "sunset": 1454752123
+      },
+      "id": 7839458,
+      "name": ""
+    },
     error: {}
   },
   location: {
