@@ -19,7 +19,7 @@ export class HomeView extends Component {
     headerText: PropTypes.string.isRequired,
     headerParagraph: PropTypes.string.isRequired,
     portfolio: PropTypes.array.isRequired
-  }
+  };
 
   render() {
     const { headerImage, headerText, headerParagraph, portfolio } = this.props

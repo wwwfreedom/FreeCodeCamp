@@ -12,6 +12,7 @@ import ContactView from 'views/ContactView'
 import QuoteView from 'views/QuoteView/QuoteView'
 import PomoTime from 'views/PomoTime/PomoTime'
 import Calculator from 'views/Calculator/Calculator'
+import Weather from 'views/Weather/Weather'
 
 export default (
   <Route path='/' component={CoreLayout}>
@@ -20,6 +21,7 @@ export default (
     <Route path='/contact' component={ContactView} />
     <Route path='/quoteGenerator' component={QuoteView} />
     <Route path='/pomotime' component={PomoTime} />
+    <Route path='/Weather' component={Weather} />
     <Route path='/Calculator' component={Calculator} />
   </Route>
 )

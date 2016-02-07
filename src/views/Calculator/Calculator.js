@@ -20,7 +20,8 @@ export class Calculator extends Component {
     calcMinus: PropTypes.func.isRequired,
     calcMultiply: PropTypes.func.isRequired,
     calcDivide: PropTypes.func.isRequired
-  }
+  };
+
   render() {
     const { output, calcButtonClick, calcReset, calcAdd, calcEqual, calcDotButtonClick, calcMinus, calcMultiply, calcDivide } = this.props
     return (

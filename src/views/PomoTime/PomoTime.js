@@ -25,7 +25,7 @@ export class PomoTime extends Component {
     goals: PropTypes.object.isRequired,
     settings: PropTypes.object.isRequired,
     alarmSoundPlayOff: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     const { timer, settings, stats, goals, alarmSoundPlayOff } = this.props

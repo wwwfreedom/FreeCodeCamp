@@ -1,6 +1,8 @@
 import '../styles/core.scss'
 import Navigation from '../containers/Navigation/Navigation.js'
 import sty from './CoreLayout.scss'
+import Notifications from '../containers/Notification/Notifications.js'
+
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
 //
@@ -14,6 +16,7 @@ function CoreLayout ({ children }) {
   return (
     <div className='pageContainer'>
       <Navigation />
+      <Notifications />
       <div className={sty.viewContainer}>
         {children}
       </div>
