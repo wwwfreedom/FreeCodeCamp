@@ -8,7 +8,7 @@ import TempDisplay from 'components/Weather/TempDisplay.js'
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const mapStateToProps = (state) => ({

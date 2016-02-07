@@ -22,6 +22,7 @@
     "eol-last": 0,
     "jsx-quotes": 0,
     "quotes": 0,
-    "space-before-function-paren": [0, "never"]
+    "space-before-function-paren": [0, "never"],
+    "space-in-parens": 0
   }
 }
