@@ -3,8 +3,8 @@ import React from 'react'
 class IconBase extends React.Component {
   render() {
     let styles = {
-      verticalAlign: "middle",
-      display: 'inline-block'
+      verticalAlign: "middle"
+      // display: 'inline-block'
     }
     var props = {
       fill: "currentColor",

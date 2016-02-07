@@ -1,23 +1,42 @@
 @import 'base';
 
 .container {
-  // background: red;
   display: flex;
-  font-family: weathericons;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: calc(85vh - #{$menuBarHeight});
 }
 
-.temp {
-  display: flex;
-  flex-direction: center;
-  font-size: 2em;
+.nameTemp {
+  display:flex;
+  flex-direction: column;
+  @include materialShadow(3);
+  background: #292929;
+  color: #fff;
+  padding: 1.5em;
+  width: 200px;
+  overflow: scroll;
 }
 
-.icons {
-  font-size: 2em;
-  // cursor: pointer;
-  opacity: 0.5;
-  &:hover {
-    opacity: 1;
-    transition: all 1s ease;
-  }
+.cityName {
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: 2em;
+}
+
+.statwrap {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  @include materialShadow(3);
+  padding: 1.5em;
+  width: 200px;
+  overflow: scroll;
+}
+
+.description {
+  margin-top: 1em;
+  font-size: 1.2em;
 }

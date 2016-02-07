@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { actions as WeatherActions } from 'redux/modules/Weather/Weather.js'
 import sty from './Weather.scss'
 import IconDisplay from 'components/Weather/IconDisplay.js'
+import TempDisplay from 'components/Weather/TempDisplay.js'
 
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
@@ -27,19 +28,20 @@ export default class Weather extends Component {
   };
 
   render() {
-    const { location, weather } = this.props
+    const { weather } = this.props
     return (
       <div className={sty.container}>
-        <div className={sty.temp}>
-          <span>{weather.stat.main.temp}</span>
+        <div className={sty.nameTemp}>
+          <TempDisplay temp={weather.stat.main.temp} unit={'deg'}/>
+          <div className={sty.cityName}>
+            {weather.stat.name}
+          </div>
         </div>
-        <IconDisplay code={weather.stat.weather[0].id}/>
-        <div>
-           <span>&#xf00d;</span>
-           <span>&#xf002;</span>
-           <span>&#xf008;</span>
-           <span>afsdfas</span>
-           <i className="icon-clock"></i>
+        <div className={sty.statwrap}>
+          <IconDisplay code={weather.stat.weather[0].id}/>
+          <div className={sty.description}>
+            {weather.stat.weather[0].description}
+          </div>
         </div>
       </div>
     )
