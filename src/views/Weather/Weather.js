@@ -7,6 +7,10 @@ import TempDisplay from 'components/Weather/TempDisplay.js'
 
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const mapStateToProps = (state) => ({
   location: state.Weather.location,
   weather: state.Weather.weather
@@ -27,12 +31,20 @@ export default class Weather extends Component {
     weather: PropTypes.object.isRequired
   };
 
+  state = {
+    unit: 'deg',
+    temp: this.props.weather.stat.main.temp
+  }
   render() {
     const { weather } = this.props
     return (
       <div className={sty.container}>
         <div className={sty.nameTemp}>
-          <TempDisplay temp={weather.stat.main.temp} unit={'deg'}/>
+          <TempDisplay
+            temp={this.state.temp}
+            unit={this.state.unit}
+            onClick={this.handleClick}
+          />
           <div className={sty.cityName}>
             {weather.stat.name}
           </div>
@@ -40,11 +52,32 @@ export default class Weather extends Component {
         <div className={sty.statwrap}>
           <IconDisplay code={weather.stat.weather[0].id}/>
           <div className={sty.description}>
-            {weather.stat.weather[0].description}
+            {capitalizeFirstLetter(weather.stat.weather[0].description)}
           </div>
         </div>
       </div>
     )
+  }
+
+  handleClick = () => {
+    if (this.state.unit === 'deg') {
+      this.setState({
+        unit: 'fah',
+        temp: Math.round((this.state.temp * 1.8 + 32) * 10 ) / 10
+      })
+    } else {
+      this.setState({
+        unit: 'deg',
+        temp: Math.round(((this.state.temp - 32) / 1.8) * 10 ) / 10
+      })
+    }
+  }
+
+// lesson: if using redux to keep the state then you will need to force the component to set the state and force re-render on change of props otherwise it won't be reflected in the ui
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      temp: nextProps.weather.stat.main.temp
+    })
   }
 
   componentDidMount() {
@@ -83,7 +116,7 @@ export default class Weather extends Component {
         }
       }
       const geoOptions = {
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 30000,
         timeout: 27000
       }

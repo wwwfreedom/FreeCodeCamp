@@ -131,7 +131,7 @@ const initialState = {
         }
       ],
       "main": {
-        "temp": '-',
+        "temp": 0,
         "pressure": 1012,
         "humidity": 69,
         "temp_min": 25,
