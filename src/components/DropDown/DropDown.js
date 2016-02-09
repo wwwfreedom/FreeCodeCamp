@@ -14,7 +14,8 @@ export default class DropDown extends Component {
     dropDownStatus: PropTypes.bool.isRequired,
     mobileNavIsOpen: React.PropTypes.bool.isRequired,
     toggleMenu: React.PropTypes.func.isRequired
-  }
+  };
+
   render() {
     const { dropDownLinks, dropDownActivate, dropDownStatus } = this.props
     let dropDown = cx({
@@ -54,5 +55,5 @@ export default class DropDown extends Component {
       toggleMenu()
     }
     dropDownActivate()
-  }
+  };
 }

@@ -5,7 +5,8 @@ export default class Section extends Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired
-  }
+  };
+
   render() {
     const { text, title } = this.props
     return (

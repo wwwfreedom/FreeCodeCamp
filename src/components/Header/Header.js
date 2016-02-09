@@ -7,7 +7,8 @@ export default class Header extends Component {
     headerText: React.PropTypes.string.isRequired,
     headerParagraph: React.PropTypes.string,
     separator: PropTypes.bool
-  }
+  };
+
   render() {
     const { headerImage, headerText, headerParagraph, separator } = this.props
     let style = {
@@ -35,5 +36,5 @@ export default class Header extends Component {
         </div>
       )
     }
-  }
+  };
 }

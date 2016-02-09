@@ -34,7 +34,8 @@ export default class Weather extends Component {
   state = {
     unit: 'deg',
     temp: this.props.weather.stat.main.temp
-  }
+  };
+
   render() {
     const { weather } = this.props
     return (
@@ -71,7 +72,7 @@ export default class Weather extends Component {
         temp: Math.round(((this.state.temp - 32) / 1.8) * 10 ) / 10
       })
     }
-  }
+  };
 
 // lesson: if using redux to keep the state then you will need to force the component to set the state and force re-render on change of props otherwise it won't be reflected in the ui
   componentWillReceiveProps(nextProps) {

@@ -16,7 +16,7 @@ export default class SettingsPanel extends Component {
     settingAutoBreakToggle: PropTypes.func.isRequired,
     settingAlarmNotificationToggle: PropTypes.func.isRequired,
     settingAlarmAudioToggle: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     const {timerDurationChange, work, rest, goalChange, goals, settingAutoBreakToggle, settings} = this.props
@@ -126,7 +126,7 @@ export default class SettingsPanel extends Component {
         </div>
       )
     }
-  }
+  };
 
   // hide these feature switch on mobile and tablet and only display on desktop. Reason is autoplaying and notification support is not widely supported yet
   renderNotificationSwitch = () => {
@@ -145,7 +145,7 @@ export default class SettingsPanel extends Component {
         </div>
       )
     }
-  }
+  };
 
   activateAlarmNotification = () => {
     if (!("Notification" in window)) {
@@ -156,5 +156,5 @@ export default class SettingsPanel extends Component {
       window.Notification.requestPermission()
     }
     this.props.settingAlarmNotificationToggle()
-  }
+  };
 }
