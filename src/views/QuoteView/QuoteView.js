@@ -60,6 +60,7 @@ export class QuoteView extends Component {
       </div>
     )
   }
+
   renderImage = (image, text) => {
     // strip image links of spaces
     var imageNoSpace = image.replace(/ +/g, "")
@@ -70,7 +71,7 @@ export class QuoteView extends Component {
     } else {
       return <div className={sty.fillerDiv}></div>
     }
-  }
+  };
 }
 
 export default connect(mapStateToProps, QuoteViewActions)(QuoteView)

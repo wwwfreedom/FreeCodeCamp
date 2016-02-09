@@ -32,11 +32,11 @@ export default class Timer extends Component {
     statWorkCompleteSet: PropTypes.func.isRequired,
     statRestCompleteSet: PropTypes.func.isRequired,
     alarmSoundPlayOn: PropTypes.func.isRequired
-  }
+  };
 
   state = {
     windowWidth: window.innerWidth
-  }
+  };
 
   render() {
     const { timer } = this.props
@@ -117,7 +117,7 @@ export default class Timer extends Component {
   // add in logic to detect resize to adjust the svg diameter to suit the viewport
   handleResize = (e) => {
     this.setState({windowWidth: window.innerWidth})
-  }
+  };
 
   renderSettingButton = () => {
     const { timer, settingToggle } = this.props
@@ -134,7 +134,7 @@ export default class Timer extends Component {
         </div>
       )
     }
-  }
+  };
 
   renderButtons = () => {
     const { timer } = this.props
@@ -151,7 +151,7 @@ export default class Timer extends Component {
         </div>
       )
     }
-  }
+  };
 
   // adjust the svg circle cicumference for small and big viewport
   dynamicDiameter = () => {
@@ -160,7 +160,7 @@ export default class Timer extends Component {
     } else {
       return 360
     }
-  }
+  };
 
   handleReset = () => {
     const { timer, countDownReset, work, rest, timerProgressSet } = this.props
@@ -182,7 +182,7 @@ export default class Timer extends Component {
     clearInterval(this.distractionTimer)
     // stop the countDown timer
     clearInterval(this.Timer)
-  }
+  };
 
   handlePause = () => {
     const { countDownPause, timer, distractionTimeIncrease } = this.props
@@ -201,19 +201,16 @@ export default class Timer extends Component {
     }
     // stop the current active workTimer
     clearInterval(this.Timer)
-  }
+  };
 
   handleStart = () => {
     const { countDownStart, settingClose, timer, work, rest, statDistractionSet } = this.props
-
     // to make sure that setting is hidden out of view when timer is active
     settingClose()
-
     // if timer is active then do nothing if user press the start button
     if (timer.status === 'active') {
       return
     }
-
     // if the timer's status is 'notActive' then make a new timer and start countDown
     if (timer.status === 'notActive') {
       countDownStart()
@@ -249,7 +246,7 @@ export default class Timer extends Component {
         this.Timer = setInterval(this.doCountDown, 1000)
       }
     }
-  }
+  };
 
   doCountDown = () => {
     const { timer, work, rest, timerProgressSet, workTimeIncrease, restTimeIncrease, countDownReset, timerTypeSet, statWorkCompleteSet, statRestCompleteSet, settings, alarmSoundPlayOn } = this.props
@@ -327,5 +324,5 @@ export default class Timer extends Component {
         alarmSoundPlayOn()
       }
     }
-  }
+  };
 }

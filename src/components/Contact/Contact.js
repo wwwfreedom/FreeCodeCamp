@@ -12,12 +12,14 @@ export default class Contact extends Component {
     contactEmailSet: PropTypes.func.isRequired,
     contactMessageSet: PropTypes.func.isRequired,
     contactFormSubmit: PropTypes.func.isRequired
-  }
+  };
+
   state = {
     name: this.props.contact.formInput.name,
     email: this.props.contact.formInput.email,
     message: this.props.contact.formInput.message
-  }
+  };
+
   render() {
     const { contact } = this.props
     var style = {
@@ -85,6 +87,7 @@ export default class Contact extends Component {
       </div>
     )
   }
+
   renderSubmitButton = () => {
     const { formStatus } = this.props.contact
     if (formStatus.submitted === false && formStatus.error === false) {
@@ -94,7 +97,8 @@ export default class Contact extends Component {
     } else {
       return <input type="text" style={{backgroundColor: '#DFF2BF'}} disabled value={formStatus.response} className='submit'/>
     }
-  }
+  };
+
   handleSubmit = (e) => {
     e.preventDefault()
     var payload = {
@@ -103,7 +107,7 @@ export default class Contact extends Component {
       message: this.state.message
     }
     this.props.contactFormSubmit(payload)
-  }
+  };
 
   handleBlur = (e, type) => {
     if (type === 'name') {
@@ -117,7 +121,7 @@ export default class Contact extends Component {
     if (type === 'message') {
       this.props.contactMessageSet(e.target.value)
     }
-  }
+  };
 
   handleChange = (e, type) => {
     if (type === 'name') {
@@ -131,5 +135,5 @@ export default class Contact extends Component {
     if (type === 'message') {
       this.setState({ message: e.target.value })
     }
-  }
+  };
 }

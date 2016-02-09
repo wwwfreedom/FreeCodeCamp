@@ -14,7 +14,8 @@ export default class SideBar extends Component {
     dropDownLinks: React.PropTypes.array.isRequired,
     dropDownActivate: React.PropTypes.func.isRequired,
     dropDownStatus: React.PropTypes.bool.isRequired
-  }
+  };
+
   render() {
     const { dropDownLinks, dropDownActivate, dropDownStatus, toggleMenu, mobileNavIsOpen } = this.props
     let mobileNav = cx({
@@ -65,7 +66,7 @@ export default class SideBar extends Component {
         </Link>
       )
     )
-  }
+  };
 
   handleClick = () => {
     // close dropdown on closing sidebar or navigating to new links
@@ -73,11 +74,12 @@ export default class SideBar extends Component {
       this.props.dropDownActivate()
     }
     this.props.toggleMenu()
-  }
+  };
 
   componentDidMount() {
     window.onkeydown = this.listenForClose
   }
+
   componentWillUnmount() {
     window.onkeydown = null
   }
@@ -96,5 +98,5 @@ export default class SideBar extends Component {
     if (this.props.mobileNavIsOpen === true && (e.key === 'Escape' || e.keyCode === 27)) {
       this.props.toggleMenu()
     }
-  }
+  };
 }
