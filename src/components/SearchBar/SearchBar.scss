@@ -15,7 +15,6 @@ $inputTextAreaMargin: 0.5em;
     top: 15px;
     transition-duration: 0.25s;
     &:hover {
-      @include materialShadow(4);
       transform: scale(1.5);
     }
   }

@@ -1,5 +1,7 @@
 // using this because json-fetch doesn't support jsonp
 import fetchJsonp from 'fetch-jsonp'
+import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -18,12 +20,14 @@ export const searchInputSet = (value = '') => ({
   payload: value
 })
 
-export const wikiSearchRequest = (value) => ({ type: WIKI_SEARCH_REQUEST })
+export const wikiSearchRequest = () => ({ type: WIKI_SEARCH_REQUEST })
+export const wikiSearchFailure = () => ({ type: WIKI_SEARCH_FAILURE })
 
-// export const wikiSearchReceive = (articles) => ({
-//   type: SEARCH_INPUT_SET,
-//   payload: value
-// })
+export const wikiSearchReceive = (articles) => ({
+  type: WIKI_SEARCH_RECEIVE,
+  payload: articles
+})
+
 /**
  * Thunk actions
  */
@@ -37,9 +41,17 @@ export const wikiFetch = () => async (dispatch, getState) => {
     var articles = await fetchJsonp(`http://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=${searchTerm}&callback=JSON_CALLBACK`)
     // resolve the promise and convert parse response to an object
     .then(response => response.json())
-    console.log(articles)
+
+    // dispatch the articles
+    dispatch(wikiSearchReceive(articles.query.pages))
   } catch (error) {
-    console.log(error)
+    // send popup if error
+    dispatch(notifSend({
+      message: "Something went wrong. Please refresh the page or go to wikipedia.org",
+      kind: 'danger',
+      dismissAfter: 5000
+    }))
+    dispatch(wikiSearchFailure())
   }
 }
 
@@ -73,8 +85,19 @@ const ACTION_HANDLERS = {
     searchInput: action.payload
   }),
 
-  [WIKI_SEARCH_REQUEST]: (state, action) => Object.assign({}, state, {
-    isFetching: true
+  [WIKI_SEARCH_REQUEST]: (state) => Object.assign({}, state, {
+    isFetching: true,
+    error: false
+  }),
+
+  [WIKI_SEARCH_RECEIVE]: (state, action) => Object.assign({}, state, {
+    isFetching: false,
+    articles: action.payload
+  }),
+
+  [WIKI_SEARCH_FAILURE]: (state) => Object.assign({}, state, {
+    isFetching: false,
+    error: true
   })
 }
 
@@ -86,9 +109,7 @@ const initialState = {
   searchInput: '',
   articles: [],
   isFetching: false,
-  error: {
-    status: false
-  }
+  error: true
 }
 
 export default function wikipedia(state = initialState, action) {

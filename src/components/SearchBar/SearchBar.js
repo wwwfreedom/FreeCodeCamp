@@ -37,9 +37,10 @@ export default class SearchBar extends Component {
 
   handleInputBlur = (e) => {
     this.props.searchInputSet(e.target.value)
-    setTimeout(function() {
-      this.setState({searchInput: ''})
-    }.bind(this), 5000)
+    // lesson: how to use setTimeout in react
+    // setTimeout(function() {
+    //   this.setState({searchInput: ''})
+    // }.bind(this), 5000)
   };
 
   handleButtonPress = (e) => {
