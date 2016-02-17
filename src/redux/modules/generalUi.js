@@ -52,7 +52,7 @@ export const generalUi = handleActions({
   // this the default state
   sideBarStatus: false,
   menuLinks: menuLinks,
-  dropDownLinks: ['PomoTime', 'Quote Generator', 'Calculator', 'Weather'],
+  dropDownLinks: ['PomoTime', 'Quote Generator', 'Calculator', 'Weather', 'Wikipedia'],
   dropDownStatus: false
 })
 
