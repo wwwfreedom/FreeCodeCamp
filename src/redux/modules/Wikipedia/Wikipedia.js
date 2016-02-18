@@ -1,3 +1,7 @@
+/**
+ * resources
+ * http://stackoverflow.com/questions/8363531/accessing-main-picture-of-wikipedia-page-by-api
+ */
 // using this because json-fetch doesn't support jsonp
 import fetchJsonp from 'fetch-jsonp'
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
@@ -38,13 +42,17 @@ export const wikiFetch = () => async (dispatch, getState) => {
     // get the search term from redux store
     var searchTerm = getState().wikipedia.searchInput
     // lesson: using jsonp because it's too cummbersome to use cors with wikipedia api
-    var articles = await fetchJsonp(`http://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=${searchTerm}&callback=JSON_CALLBACK`)
+    var articles = await fetchJsonp(`http://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=${searchTerm}&pithumbsize=300&callback=JSON_CALLBACK`)
     // resolve the promise and convert parse response to an object
     .then(response => response.json())
+    // convert the articles object properties into an array of object using es7
+    // lesson: convert object properties to an array using es7 Object.values
+    // http://stackoverflow.com/questions/6857468/a-better-way-to-convert-js-object-to-array
+    .then(json => Object.values(json.query.pages))
 
-    // dispatch the articles
-    dispatch(wikiSearchReceive(articles.query.pages))
+    dispatch(wikiSearchReceive(articles))
   } catch (error) {
+    console.log(error)
     // send popup if error
     dispatch(notifSend({
       message: "Something went wrong. Please refresh the page or go to wikipedia.org",
