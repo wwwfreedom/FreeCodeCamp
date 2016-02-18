@@ -13,7 +13,8 @@ export default class AudioPlayer extends Component {
     // onProgress: PropTypes.func.isRequired,
     // onTimeUpdate: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired
-  }
+  };
+
   render() {
     return (
       <audio preload='none'>
@@ -77,7 +78,7 @@ export default class AudioPlayer extends Component {
   handleMediaEnd = () => {
     React.findDOMNode(this).currentTime = 0
     this.props.onEnd()
-  }
+  };
 
   // handleProgress = () => {
   //   var node = React.findDOMNode(this)
@@ -95,7 +96,7 @@ export default class AudioPlayer extends Component {
     if (node.readyState) {
       node.currentTime = this.props.defaultTime
     }
-  }
+  };
 
   updateIsPlaying = () => {
     var node = React.findDOMNode(this)
@@ -106,7 +107,7 @@ export default class AudioPlayer extends Component {
     } else {
       node.pause()
     }
-  }
+  };
 
   updateSource = () => {
     var node = React.findDOMNode(this)
@@ -122,5 +123,5 @@ export default class AudioPlayer extends Component {
     if (isPlaying) {
       node.play()
     }
-  }
+  };
 }

@@ -26,11 +26,11 @@ export default class Notification extends Component {
       dangerClasses: PropTypes.string
     }),
     CustomComponent: PropTypes.element
-  }
+  };
 
   static defaultProps = {
     kind: 'info'
-  }
+  };
 
   constructor() {
     super()
@@ -49,7 +49,7 @@ export default class Notification extends Component {
     } else {
       return
     }
-  }
+  };
 
   render() {
     const { theme, kind, CustomComponent, action } = this.props

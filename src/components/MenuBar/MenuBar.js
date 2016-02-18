@@ -12,7 +12,8 @@ export default class MenuBar extends Component {
     dropDownLinks: React.PropTypes.array.isRequired,
     dropDownActivate: React.PropTypes.func.isRequired,
     dropDownStatus: React.PropTypes.bool.isRequired
-  }
+  };
+
   render() {
     const { dropDownLinks, dropDownActivate, dropDownStatus, toggleMenu, mobileNavIsOpen } = this.props
     return (
@@ -51,17 +52,17 @@ export default class MenuBar extends Component {
         </Link>
       )
     )
-  }
+  };
 
   // toggle sidebar on click of hamburger menu
   handleMenuClick = () => {
     this.props.toggleMenu()
-  }
+  };
 
   // close dropdown on closing sidebar or navigating to new links
   handleLinkClick = () => {
     if (this.props.dropDownStatus === true) {
       this.props.dropDownActivate()
     }
-  }
+  };
 }
