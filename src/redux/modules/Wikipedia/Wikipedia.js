@@ -4,7 +4,7 @@
  */
 // using this because json-fetch doesn't support jsonp
 import fetchJsonp from 'fetch-jsonp'
-import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
+// import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
 // ------------------------------------
 // Constants
@@ -54,11 +54,11 @@ export const wikiFetch = () => async (dispatch, getState) => {
   } catch (error) {
     console.log(error)
     // send popup if error
-    dispatch(notifSend({
-      message: "Something went wrong. Please refresh the page or go to wikipedia.org",
-      kind: 'danger',
-      dismissAfter: 5000
-    }))
+    // dispatch(notifSend({
+    //   message: "Something went wrong. Please refresh the page or go to wikipedia.org",
+    //   kind: 'danger',
+    //   dismissAfter: 5000
+    // }))
     dispatch(wikiSearchFailure())
   }
 }
@@ -74,7 +74,6 @@ const shouldFetchWiki = (state) => {
 
 export const fetchWikiIfNeeded = () => (dispatch, getState) => {
   if (shouldFetchWiki(getState().wikipedia)) {
-    console.log('running in fetch')
     dispatch(wikiFetch())
   }
 }
@@ -105,7 +104,8 @@ const ACTION_HANDLERS = {
 
   [WIKI_SEARCH_FAILURE]: (state) => Object.assign({}, state, {
     isFetching: false,
-    error: true
+    error: true,
+    articles: []
   })
 }
 

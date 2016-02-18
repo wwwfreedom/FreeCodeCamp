@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './SearchBar.scss'
 import MdSearch from 'react-icons/lib/md/search'
+import {debounce} from 'lodash'
 
 export default class SearchBar extends Component {
   static propTypes = {
@@ -33,14 +34,18 @@ export default class SearchBar extends Component {
 
   handleInputChange = (e) => {
     this.setState({searchInput: e.target.value})
+    this.props.searchInputSet(e.target.value)
+    // lesson: how to use setTimeout in react
+    // add a bit of delay to
+    // ToAsk: would debounce be better use here
+    // http://stackoverflow.com/questions/23123138/perform-debounce-in-react-js
+    setTimeout(function() {
+      this.props.fetchWikiIfNeeded()
+    }.bind(this), 700)
   };
 
   handleInputBlur = (e) => {
     this.props.searchInputSet(e.target.value)
-    // lesson: how to use setTimeout in react
-    // setTimeout(function() {
-    //   this.setState({searchInput: ''})
-    // }.bind(this), 5000)
   };
 
   handleButtonPress = (e) => {
