@@ -29,7 +29,7 @@ export default class Wikipedia extends Component {
       <div className={sty.container}>
         <h1>Simple English Wikipedia Search</h1>
         <Button
-          text={'random wikipedia article'}
+          text={'get random article'}
           href='http://simple.wikipedia.org/wiki/Special:Random'
           target='_blank'
         />

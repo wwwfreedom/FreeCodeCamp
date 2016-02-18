@@ -36,6 +36,7 @@ export const wikiSearchReceive = (articles) => ({
  * Thunk actions
  */
 
+// lesson: using es7 async/await pattern
 export const wikiFetch = () => async (dispatch, getState) => {
   dispatch(wikiSearchRequest())
   try {
@@ -53,6 +54,7 @@ export const wikiFetch = () => async (dispatch, getState) => {
     dispatch(wikiSearchReceive(articles))
   } catch (error) {
     console.log(error)
+    // ToAsk: getting weird edge case error when user is deleting the search word too fast
     // send popup if error
     // dispatch(notifSend({
     //   message: "Something went wrong. Please refresh the page or go to wikipedia.org",
