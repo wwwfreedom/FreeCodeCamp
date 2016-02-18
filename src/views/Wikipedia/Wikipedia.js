@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { isEmpty } from 'lodash'
 import { actions as wikipediaActions } from 'redux/modules/Wikipedia/Wikipedia.js'
 import SearchBar from 'components/SearchBar/SearchBar'
 import sty from './Wikipedia.scss'
 import Loader from 'halogen/PulseLoader'
+import Cards from 'components/Cards/Cards'
 
 const mapStateToProps = (state) => ({
   searchInput: state.wikipedia.searchInput,
@@ -13,7 +15,7 @@ const mapStateToProps = (state) => ({
 
 export default class Wikipedia extends Component {
   static propTypes = {
-    articles: PropTypes.object.isRequired,
+    articles: PropTypes.array.isRequired,
     searchInput: PropTypes.string,
     fetchWikiIfNeeded: PropTypes.func.isRequired,
     searchInputSet: PropTypes.func.isRequired,
@@ -21,7 +23,7 @@ export default class Wikipedia extends Component {
   };
 
   render() {
-    const {searchInput, fetchWikiIfNeeded, searchInputSet, isFetching} = this.props
+    const {searchInput, fetchWikiIfNeeded, searchInputSet, isFetching, articles} = this.props
     return (
       <div className={sty.container}>
         <h1>Wikipedia Search</h1>
@@ -30,7 +32,11 @@ export default class Wikipedia extends Component {
           searchInputSet={searchInputSet}
           fetchWikiIfNeeded={fetchWikiIfNeeded}
         />
-        {isFetching ? <Loader color="#D3D3D3" size="32px" margin="4px" /> : ''}
+        {isFetching ? <Loader color="#D3D3D3" size="32px" margin="20px" /> : ''}
+        {isEmpty(articles)
+          ? <div>Test</div>
+          : <Cards articles={articles} />
+        }
       </div>
     )
   }
