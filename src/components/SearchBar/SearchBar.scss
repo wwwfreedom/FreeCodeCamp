@@ -1,0 +1,70 @@
+@import 'base';
+$inputWidth: 250px;
+$inputColor: #fff;
+$inputTextAreaMargin: 0.5em;
+
+.container {
+  display: flex;
+  position: relative;
+  button {
+    border: none;
+    padding: 5px;
+    background: none;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    transition-duration: 0.25s;
+    outline: none;
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+  input {
+    display: block;
+    width: $inputWidth;
+    @include MQ(SM) {
+      width: 350px;
+    }
+    @include MQ(L) {
+      width: 400px;
+    }
+    margin: $inputTextAreaMargin auto;
+    padding: 10px 15px;
+    appearance: none;
+    outline: 0;
+    border: none;
+    @include materialShadow(2);
+    border-radius: 3px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 300;
+    transition-duration: 0.25s;
+    &:focus {
+      background-color: $inputColor;
+      width: 300px;
+      @include MQ(SM) {
+        width: 400px;
+      }
+      @include MQ(L) {
+        width: 450px;
+      }
+      color: $textColor;
+    }
+    &[type="submit"] {
+      background-color: $altBgColor;
+      border: 3px solid $altBgColor;
+      margin: 1em auto;
+      text-align: center;
+      font-weight: 400;
+      color: $textColor;
+      &:hover {
+        @include materialShadow(4);
+        transform: scale(1.005);
+      }
+    }
+    &[disabled] {
+      font-weight: 400;
+      text-align: center;
+    }
+  }
+}
