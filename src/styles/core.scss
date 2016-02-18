@@ -44,7 +44,10 @@ body {
   font-family: 'Lato', serif;
   // to removes the flash on touch in ios
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
   // use media query to enable overflow-y below for screen size bigger than the ipad to stop the jerky repaint of the nav bar when user scroll to far up on chrome. This behaviour breaks when user resize from small to big. Minor bug disable for now
   // @media all and (min-width: 1025px) {
   //   overflow-y: scroll;
