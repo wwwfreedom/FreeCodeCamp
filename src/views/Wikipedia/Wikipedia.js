@@ -6,6 +6,7 @@ import SearchBar from 'components/SearchBar/SearchBar'
 import sty from './Wikipedia.scss'
 import Loader from 'halogen/PulseLoader'
 import Cards from 'components/Cards/Cards'
+import Button from 'components/Button/Button'
 
 const mapStateToProps = (state) => ({
   searchInput: state.wikipedia.searchInput,
@@ -27,6 +28,11 @@ export default class Wikipedia extends Component {
     return (
       <div className={sty.container}>
         <h1>Wikipedia Search</h1>
+        <Button
+          text={'random wikipedia article'}
+          href='http://en.wikipedia.org/wiki/Special:Random'
+          target='_blank'
+        />
         <SearchBar
           searchInput={searchInput}
           searchInputSet={searchInputSet}
@@ -34,7 +40,7 @@ export default class Wikipedia extends Component {
         />
         {isFetching ? <Loader color="#D3D3D3" size="32px" margin="20px" /> : ''}
         {isEmpty(articles)
-          ? <div>Test</div>
+          ? <div></div>
           : <Cards articles={articles} />
         }
       </div>
