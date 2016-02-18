@@ -6,7 +6,7 @@ export default function Card ({item}) {
   return (
     <div className={sty.container}>
       {isEmpty(item.thumbnail)
-        ? <div className={sty.noImage}></div>
+        ? <div></div>
         : <a href={`http://en.wikipedia.org/?curid=${item.pageid}`} target='_blank'>
             <div className={sty.image} style={{backgroundImage: `url('${item.thumbnail.source}')`}}>
             </div>

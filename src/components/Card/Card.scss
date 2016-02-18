@@ -16,21 +16,16 @@
 }
 
 .image {
+  height: 150px;
+  @include MQ(SM) {
+    height: 200px;
+  }
   width: 280px;
-  height: 200px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   filter: contrast(70%);
   transition: 0.5s cubic-bezier(.43,.41,.22,.91);
-}
-
-.noImage {
-  width: 280px;
-  height: 200px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
 }
 
 .content {
