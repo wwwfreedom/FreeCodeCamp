@@ -7,14 +7,14 @@ export default function Card ({item}) {
     <div className={sty.container}>
       {isEmpty(item.thumbnail)
         ? <div></div>
-        : <a href={`http://en.wikipedia.org/?curid=${item.pageid}`} target='_blank'>
+        : <a href={`http://simple.wikipedia.org/?curid=${item.pageid}`} target='_blank'>
             <div className={sty.image} style={{backgroundImage: `url('${item.thumbnail.source}')`}}>
             </div>
           </a>
       }
       <div className={sty.content}>
         <div className={sty.header}>
-          <a href={`http://en.wikipedia.org/?curid=${item.pageid}`} target='_blank'>
+          <a href={`http://simple.wikipedia.org/?curid=${item.pageid}`} target='_blank'>
             <h3>{item.title}</h3>
           </a>
         </div>

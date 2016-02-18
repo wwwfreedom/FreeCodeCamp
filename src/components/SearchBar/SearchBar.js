@@ -23,6 +23,7 @@ export default class SearchBar extends Component {
           onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
           onKeyDown={this.handleKeyPress}
+          placeholder='Find things in simple English'
           ref='search'
         />
         <button onClick={this.handleButtonPress}>
