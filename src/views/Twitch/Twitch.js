@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './Twitch.scss'
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup'
+import UserCard from 'components/UserCard/UserCard'
 
 export default class Twitch extends Component {
   static propTypes = {
@@ -14,17 +15,17 @@ export default class Twitch extends Component {
     return (
       <div className={sty.container}>
         <h1>Twitch Streamers</h1>
+        <ButtonGroup
+        value={this.state.value}
+        buttons={[
+          {value: 'all', content: 'All'},
+          {value: 'online', content: 'Online'},
+          {value: 'offline', content: 'Offline'}
+        ]}
+        onChange={this.handleChange}
+        />
         <div className={sty.listWrap}>
-          <ButtonGroup
-          value={this.state.value}
-          buttons={[
-            {value: 'all', content: 'All'},
-            {value: 'online', content: 'Online'},
-            {value: 'offline', content: 'Offline'}
-          ]}
-          onChange={this.handleChange}
-          />
-          Lists
+          <UserCard />
         </div>
       </div>
     )

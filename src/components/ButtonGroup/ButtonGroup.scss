@@ -21,7 +21,8 @@
 
 .buttonActive {
   composes: button;
-  transition: 0.5s cubic-bezier(.43,.41,.22,.91);
+  transition: background 0.5s cubic-bezier(.43,.41,.22,.91);
   @include materialShadow(5);
   background: $lightGray;
+  border-bottom: 3px solid red;
 }
