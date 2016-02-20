@@ -1,11 +1,19 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { actions as twitchActions } from 'redux/modules/Twitch/Twitch.js'
 import sty from './Twitch.scss'
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup'
 import UserCard from 'components/UserCard/UserCard'
 
+const mapStateToProps = (state) => ({
+  streamersDetails: state.Twitch.streamersDetails,
+  isFetching: state.Twitch.isFetching
+})
+
 export default class Twitch extends Component {
   static propTypes = {
-    streamers: PropTypes.array.isRequired
+    streamersDetails: PropTypes.array.isRequired,
+    fetchTwitchIfNeeded: PropTypes.func.isRequired
   };
 
   state = {
@@ -31,8 +39,15 @@ export default class Twitch extends Component {
     )
   }
 
+  componentDidMount() {
+    this.props.fetchTwitchIfNeeded()
+  }
+
   handleChange = (value) => {
     console.log(value)
     this.setState({value})
   }
+
 }
+
+export default connect(mapStateToProps, twitchActions)(Twitch)
