@@ -1,0 +1,88 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  width: 280px;
+  @include materialShadow(1);
+  transition: 0.5s cubic-bezier(.43,.41,.22,.91);
+  &:hover {
+    @include materialShadow(3)
+  }
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+}
+
+.imageWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 0;
+    @include materialShadow(1);
+  }
+}
+
+.content {
+  display: flex;
+  // lesson: need to set the width for flex to work properly in ios
+  width: 220px;
+  flex: 2 1 auto;
+  flex-direction: column;
+  padding: 1em;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  h3 {
+    padding: 0;
+    margin: 0;
+  }
+  p {
+    padding: 0.15em 0 0.3em 0;
+    margin: 0;
+    font-size: 0.85em;
+  }
+}
+.status {
+  margin-top: 1em;
+  font-size: 0.75em;
+  border-radius: 2px;
+  span {
+    padding: 0.3em;
+  }
+}
+
+.offline {
+  composes: status;
+  span {
+    border: 1px solid rgba(38,13,224, 0.5);
+    box-shadow: 2px 2px 2px -1px rgba(38,13,224,1);
+  }
+}
+
+.online {
+  composes: status;
+  span {
+    border: 1px solid rgba(9,179,40,0.5);
+    box-shadow: 2px 2px 2px -1px rgba(9,179,40,1);
+  }
+}
+
+.closed {
+  composes: status;
+  span {
+    border: 1px solid rgba(0,0,0,0.5);
+    @include materialShadow(2)
+  }
+}
+
+
