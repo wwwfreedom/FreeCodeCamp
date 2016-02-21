@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import {isEmpty} from 'lodash'
 import sty from './UserCard.scss'
+import classNames from 'classnames/bind'
+
+let cx = classNames.bind(sty)
 
 export default class UserCard extends Component {
   static propTypes = {
@@ -8,11 +10,16 @@ export default class UserCard extends Component {
     link: PropTypes.string.isRequired,
     statusText: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
-    status: PropTypes.bool.isRequired
+    status: PropTypes.string.isRequired
   };
 
   render() {
     const {image, link, status, userName, statusText} = this.props
+    const statusStyle = cx({
+      online: status === 'Online',
+      offline: status === 'Offline',
+      closed: status === 'Account closed'
+    })
     return (
       <div className={sty.container}>
         <div className={sty.image}>
@@ -23,7 +30,7 @@ export default class UserCard extends Component {
         <div className={sty.content}>
           <a href={link}><h3>{userName}</h3></a>
           <p>{statusText}</p>
-          <div className={sty.closed}>
+          <div className={statusStyle}>
             <span>{status}</span>
           </div>
         </div>
