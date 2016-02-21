@@ -5,6 +5,7 @@ import { actions as twitchActions } from 'redux/modules/Twitch/Twitch.js'
 import sty from './Twitch.scss'
 import ButtonGroup from 'components/ButtonGroup/ButtonGroup'
 import UserCard from 'components/UserCard/UserCard'
+import Loader from 'halogen/PulseLoader'
 
 const mapStateToProps = (state) => ({
   streamersDetails: state.Twitch.streamersDetails,
@@ -21,7 +22,8 @@ const TWITCH_FILTERS = {
 class Twitch extends Component {
   static propTypes = {
     streamersDetails: PropTypes.array.isRequired,
-    fetchTwitchIfNeeded: PropTypes.func.isRequired
+    fetchTwitchIfNeeded: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool.isRequired
   };
 
   state = {
@@ -29,7 +31,7 @@ class Twitch extends Component {
   };
 
   render() {
-    const {streamersDetails} = this.props
+    const {streamersDetails, isFetching} = this.props
     const { filter } = this.state
     // filtering the array of user base on the filter set
     const filteredTwitchUsers = streamersDetails.filter(TWITCH_FILTERS[filter])
@@ -45,19 +47,22 @@ class Twitch extends Component {
           ]}
           onChange={this.handleChange}
         />
-        <div className={sty.listWrap}>
-          {filteredTwitchUsers.map((user, index) => {
-            return <UserCard
-              image={isEmpty(user.logo) ? 'http://dummyimage.com/60x60/ecf0e7/5c5457.jpg&text=0x3F' : user.logo}
-              link={user.url}
-              statusText={user.status}
-              userName={user.display_name}
-              status={user.userStatus}
-              key={index}
-            />
-          })
-          }
-        </div>
+        {isFetching
+          ? <Loader color="#D3D3D3" size="32px" margin="20px" />
+          : <div className={sty.listWrap}>
+            {filteredTwitchUsers.map((user, index) => {
+              return <UserCard
+                image={isEmpty(user.logo) ? 'http://dummyimage.com/60x60/ecf0e7/5c5457.jpg&text=0x3F' : user.logo}
+                link={user.url}
+                statusText={user.status}
+                userName={user.display_name}
+                status={user.userStatus}
+                key={index}
+              />
+            })
+            }
+          </div>
+        }
       </div>
     )
   }
