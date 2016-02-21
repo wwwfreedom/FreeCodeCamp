@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import classNames from 'classnames/bind'
 import { Link } from 'react-router'
 import sty from './SideBar.scss'
-import DropDown from 'components/DropDown/DropDown'
 
 let cx = classNames.bind(sty)
 
@@ -17,7 +16,6 @@ export default class SideBar extends Component {
   };
 
   render() {
-    const { dropDownLinks, dropDownActivate, dropDownStatus, toggleMenu, mobileNavIsOpen } = this.props
     let mobileNav = cx({
       mobileNavOpen: this.props.mobileNavIsOpen
       // mobileNavClose: this.props.mobileNavIsOpen
@@ -38,13 +36,6 @@ export default class SideBar extends Component {
             >
              Home
             </Link>
-            <DropDown
-              dropDownLinks={dropDownLinks}
-              dropDownStatus={dropDownStatus}
-              dropDownActivate={dropDownActivate}
-              toggleMenu={toggleMenu}
-              mobileNavIsOpen={mobileNavIsOpen}
-            />
             {this.renderMenuLinks()}
           </nav>
         </div>
@@ -69,10 +60,6 @@ export default class SideBar extends Component {
   };
 
   handleClick = () => {
-    // close dropdown on closing sidebar or navigating to new links
-    if (this.props.dropDownStatus === true) {
-      this.props.dropDownActivate()
-    }
     this.props.toggleMenu()
   };
 
