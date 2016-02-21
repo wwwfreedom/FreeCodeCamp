@@ -11,34 +11,45 @@ const mapStateToProps = (state) => ({
   isFetching: state.Twitch.isFetching
 })
 
-export default class Twitch extends Component {
+// condition to filter the twitch user array putting it here because this doesen't get rerun every time the react render if this were put under react render function.
+const TWITCH_FILTERS = {
+  All: () => true,
+  Online: user => user.userStatus === 'Online',
+  Offline: user => user.userStatus === 'Offline'
+}
+
+class Twitch extends Component {
   static propTypes = {
     streamersDetails: PropTypes.array.isRequired,
     fetchTwitchIfNeeded: PropTypes.func.isRequired
   };
 
   state = {
-    value: 'all'
+    filter: 'All'
   };
+
   render() {
     const {streamersDetails} = this.props
+    const { filter } = this.state
+    // filtering the array of user base on the filter set
+    const filteredTwitchUsers = streamersDetails.filter(TWITCH_FILTERS[filter])
     return (
       <div className={sty.container}>
         <h1>Twitch Streamers</h1>
         <ButtonGroup
-          value={this.state.value}
+          value={this.state.filter}
           buttons={[
-            {value: 'all', content: 'All'},
-            {value: 'online', content: 'Online'},
-            {value: 'offline', content: 'Offline'}
+            {value: 'All', content: 'All'},
+            {value: 'Online', content: 'Online'},
+            {value: 'Offline', content: 'Offline'}
           ]}
           onChange={this.handleChange}
         />
         <div className={sty.listWrap}>
-          {streamersDetails.map((user, index) => {
+          {filteredTwitchUsers.map((user, index) => {
             return <UserCard
               image={isEmpty(user.logo) ? 'http://dummyimage.com/60x60/ecf0e7/5c5457.jpg&text=0x3F' : user.logo}
-              link={isEmpty(user.url) ? null : user.url}
+              link={user.url}
               statusText={user.status}
               userName={user.display_name}
               status={user.userStatus}
@@ -51,13 +62,13 @@ export default class Twitch extends Component {
     )
   }
 
+  // fetch twitch api on component mount
   componentDidMount() {
     this.props.fetchTwitchIfNeeded()
   }
 
-  handleChange = (value) => {
-    console.log(value)
-    this.setState({value})
+  handleChange = (filter) => {
+    this.setState({filter})
   }
 
 }

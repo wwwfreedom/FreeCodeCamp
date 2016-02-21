@@ -7,8 +7,8 @@ let cx = classNames.bind(sty)
 export default class UserCard extends Component {
   static propTypes = {
     image: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-    statusText: PropTypes.string.isRequired,
+    link: PropTypes.string,
+    statusText: PropTypes.string,
     userName: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired
   };
@@ -28,7 +28,9 @@ export default class UserCard extends Component {
           </div>
         </div>
         <div className={sty.content}>
-          <a href={link}><h3>{userName}</h3></a>
+          <a href={link} target='_blank'>
+            <h3>{userName}</h3>
+          </a>
           <p>{statusText}</p>
           <div className={statusStyle}>
             <span>{status}</span>
