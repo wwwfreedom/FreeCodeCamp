@@ -24,7 +24,7 @@ const initialState = {
     title: 'About Me',
     introText: "I'm a self taught web developer based in Adelaide. My passion is to solve interesting problems using innovative web technologies. Lately, I've been developing with React.js. If you're interested in my work, check out my portfolio and say hi."
   },
-  image: 'https://images.unsplash.com/uploads/14110333373510325e3e0/355b160e?crop=entropy&fit=crop&fm=jpg&h=825&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1450'
+  image: 'https://images.unsplash.com/photo-1438354886727-070458b3b5cf?crop=entropy&fit=crop&fm=jpg&h=825&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1450'
 }
 
 /**
