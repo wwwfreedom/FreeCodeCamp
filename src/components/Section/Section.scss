@@ -23,6 +23,9 @@
   line-height: 1.5em;
   font-family: 'Merriweather', serif;
   text-align: center;
+  p {
+    text-align: left;
+  }
   @include MQ(SM) {
     margin: 0 auto;
     font-size: 20px;

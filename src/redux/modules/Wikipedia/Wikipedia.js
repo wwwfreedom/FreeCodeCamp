@@ -1,10 +1,11 @@
+import {isEmpty} from 'lodash'
 /**
  * resources
  * http://stackoverflow.com/questions/8363531/accessing-main-picture-of-wikipedia-page-by-api
  */
 // using this because json-fetch doesn't support jsonp
 import fetchJsonp from 'fetch-jsonp'
-// import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
+import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
 // ------------------------------------
 // Constants
@@ -49,18 +50,29 @@ export const wikiFetch = () => async (dispatch, getState) => {
     // convert the articles object properties into an array of object using es7
     // lesson: convert object properties to an array using es7 Object.values
     // http://stackoverflow.com/questions/6857468/a-better-way-to-convert-js-object-to-array
-    .then(json => Object.values(json.query.pages))
+    .then(json => {
+      // if wikipedia api does return a query object then return json object otherwise dispactch a wikiSearchFailure action
+      // lesson: using es7 Object.values to return only the value of the object and not the property as an array
+      if (json.query) {
+        return Object.values(json.query.pages)
+      } else {
+        dispatch(wikiSearchFailure())
+      }
+    })
 
-    dispatch(wikiSearchReceive(articles))
+    // if articles is not empty then dispatch wikiSearchReceive
+    if (isEmpty(articles) === false) {
+      dispatch(wikiSearchReceive(articles))
+    }
   } catch (error) {
+    // for all other errors dispatch wikiSearchFailure
     console.log(error)
-    // ToAsk: getting weird edge case error when user is deleting the search word too fast
     // send popup if error
-    // dispatch(notifSend({
-    //   message: "Something went wrong. Please refresh the page or go to wikipedia.org",
-    //   kind: 'danger',
-    //   dismissAfter: 5000
-    // }))
+    dispatch(notifSend({
+      message: "Something went wrong. Please refresh the page or go to wikipedia.org",
+      kind: 'danger',
+      dismissAfter: 5000
+    }))
     dispatch(wikiSearchFailure())
   }
 }

@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 /**
  * Fixed variables
  */
-export const menuLinks = ['about', 'contact']
+export const menuLinks = ['portfolio', 'about', 'contact']
 
 /**
  * Constants
@@ -52,7 +52,7 @@ export const generalUi = handleActions({
   // this the default state
   sideBarStatus: false,
   menuLinks: menuLinks,
-  dropDownLinks: ['PomoTime', 'Quote Generator', 'Calculator', 'Weather', 'Wikipedia'],
+  dropDownLinks: ['PomoTime', 'Quote Generator', 'Calculator', 'Weather', 'Wikipedia', 'Twitch'],
   dropDownStatus: false
 })
 

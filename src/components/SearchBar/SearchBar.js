@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './SearchBar.scss'
 import MdSearch from 'react-icons/lib/md/search'
-import {debounce} from 'lodash'
 
 export default class SearchBar extends Component {
   static propTypes = {

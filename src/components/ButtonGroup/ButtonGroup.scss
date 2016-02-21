@@ -1,0 +1,28 @@
+@import 'base';
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 280px;
+  overflow: hidden;
+  @include materialShadow(1);
+  background: none;
+}
+
+.button {
+  border: none;
+  margin: 0;
+  padding: 1em;
+  @include materialShadow(1);
+  background: none;
+  outline: none;
+  width: calc(280/3px);
+}
+
+.buttonActive {
+  composes: button;
+  transition: background 0.5s cubic-bezier(.43,.41,.22,.91);
+  @include materialShadow(5);
+  background: $lightGray;
+  border-bottom: 3px solid red;
+}

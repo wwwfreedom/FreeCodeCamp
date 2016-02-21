@@ -13,7 +13,9 @@ import QuoteView from 'views/QuoteView/QuoteView'
 import PomoTime from 'views/PomoTime/PomoTime'
 import Calculator from 'views/Calculator/Calculator'
 import Weather from 'views/Weather/Weather'
+import Twitch from 'views/Twitch/Twitch'
 import Wikipedia from 'views/Wikipedia/Wikipedia'
+import Portfolio from 'views/Portfolio/Portfolio'
 
 export default (
   <Route path='/' component={CoreLayout}>
@@ -23,7 +25,9 @@ export default (
     <Route path='/quoteGenerator' component={QuoteView} />
     <Route path='/pomotime' component={PomoTime} />
     <Route path='/Wikipedia' component={Wikipedia} />
+    <Route path='/Twitch' component={Twitch} />
     <Route path='/Weather' component={Weather} />
     <Route path='/Calculator' component={Calculator} />
+    <Route path='/Portfolio' component={Portfolio} />
   </Route>
 )
