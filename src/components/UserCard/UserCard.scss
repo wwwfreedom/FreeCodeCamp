@@ -3,7 +3,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  margin-top: 2em;
+  margin-top: 1em;
   width: 280px;
   @include materialShadow(1);
   transition: 0.5s cubic-bezier(.43,.41,.22,.91);
@@ -19,12 +19,12 @@
 }
 
 .imageWrap {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     padding: 0;
     @include materialShadow(1);
@@ -33,8 +33,15 @@
 
 .content {
   display: flex;
+  // lesson: need to set the width for flex to work properly in ios
+  width: 220px;
+  flex: 2 1 auto;
   flex-direction: column;
   padding: 1em;
+  a {
+    text-decoration: none;
+    color: black;
+  }
   h3 {
     padding: 0;
     margin: 0;

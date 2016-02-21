@@ -29,7 +29,7 @@ export const twitchFetch = () => async (dispatch, getState) => {
   dispatch(twitchRequest())
 
   try {
-    let arrayOfStreamers = ["freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff", "halfemptyenergytank"]
+    let arrayOfStreamers = ["freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "comster404", "noobs2ninjas", "beohoff", "brunofin", "OgamingSC2"]
 
     // call api to get the details of all streamers in the array
     // lesson: using Promise.all with es7 asycn to do multiple api requests asynchronously
@@ -42,14 +42,22 @@ export const twitchFetch = () => async (dispatch, getState) => {
 
         // if user is not streameing online then do another api request to get the user channel details
         if (isEmpty(onlineStreamer.stream)) {
+          // if status is 422 it means account is closed
+          if (onlineStreamer.status === 422) {
+            return {
+              userStatus: 'Account closed',
+              display_name: streamer
+            }
+          }
+          // 2nd api call to get channel detail if user is offline
           let streamerDetails = await fetchJsonp(`https://api.twitch.tv/kraken/channels/${streamer}`).then(response => response.json())
           // transform the object return from api to include a new online property status
           return Object.assign({}, streamerDetails, {
-            online: false
+            userStatus: 'Offline'
           })
         } else {
           return Object.assign({}, onlineStreamer.stream.channel, {
-            online: true
+            userStatus: 'Online'
           })
         }
       }))
@@ -97,7 +105,7 @@ const ACTION_HANDLERS = {
 
   [TWITCH_RECEIVE]: (state, action) => Object.assign({}, state, {
     isFetching: false,
-    streamerDetails: action.payload
+    streamersDetails: action.payload
   }),
 
   [TWITCH_FAILURE]: (state) => Object.assign({}, state, {
