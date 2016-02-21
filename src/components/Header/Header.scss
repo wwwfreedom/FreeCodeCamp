@@ -1,5 +1,5 @@
 @import 'base';
-$headerMinHeight: 300px;
+$headerMinHeight: 320px;
 .container {
   position: relative;
 }
@@ -19,13 +19,13 @@ $headerMinHeight: 300px;
   background-size: 100%;
   @include MQ(SM) {
     // lesson: can't use calc with variable, have to interpolate the sass variable like so #{$sassVariable}
-    height: calc(#{$headerMinHeight} + 150px);
+    height: calc(#{$headerMinHeight} + 130px);
   }
   @include MQ(M) {
-    height: calc(#{$headerMinHeight} + 200px);
+    height: calc(#{$headerMinHeight} + 180px);
   }
   @include MQ(L) {
-    height: calc(#{$headerMinHeight} + 300px);
+    height: calc(#{$headerMinHeight} + 280px);
   }
 }
 
@@ -33,13 +33,13 @@ $headerMinHeight: 300px;
   width: 100%;
   min-height: $headerMinHeight;
   @include MQ(SM) {
-    height: calc(#{$headerMinHeight} + 150px);
+    height: calc(#{$headerMinHeight} + 130px);
   }
   @include MQ(M) {
-    height: calc(#{$headerMinHeight} + 200px);
+    height: calc(#{$headerMinHeight} + 180px);
   }
   @include MQ(L) {
-    height: calc(#{$headerMinHeight} + 300px);
+    height: calc(#{$headerMinHeight} + 280px);
   }
   // backup gradient just incase there's no picture
   background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
