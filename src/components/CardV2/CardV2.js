@@ -5,11 +5,22 @@ import { Link } from 'react-router'
 export default function CardV2 ({image, link, title, text, internalLink, externalLink}) {
   return (
     <div className={sty.container}>
-      <div
-        className={sty.image}
-        style={{backgroundImage: `url('${image}')`}}
-      >
-      </div>
+      {externalLink
+        ? <a href={link} target='_blank'>
+            <div
+              className={sty.image}
+              style={{backgroundImage: `url('${image}')`}}
+            >
+            </div>
+          </a>
+        : <Link to={`/${link}`}>
+          <div
+            className={sty.image}
+            style={{backgroundImage: `url('${image}')`}}
+          >
+          </div>
+        </Link>
+      }
 
       <div className={sty.content}>
         <div className={sty.header}>
