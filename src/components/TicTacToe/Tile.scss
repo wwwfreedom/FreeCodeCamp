@@ -1,0 +1,19 @@
+@import 'base';
+.container {
+  button {
+    width: calc(280/3px);
+    height: calc(280/3px);
+    font-size: 2em;
+    font-weight: 300;
+    background: none;
+    outline: none;
+    @include materialShadow(1);
+    transition: 0.25s ease-out;
+    &:focus {
+      @include materialShadow(3);
+    }
+    &:hover {
+      @include materialShadow(3);
+    }
+  }
+}
