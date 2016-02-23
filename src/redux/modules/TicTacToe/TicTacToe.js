@@ -1,9 +1,12 @@
+import { createAction } from 'redux-actions'
 // ------------------------------------
 // Constants
 // ------------------------------------
 
 export const TILE_SET = 'TILE_SET'
 export const BOARD_INIT = 'BOARD_INIT'
+export const PLAYER_TYPE_SET = 'PLAYER_TYPE_SET'
+export const GAME_STATUS_SET = 'GAME_STATUS_SET'
 
 // ------------------------------------
 // Actions
@@ -16,6 +19,13 @@ export const tileSet = (position, type) => ({
     type: type
   }
 })
+
+export const playerTypeSet = (type) => ({
+  type: PLAYER_TYPE_SET,
+  payload: type
+})
+
+export const gameStatusSet = createAction(GAME_STATUS_SET, status => status)
 
 // ------------------------------------
 // Thunk Actions
@@ -33,7 +43,9 @@ export const boardInit = () => (dispatch, getState) => {
 
 export const actions = {
   tileSet,
-  boardInit
+  boardInit,
+  playerTypeSet,
+  gameStatusSet
 }
 
 // ------------------------------------
@@ -43,6 +55,14 @@ export const actions = {
 const ACTION_HANDLERS = {
   [TILE_SET]: (state, action) => Object.assign({}, state, {
     gameState: state.gameState.concat(action.payload)
+  }),
+
+  [PLAYER_TYPE_SET]: (state, action) => Object.assign({}, state, {
+    humanType: action.payload
+  }),
+
+  [GAME_STATUS_SET]: (state, action) => Object.assign({}, state, {
+    status: action.payload
   })
 }
 
@@ -52,6 +72,8 @@ const ACTION_HANDLERS = {
 
 const initialState = {
   currentTurn: 'human',
+  status: 'inActive',
+  humanType: '',
   score: 0,
   winState: [
     [1, 2, 3],
