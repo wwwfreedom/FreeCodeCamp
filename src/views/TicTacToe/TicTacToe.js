@@ -17,21 +17,21 @@ class TicTacToe extends Component {
     currentTurn: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     gameState: PropTypes.array.isRequired,
-    tileSet: PropTypes.func.isRequired,
-    boardInit: PropTypes.func.isRequired,
+    tileSetIfValid: PropTypes.func.isRequired,
+    boardInitIfNeeded: PropTypes.func.isRequired,
     playerTypeSet: PropTypes.func.isRequired,
     gameStatusSet: PropTypes.func.isRequired
   };
 
   render() {
-    const {gameState, tileSet} = this.props
+    const {gameState, tileSetIfValid} = this.props
     return (
       <div className={sty.container}>
         <h1>Tic Tac Toe</h1>
         {this.renderOptionBarOrStatus()}
         <div className={sty.tilesContainer}>
           {gameState.map((tile) => {
-            return <Tile type={tile.type} position={tile.position} />
+            return <Tile type={tile.type} position={tile.position} tileSetIfValid={tileSetIfValid} key={tile.position}/>
           })}
         </div>
       </div>
@@ -62,7 +62,7 @@ class TicTacToe extends Component {
   }
 
   componentDidMount() {
-    this.props.boardInit()
+    this.props.boardInitIfNeeded()
   }
 }
 

@@ -7,7 +7,8 @@ import sty from './Tile.scss'
 export default class Tile extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    position: PropTypes.number.isRequired
+    position: PropTypes.number.isRequired,
+    tileSetIfValid: PropTypes.func.isRequired
   };
 
   render() {
@@ -32,7 +33,7 @@ export default class Tile extends Component {
   };
 
   handleButtonClick = (e) => {
-    console.log(e.target.value)
-    console.log(e.target.name)
+    const {tileSetIfValid} = this.props
+    tileSetIfValid(Number(e.target.name))
   }
 }
