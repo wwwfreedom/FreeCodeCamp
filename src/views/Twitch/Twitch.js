@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
 import {isEmpty} from 'lodash'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as twitchActions } from 'redux/modules/Twitch/Twitch.js'
 import sty from './Twitch.scss'

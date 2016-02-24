@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
 import { isEmpty } from 'lodash'
+import React, { PropTypes } from 'react'
 import sty from './Card.scss'
 
 export default function Card ({item}) {
