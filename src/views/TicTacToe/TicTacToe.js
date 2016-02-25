@@ -9,7 +9,8 @@ import Button from 'components/Button/Button'
 const mapStateToProps = (state) => ({
   currentTurn: state.TicTacToe.currentTurn,
   gameState: state.TicTacToe.gameState,
-  status: state.TicTacToe.status
+  status: state.TicTacToe.status,
+  winner: state.TicTacToe.winner
 })
 
 class TicTacToe extends Component {
@@ -20,7 +21,8 @@ class TicTacToe extends Component {
     tileSetIfValid: PropTypes.func.isRequired,
     boardInitIfNeeded: PropTypes.func.isRequired,
     playerTypeSet: PropTypes.func.isRequired,
-    gameStatusSet: PropTypes.func.isRequired
+    gameStatusSet: PropTypes.func.isRequired,
+    winner: PropTypes.string.isRequired
   };
 
   render() {
@@ -31,7 +33,7 @@ class TicTacToe extends Component {
         {this.renderOptionBarOrStatus()}
         <div className={sty.tilesContainer}>
           {gameState.map((tile) => {
-            return <Tile type={tile.type} position={tile.position} tileSetIfValid={tileSetIfValid} key={tile.position}/>
+            return <Tile type={tile.type} position={tile.position} win={tile.win} tileSetIfValid={tileSetIfValid} key={tile.position}/>
           })}
         </div>
       </div>
@@ -39,9 +41,13 @@ class TicTacToe extends Component {
   }
 
   renderOptionBarOrStatus = () => {
-    const {status} = this.props
+    const {status, winner} = this.props
     if (status === 'active') {
       return <div className={sty.status}><h3>Play</h3></div>
+    } else if (status === 'won') {
+      return <div className={sty.status}>
+        <h3>{winner === 'human' ? 'Awesome you won' : 'Bad luck. The computer won'}</h3>
+      </div>
     } else {
       return (
         <div className={sty.options}>
@@ -58,6 +64,7 @@ class TicTacToe extends Component {
   playerTypeSet = (e) => {
     const {gameStatusSet, playerTypeSet} = this.props
     gameStatusSet('active')
+    // set the option that player chose
     playerTypeSet(e.target.text)
   }
 

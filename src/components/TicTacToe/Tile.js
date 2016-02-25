@@ -8,7 +8,8 @@ export default class Tile extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
     position: PropTypes.number.isRequired,
-    tileSetIfValid: PropTypes.func.isRequired
+    tileSetIfValid: PropTypes.func.isRequired,
+    win: PropTypes.bool
   };
 
   render() {
@@ -20,12 +21,19 @@ export default class Tile extends Component {
   }
 
   renderTile = () => {
-    const {type, position} = this.props
-
+    const {type, position, win} = this.props
+    let style = {background: 'red'}
+    if (win) {
+      if (type === 'O') {
+        return <button name={position} value='O' onClick={this.handleButtonClick} style={style} >O</button>
+      } else {
+        return <button name={position} value='X' onClick={this.handleButtonClick} style={style} >X</button>
+      }
+    }
     if (type === 'O') {
-      return <button name={position} value='O' onClick={this.handleButtonClick}>O</button>
+      return <button name={position} value='O' onClick={this.handleButtonClick} >O</button>
     } else if (type === 'X') {
-      return <button name={position} value='X' onClick={this.handleButtonClick}>X</button>
+      return <button name={position} value='X' onClick={this.handleButtonClick} >X</button>
     } else {
       // lesson: using zero width unicode character to fill in the blank button to maintain style consistency
       return <button name={position} value='' onClick={this.handleButtonClick}>&#8203;</button>
