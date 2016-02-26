@@ -1,5 +1,93 @@
-// import {isEmpty, includes, flatMap} from 'lodash'
 import { createAction } from 'redux-actions'
+
+var computerMove = 0
+
+// fastest clone implementation http://jsperf.com/deep-cloning-of-objects
+function deepClone(obj) {
+  var i, ret, ret2
+  if (typeof obj === "object") {
+    if (obj === null) return obj
+    if (Object.prototype.toString.call(obj) === "[object Array]") {
+      ret = []
+      for (i = 0; i < obj.length; i++) {
+        if (typeof obj[i] === "object") {
+          ret2 = deepClone(obj[i])
+        } else {
+          ret2 = obj[i]
+        }
+        ret.push(ret2)
+      }
+    } else {
+      ret = {}
+      for (i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          if (typeof (obj[i] === "object")) {
+            ret2 = deepClone(obj[i])
+          } else {
+            ret2 = obj[i]
+          }
+          ret[i] = ret2
+        }
+      }
+    }
+  } else {
+    ret = obj
+  }
+  return ret
+}
+
+function availableMoves(stateCopy) {
+  let moves = []
+  stateCopy.tiles.forEach(function(cell, i) {
+    if (cell === '') {
+      moves.push(i)
+    }
+  })
+  return moves
+}
+
+function simulatedMove(move, simStateCopy) {
+  let simstate = simStateCopy
+  simstate.tiles[move] = simstate.turn
+  simstate.turn = simstate.turn === 'x' ? 'o' : 'x'
+  simstate.winner = checkBoard(simstate)
+  return simstate
+}
+
+function minimax(_stateCopy) {
+  let stateCopy = deepClone(_stateCopy)
+  // terminal states to end the recursion
+  if (stateCopy.winner === 'x') {
+    return 1
+  } else if (stateCopy.winner === 'o') {
+    return -1
+  } else if (stateCopy.winner === 'd') {
+    return 0
+  } else {
+    let moves = availableMoves(stateCopy)
+    let scores = moves.map(move => {
+      // for each move return to current board configuration ??
+      stateCopy = deepClone(_stateCopy)
+      let simulatedGame = simulatedMove(move, stateCopy)
+      // recursion.  simulatedGame until terminal state is reached for all moves.
+      return minimax(simulatedGame)
+    })
+    let maxScore = Math.max.apply(null, scores)
+    let minScore = Math.min.apply(null, scores)
+
+    // return stateCopy to initial current state
+    stateCopy = deepClone(_stateCopy)
+    if (stateCopy.turn === 'x') {
+      computerMove = moves[scores.indexOf(maxScore)]
+      return maxScore
+    } else if (stateCopy.turn === 'o') {
+      computerMove = moves[scores.indexOf(minScore)]
+      return minScore
+    } else {
+      throw new Error('Cannot minimax invalid player: ')
+    }
+  }
+}
 
 // ------------------------------------
 // Constants
@@ -52,30 +140,26 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
     dispatch(tileSet(position, player))
     dispatch(turnSet(computer))
     // checkboard if there's a winner if not then set winner to either n or d for draw
-    dispatch(winnerSet(checkBoard(getState().TicTacToe.tiles)))
+    dispatch(winnerSet(checkBoard(getState().TicTacToe)))
+
+    // only initiate AI minimax if it is needed ?
+    if (getState().TicTacToe.turn === getState().TicTacToe.computer && getState().TicTacToe.winner === 'n') {
+      // using setTimeout here because minimax is a heavy function so I don't want to block the dispatches above. This force the function below to run after all the functions above finises.
+      setTimeout(() => {
+        // create a copy of the current board to work with using Object.assign doesn't work here for come reason
+        // lesson: This is another way to clone an object but avoid using if there's function in the properties of the object then use lodash deepClone
+        let stateCopy = deepClone(getState().TicTacToe)
+        // lesson: using performance to measure time it takes to execute a function
+        // let t0 = performance.now()
+        minimax(stateCopy)
+        // let t1 = performance.now()
+        // console.log("Call to minimax took " + (t1 - t0) + " milliseconds.")
+        dispatch(tileSet(computerMove, computer))
+        dispatch(turnSet(player))
+        dispatch(winnerSet(checkBoard(getState().TicTacToe)))
+      }, 0)
+    }
   }
-  // // // if human hasn't chose a type then return (exit the function)
-  // // if (isEmpty(player)) return
-  // // if human turn
-  // if (turn === 'human' && tileType === 'blank') {
-  //   // only set tile if it's blank otherwise return
-  //   dispatch(tileSet(position, player, false))
-  //   // switch over to computer
-  //   dispatch(turnSet('computer'))
-  //   dispatch(checkBoard())
-  // }
-  // // if computer turn
-  // if (turn === 'computer' && tileType === 'blank') {
-  //   let type
-  //   if (player === 'X') {
-  //     type = 'O'
-  //   } else {
-  //     type = 'X'
-  //   }
-  //   dispatch(tileSet(position, type, false))
-  //   dispatch(turnSet('human'))
-  //   dispatch(checkBoard())
-  // }
 }
 
 /**
@@ -83,7 +167,8 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
  * @param  {array} t array of x or o or '' reflecting the board state
  * @return {string}   a string character denoting the result of check
  */
-function checkBoard(t) {
+function checkBoard(state) {
+  let t = state.tiles
   // using regex join the strings in board to see if it matchs the pattern
   let check = (a, b, c) => !!(a + b + c).match(/^(xxx|ooo)$/gi)
   // if match one of the win condition then return the value of the match either as x or o
@@ -103,84 +188,19 @@ function checkBoard(t) {
   return 'n'
 }
 
-// export const checkBoard = () => (dispatch, getState) => {
-//   const { winState, gameState, player } = getState().TicTacToe
-//   // return array of gamestate tile objects with the relevant tile type
-//   let xState = gameState.filter(tile => tile.type === 'X')
-//   let oState = gameState.filter(tile => tile.type === 'O')
-//   // loop through the winState array of winning positions
-//   let xWinTest = winState.map(winningTiles => {
-//     // loop through the winning combination postion and compare the gameState position
-//     let x = winningTiles.map(position => {
-//       return includes(flatMap(xState, tile => tile.position), position)
-//     })
-//     // if winning position match the winning position of the current winState position then
-//     if (includes(x, false)) {
-//       return false
-//     } else {
-//       return true
-//     }
-//   })
-
-//   let oWinTest = winState.map(winningTiles => {
-//     let o = winningTiles.map(position => {
-//       return includes(flatMap(oState, tile => tile.position), position)
-//     })
-//     if (includes(o, false)) {
-//       return false
-//     } else {
-//       return true
-//     }
-//   })
-
-//   // if there's three consecutive true in x's then
-//   if (includes(xWinTest, true)) {
-//     // for each of the winning tile set the win state to true which will change the background of winning tiles
-//     winState[xWinTest.indexOf(true)].map((position) => {
-//       dispatch(tileSet(position, 'X', true))
-//     })
-//     if (player === 'X') {
-//       dispatch(winnerSet('human'))
-//       dispatch(gameStatusSet('won'))
-//       // delay the reset by 3 seconds.
-//       setTimeout(() => { dispatch(gameSoftReset()) }, 1500)
-//     } else {
-//       dispatch(winnerSet('computer'))
-//       dispatch(gameStatusSet('won'))
-//       setTimeout(() => { dispatch(gameSoftReset()) }, 1500)
-//     }
-//   }
-//   // if there's three consecutive true in o's then
-//   if (includes(oWinTest, true)) {
-//     winState[oWinTest.indexOf(true)].map((position) => {
-//       dispatch(tileSet(position, 'O', true))
-//     })
-//     if (player === 'O') {
-//       dispatch(winnerSet('human'))
-//       dispatch(gameStatusSet('won'))
-//       setTimeout(() => { dispatch(gameSoftReset()) }, 1500)
-//     } else {
-//       dispatch(winnerSet('computer'))
-//       dispatch(gameStatusSet('won'))
-//       setTimeout(() => { dispatch(gameSoftReset()) }, 1500)
-//     }
-//   }
-// }
-
 // reset everything except for previous winner
 export const gameSoftReset = () => (dispatch, getState) => {
   // default back to human begin plays
   dispatch(turnSet('human'))
   dispatch(gameStateSet([]))
-  // dispatch(boardInitIfNeeded())
   dispatch(gameStatusSet('active'))
 }
 
 export const actions = {
   tileSetIfValid,
-  // boardInitIfNeeded,
   playerTypeSet,
-  gameStatusSet
+  gameStatusSet,
+  tileSet
 }
 
 // ------------------------------------
