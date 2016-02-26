@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './Tile.scss'
 
-// import FaClose from 'react-icons/lib/fa/close'
-// import FaCircleO from 'react-icons/lib/fa/circle-o'
-
+// to highlight the winning combo coudld pass down the winning combo position and have a check to match the position of the tile with the position of the winning position to add on extra background
 export default class Tile extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
@@ -21,27 +19,27 @@ export default class Tile extends Component {
   }
 
   renderTile = () => {
-    const {type, position, win} = this.props
+    const {type, win} = this.props
     let style = {background: 'red'}
     if (win) {
-      if (type === 'O') {
-        return <button name={position} value='O' onClick={this.handleButtonClick} style={style} >O</button>
+      if (type === 'o') {
+        return <button onClick={this.handleButtonClick} style={style} >O</button>
       } else {
-        return <button name={position} value='X' onClick={this.handleButtonClick} style={style} >X</button>
+        return <button onClick={this.handleButtonClick} style={style} >X</button>
       }
     }
-    if (type === 'O') {
-      return <button name={position} value='O' onClick={this.handleButtonClick} >O</button>
-    } else if (type === 'X') {
-      return <button name={position} value='X' onClick={this.handleButtonClick} >X</button>
+    if (type === 'o') {
+      return <button onClick={this.handleButtonClick} >O</button>
+    } else if (type === 'x') {
+      return <button onClick={this.handleButtonClick} >X</button>
     } else {
       // lesson: using zero width unicode character to fill in the blank button to maintain style consistency
-      return <button name={position} value='' onClick={this.handleButtonClick}>&#8203;</button>
+      return <button onClick={this.handleButtonClick}>&#8203;</button>
     }
   };
 
   handleButtonClick = (e) => {
-    const {tileSetIfValid} = this.props
-    tileSetIfValid(Number(e.target.name))
+    const {tileSetIfValid, position} = this.props
+    tileSetIfValid(position)
   }
 }
