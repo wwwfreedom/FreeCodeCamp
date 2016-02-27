@@ -22,7 +22,8 @@ class TicTacToe extends Component {
     playerTypeSet: PropTypes.func.isRequired,
     gameStatusSet: PropTypes.func.isRequired,
     winner: PropTypes.string.isRequired,
-    tileSet: PropTypes.func.isRequired
+    tileSet: PropTypes.func.isRequired,
+    gameHardReset: PropTypes.func.isRequired
   };
 
   render() {
@@ -41,9 +42,14 @@ class TicTacToe extends Component {
   }
 
   renderOptionBarOrStatus = () => {
-    const {status, winner} = this.props
+    const {status, winner, gameHardReset} = this.props
     if (status === 'active') {
-      return <div className={sty.status}><h3>Play</h3></div>
+      return (
+        <div className={sty.status}>
+          <h3>Play</h3>
+          <Button text='Reset' width={123} onClick={gameHardReset}/>
+        </div>
+      )
     } else if (status === 'won') {
       return <div className={sty.status}>
         <h3>{winner === 'human' ? 'Awesome you won' : 'Bad luck. The computer won'}</h3>

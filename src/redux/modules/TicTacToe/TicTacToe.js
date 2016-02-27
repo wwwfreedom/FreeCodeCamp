@@ -99,7 +99,7 @@ export const GAME_STATUS_SET = 'GAME_STATUS_SET'
 export const TURN_SET = 'TURN_SET'
 export const WINNER_SET = 'WINNER_SET'
 export const GAME_SOFT_RESET = 'GAME_SOFT_RESET'
-export const GAME_STATE_SET = 'GAME_STATE_SET'
+export const GAME_HARD_RESET = 'GAME_HARD_RESET'
 
 // ------------------------------------
 // Actions
@@ -125,7 +125,10 @@ export const turnSet = createAction(TURN_SET, player => player)
 
 export const winnerSet = createAction(WINNER_SET, player => player)
 
-export const gameStateSet = createAction(GAME_STATE_SET, state => state)
+// reset only tiles and previous winner
+export const gameSoftReset = createAction(GAME_SOFT_RESET)
+
+export const gameHardReset = createAction(GAME_HARD_RESET)
 
 // ------------------------------------
 // Thunk Actions
@@ -142,6 +145,15 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
     // checkboard if there's a winner if not then set winner to either n or d for draw
     dispatch(winnerSet(checkBoard(getState().TicTacToe)))
 
+    // game's finish when winner is not equal to 'n'
+    if (getState().TicTacToe.winner !== 'n') {
+      setTimeout(() => {
+        dispatch(gameSoftReset())
+        dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
+        dispatch(turnSet(player))
+      }, 1000)
+    }
+
     // only initiate AI minimax if it is needed ?
     if (getState().TicTacToe.turn === getState().TicTacToe.computer && getState().TicTacToe.winner === 'n') {
       // using setTimeout here because minimax is a heavy function so I don't want to block the dispatches above. This force the function below to run after all the functions above finises.
@@ -157,6 +169,14 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
         dispatch(tileSet(computerMove, computer))
         dispatch(turnSet(player))
         dispatch(winnerSet(checkBoard(getState().TicTacToe)))
+        // game's finish when winner is not equal to 'n'
+        if (getState().TicTacToe.winner !== 'n') {
+          setTimeout(() => {
+            dispatch(gameSoftReset())
+            dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
+            dispatch(turnSet(player))
+          }, 1000)
+        }
       }, 0)
     }
   }
@@ -188,19 +208,12 @@ function checkBoard(state) {
   return 'n'
 }
 
-// reset everything except for previous winner
-export const gameSoftReset = () => (dispatch, getState) => {
-  // default back to human begin plays
-  dispatch(turnSet('human'))
-  dispatch(gameStateSet([]))
-  dispatch(gameStatusSet('active'))
-}
-
 export const actions = {
   tileSetIfValid,
   playerTypeSet,
-  gameStatusSet,
-  tileSet
+  tileSet,
+  gameHardReset,
+  gameStatusSet
 }
 
 // ------------------------------------
@@ -232,9 +245,13 @@ const ACTION_HANDLERS = {
     turn: action.payload
   }),
 
-  [GAME_STATE_SET]: (state, action) => Object.assign({}, state, {
-    gameState: action.payload
+  [GAME_SOFT_RESET]: (state, action) => ({
+    ...state,
+    tiles: ['', '', '', '', '', '', '', '', ''],
+    winner: 'n'
   }),
+
+  [GAME_HARD_RESET]: (state, action) => INITIAL_STATE,
 
   [WINNER_SET]: (state, action) => Object.assign({}, state, {
     winner: action.payload
