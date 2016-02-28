@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { actions as TicTacToeActions } from 'redux/modules/TicTacToe/TicTacToe.js'
 
@@ -10,7 +11,8 @@ const mapStateToProps = (state) => ({
   turn: state.TicTacToe.turn,
   tiles: state.TicTacToe.tiles,
   status: state.TicTacToe.status,
-  winner: state.TicTacToe.winner
+  winner: state.TicTacToe.winner,
+  winningCombo: state.TicTacToe.winningCombo
 })
 
 class TicTacToe extends Component {
@@ -23,7 +25,8 @@ class TicTacToe extends Component {
     gameStatusSet: PropTypes.func.isRequired,
     winner: PropTypes.string.isRequired,
     tileSet: PropTypes.func.isRequired,
-    gameHardReset: PropTypes.func.isRequired
+    gameHardReset: PropTypes.func.isRequired,
+    winningCombo: PropTypes.array.isRequired
   };
 
   render() {
@@ -34,7 +37,7 @@ class TicTacToe extends Component {
         {this.renderOptionBarOrStatus()}
         <div className={sty.tilesContainer}>
           {tiles.map((tile, index) => {
-            return <Tile type={tile} position={index} tileSetIfValid={tileSetIfValid} key={index}/>
+            return <Tile type={tile} position={index} tileSetIfValid={tileSetIfValid} key={index} ref={index}/>
           })}
         </div>
       </div>
@@ -78,6 +81,19 @@ class TicTacToe extends Component {
     } else {
       playerTypeSet({computer: 'o', player: 'x'})
       tileSet(Math.floor(Math.random() * (9)), 'o')
+    }
+  }
+
+  // Lesson: using refs as a hackey way to add background to the actual dom component. The right way would to do via redux store passing down props and changing in the component.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.winningCombo.length === 3) {
+      nextProps.winningCombo.forEach(position => {
+        ReactDOM.findDOMNode(this.refs[position]).style.backgroundColor = 'red'
+      })
+    } else {
+      this.props.winningCombo.forEach(position => {
+        ReactDOM.findDOMNode(this.refs[position]).style.backgroundColor = ''
+      })
     }
   }
 }

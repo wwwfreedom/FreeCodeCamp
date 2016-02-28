@@ -50,7 +50,7 @@ function simulatedMove(move, simStateCopy) {
   let simstate = simStateCopy
   simstate.tiles[move] = simstate.turn
   simstate.turn = simstate.turn === 'x' ? 'o' : 'x'
-  simstate.winner = checkBoard(simstate)
+  simstate.winner = checkBoard(simstate)[0]
   return simstate
 }
 
@@ -100,6 +100,7 @@ export const TURN_SET = 'TURN_SET'
 export const WINNER_SET = 'WINNER_SET'
 export const GAME_SOFT_RESET = 'GAME_SOFT_RESET'
 export const GAME_HARD_RESET = 'GAME_HARD_RESET'
+export const WINNING_COMBO_SET = 'WINNING_COMBO_SET'
 
 // ------------------------------------
 // Actions
@@ -129,6 +130,7 @@ export const winnerSet = createAction(WINNER_SET, player => player)
 export const gameSoftReset = createAction(GAME_SOFT_RESET)
 
 export const gameHardReset = createAction(GAME_HARD_RESET)
+export const winningComboSet = createAction(WINNING_COMBO_SET, position => position)
 
 // ------------------------------------
 // Thunk Actions
@@ -143,7 +145,7 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
     dispatch(tileSet(position, player))
     dispatch(turnSet(computer))
     // checkboard if there's a winner if not then set winner to either n or d for draw
-    dispatch(winnerSet(checkBoard(getState().TicTacToe)))
+    dispatch(winnerSet(checkBoard(getState().TicTacToe)[0]))
 
     // game's finish when winner is not equal to 'n'
     if (getState().TicTacToe.winner !== 'n') {
@@ -168,14 +170,19 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
         // console.log("Call to minimax took " + (t1 - t0) + " milliseconds.")
         dispatch(tileSet(computerMove, computer))
         dispatch(turnSet(player))
-        dispatch(winnerSet(checkBoard(getState().TicTacToe)))
+        dispatch(winnerSet(checkBoard(getState().TicTacToe)[0]))
         // game's finish when winner is not equal to 'n'
         if (getState().TicTacToe.winner !== 'n') {
+          if (getState().TicTacToe.winner !== 'd') {
+            const [first, ...rest] = checkBoard(getState().TicTacToe)
+            console.log(first)
+            dispatch(winningComboSet(rest))
+          }
           setTimeout(() => {
             dispatch(gameSoftReset())
             dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
             dispatch(turnSet(player))
-          }, 1000)
+          }, 2000)
         }
       }, 0)
     }
@@ -192,20 +199,20 @@ function checkBoard(state) {
   // using regex join the strings in board to see if it matchs the pattern
   let check = (a, b, c) => !!(a + b + c).match(/^(xxx|ooo)$/gi)
   // if match one of the win condition then return the value of the match either as x or o
-  if (check(t[0], t[1], t[2])) return t[0]
-  if (check(t[3], t[4], t[5])) return t[3]
-  if (check(t[6], t[7], t[8])) return t[6]
+  if (check(t[0], t[1], t[2])) return [t[0], 0, 1, 2]
+  if (check(t[3], t[4], t[5])) return [t[3], 3, 4, 5]
+  if (check(t[6], t[7], t[8])) return [t[6], 6, 7, 8]
 
-  if (check(t[0], t[3], t[6])) return t[0]
-  if (check(t[1], t[4], t[7])) return t[1]
-  if (check(t[2], t[5], t[8])) return t[2]
+  if (check(t[0], t[3], t[6])) return [t[0], 0, 3, 6]
+  if (check(t[1], t[4], t[7])) return [t[1], 1, 4, 7]
+  if (check(t[2], t[5], t[8])) return [t[2], 2, 5, 8]
 
-  if (check(t[0], t[4], t[8])) return t[0]
-  if (check(t[2], t[4], t[6])) return t[2]
+  if (check(t[0], t[4], t[8])) return [t[0], 0, 4, 8]
+  if (check(t[2], t[4], t[6])) return [t[2], 2, 4, 6]
 
   // if no match the string length of the array will be nice in which case return d as a draw
-  if (t.join('').length === 9) return 'd'
-  return 'n'
+  if (t.join('').length === 9) return ['d']
+  return ['n']
 }
 
 export const actions = {
@@ -248,13 +255,19 @@ const ACTION_HANDLERS = {
   [GAME_SOFT_RESET]: (state, action) => ({
     ...state,
     tiles: ['', '', '', '', '', '', '', '', ''],
-    winner: 'n'
+    winner: 'n',
+    winningCombo: []
   }),
 
   [GAME_HARD_RESET]: (state, action) => INITIAL_STATE,
 
   [WINNER_SET]: (state, action) => Object.assign({}, state, {
     winner: action.payload
+  }),
+
+  [WINNING_COMBO_SET]: (state, action) => ({
+    ...state,
+    winningCombo: action.payload
   })
 }
 
@@ -274,7 +287,8 @@ const INITIAL_STATE = {
   turn: 'x',
   // n = no winner, d = draw, if there's winner then it would be x or o
   winner: 'n',
-  status: 'inActive'
+  status: 'inActive',
+  winningCombo: []
 }
 
 export default function TicTacToe(state = INITIAL_STATE, action) {
