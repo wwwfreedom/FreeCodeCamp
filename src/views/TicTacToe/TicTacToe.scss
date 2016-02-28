@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 280px;
+  margin: 0 auto;
+  // overflow: hidden;
+}
+
+.tilesContainer {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.options {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.buttons {
+  display: flex;
+}
+
+.status {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.statusUnit {
+  display: flex;
+  width: calc(280/3px);
+  flex-flow: column nowrap;
+  align-items: center;
+  text-transform: upperCase;
+  h5 {
+    margin-bottom: 0.3em;
+    padding: 0;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+  }
+}

@@ -1,6 +1,6 @@
+import { isEmpty } from 'lodash'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { isEmpty } from 'lodash'
 import { actions as wikipediaActions } from 'redux/modules/Wikipedia/Wikipedia.js'
 import SearchBar from 'components/SearchBar/SearchBar'
 import sty from './Wikipedia.scss'

@@ -1,6 +1,7 @@
+import { includes } from 'lodash'
 import sty from './Portfolio.scss'
 import { Link } from 'react-router'
-import { includes } from 'lodash'
+
 // import escaperoomsa from '../../../src/'
 
 export default function Portfolio ({portfolio}) {
