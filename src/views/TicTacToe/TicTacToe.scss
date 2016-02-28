@@ -22,5 +22,22 @@
 }
 
 .status {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
   margin-bottom: 1em;
+}
+
+.statusUnit {
+  display: flex;
+  width: calc(280/3px);
+  flex-flow: column nowrap;
+  align-items: center;
+  text-transform: upperCase;
+  h2 {
+    margin: 0;
+  }
+  p {
+    margin: 0
+  }
 }

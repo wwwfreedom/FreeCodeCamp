@@ -101,6 +101,7 @@ export const WINNER_SET = 'WINNER_SET'
 export const GAME_SOFT_RESET = 'GAME_SOFT_RESET'
 export const GAME_HARD_RESET = 'GAME_HARD_RESET'
 export const WINNING_COMBO_SET = 'WINNING_COMBO_SET'
+export const STAT_SET = 'STAT_SET'
 
 // ------------------------------------
 // Actions
@@ -121,11 +122,11 @@ export const playerTypeSet = (type) => ({
 })
 
 export const gameStatusSet = createAction(GAME_STATUS_SET, status => status)
-
 export const turnSet = createAction(TURN_SET, player => player)
 
 export const winnerSet = createAction(WINNER_SET, player => player)
 
+export const statSet = createAction(STAT_SET, stat => stat)
 // reset only tiles and previous winner
 export const gameSoftReset = createAction(GAME_SOFT_RESET)
 
@@ -147,8 +148,10 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
     // checkboard if there's a winner if not then set winner to either n or d for draw
     dispatch(winnerSet(checkBoard(getState().TicTacToe)[0]))
 
-    // game's finish when winner is not equal to 'n'
+    // game's finish when winner is not equal to 'n' this is to continue the game
     if (getState().TicTacToe.winner !== 'n') {
+      console.log('this will only run if I win')
+      dispatch(updateStat())
       setTimeout(() => {
         dispatch(gameSoftReset())
         dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
@@ -167,7 +170,7 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
         // let t0 = performance.now()
         minimax(stateCopy)
         // let t1 = performance.now()
-        // console.log("Call to minimax took " + (t1 - t0) + " milliseconds.")
+        // consoe.log("Call to minimax took " + (t1 - t0) + " milliseconds.")
         dispatch(tileSet(computerMove, computer))
         dispatch(turnSet(player))
         dispatch(winnerSet(checkBoard(getState().TicTacToe)[0]))
@@ -178,6 +181,7 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
             console.log(first)
             dispatch(winningComboSet(rest))
           }
+          dispatch(updateStat())
           setTimeout(() => {
             dispatch(gameSoftReset())
             dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
@@ -186,6 +190,23 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
         }
       }, 0)
     }
+  }
+}
+
+export const updateStat = () => (dispatch, getState) => {
+  const {winner, computer, player} = getState().TicTacToe
+  console.log(winner, computer, player)
+    // report the stats
+  if (winner === computer) {
+    dispatch(statSet('computer'))
+  }
+
+  if (winner === player) {
+    dispatch(statSet('player'))
+  }
+
+  if (winner === 'd') {
+    dispatch(statSet('ties'))
   }
 }
 
@@ -268,6 +289,14 @@ const ACTION_HANDLERS = {
   [WINNING_COMBO_SET]: (state, action) => ({
     ...state,
     winningCombo: action.payload
+  }),
+
+  [STAT_SET]: (state, action) => ({
+    ...state,
+    stats: {
+      ...state.stats,
+      [action.payload]: state.stats[action.payload] + 1
+    }
   })
 }
 
@@ -288,7 +317,12 @@ const INITIAL_STATE = {
   // n = no winner, d = draw, if there's winner then it would be x or o
   winner: 'n',
   status: 'inActive',
-  winningCombo: []
+  winningCombo: [],
+  stats: {
+    computer: 0,
+    player: 0,
+    ties: 0
+  }
 }
 
 export default function TicTacToe(state = INITIAL_STATE, action) {

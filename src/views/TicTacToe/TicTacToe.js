@@ -12,7 +12,10 @@ const mapStateToProps = (state) => ({
   tiles: state.TicTacToe.tiles,
   status: state.TicTacToe.status,
   winner: state.TicTacToe.winner,
-  winningCombo: state.TicTacToe.winningCombo
+  winningCombo: state.TicTacToe.winningCombo,
+  computer: state.TicTacToe.computer,
+  player: state.TicTacToe.player,
+  stats: state.TicTacToe.stats
 })
 
 class TicTacToe extends Component {
@@ -24,17 +27,34 @@ class TicTacToe extends Component {
     playerTypeSet: PropTypes.func.isRequired,
     gameStatusSet: PropTypes.func.isRequired,
     winner: PropTypes.string.isRequired,
+    computer: PropTypes.string.isRequired,
+    player: PropTypes.string.isRequired,
     tileSet: PropTypes.func.isRequired,
     gameHardReset: PropTypes.func.isRequired,
-    winningCombo: PropTypes.array.isRequired
+    winningCombo: PropTypes.array.isRequired,
+    stats: PropTypes.object.isRequired
   };
 
   render() {
-    const {tiles, tileSetIfValid} = this.props
+    const {tiles, tileSetIfValid, computer, player, stats} = this.props
     return (
       <div className={sty.container}>
         <h1>Tic Tac Toe</h1>
-        {this.renderOptionBarOrStatus()}
+        {this.renderOptionOrReset()}
+        <div className={sty.status}>
+          <div className={sty.statusUnit}>
+            <h5>Player({player})</h5>
+            <p>{stats.player}</p>
+          </div>
+          <div className={sty.statusUnit}>
+            <h5>Ties</h5>
+            <p>{stats.ties}</p>
+          </div>
+          <div className={sty.statusUnit}>
+            <h5>Computer({computer})</h5>
+            <p>{stats.computer}</p>
+          </div>
+        </div>
         <div className={sty.tilesContainer}>
           {tiles.map((tile, index) => {
             return <Tile type={tile} position={index} tileSetIfValid={tileSetIfValid} key={index} ref={index}/>
@@ -44,19 +64,14 @@ class TicTacToe extends Component {
     )
   }
 
-  renderOptionBarOrStatus = () => {
-    const {status, winner, gameHardReset} = this.props
+  renderOptionOrReset = () => {
+    const {status, gameHardReset} = this.props
     if (status === 'active') {
       return (
         <div className={sty.status}>
-          <h3>Play</h3>
           <Button text='Reset' width={123} onClick={gameHardReset}/>
         </div>
       )
-    } else if (status === 'won') {
-      return <div className={sty.status}>
-        <h3>{winner === 'human' ? 'Awesome you won' : 'Bad luck. The computer won'}</h3>
-      </div>
     } else {
       return (
         <div className={sty.options}>
