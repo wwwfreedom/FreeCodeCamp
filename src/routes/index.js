@@ -16,6 +16,7 @@ import Weather from 'views/Weather/Weather'
 import Twitch from 'views/Twitch/Twitch'
 import Wikipedia from 'views/Wikipedia/Wikipedia'
 import Portfolio from 'views/Portfolio/Portfolio'
+import TicTacToe from 'views/TicTacToe/TicTacToe'
 
 export default (
   <Route path='/' component={CoreLayout}>
@@ -28,6 +29,7 @@ export default (
     <Route path='/Twitch' component={Twitch} />
     <Route path='/Weather' component={Weather} />
     <Route path='/Calculator' component={Calculator} />
+    <Route path='/TicTacToe' component={TicTacToe} />
     <Route path='/Portfolio' component={Portfolio} />
   </Route>
 )

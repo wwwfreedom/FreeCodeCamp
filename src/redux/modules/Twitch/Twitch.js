@@ -1,5 +1,5 @@
-import fetchJsonp from 'fetch-jsonp'
 import {isEmpty} from 'lodash'
+import fetchJsonp from 'fetch-jsonp'
 
 // ------------------------------------
 // Constants

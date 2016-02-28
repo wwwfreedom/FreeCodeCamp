@@ -1,4 +1,5 @@
 import {isEmpty} from 'lodash'
+
 /**
  * resources
  * http://stackoverflow.com/questions/8363531/accessing-main-picture-of-wikipedia-page-by-api

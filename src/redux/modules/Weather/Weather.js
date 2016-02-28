@@ -1,5 +1,5 @@
-import { createAction, handleActions } from 'redux-actions'
 import { isEmpty } from 'lodash'
+import { createAction, handleActions } from 'redux-actions'
 import fetch from 'isomorphic-fetch'
 import { notifSend } from 'redux/modules/Notification/actions/notifs.js'
 
