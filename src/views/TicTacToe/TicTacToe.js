@@ -31,6 +31,7 @@ class TicTacToe extends Component {
     player: PropTypes.string.isRequired,
     tileSet: PropTypes.func.isRequired,
     gameHardReset: PropTypes.func.isRequired,
+    gameSoftReset: PropTypes.func.isRequired,
     winningCombo: PropTypes.array.isRequired,
     stats: PropTypes.object.isRequired
   };
@@ -86,15 +87,17 @@ class TicTacToe extends Component {
   };
 
   playerTypeSet = (e) => {
-    const {gameStatusSet, playerTypeSet, tileSet} = this.props
+    const {gameStatusSet, playerTypeSet, tileSet, gameSoftReset} = this.props
     gameStatusSet('active')
     // set the option that player chose
     if (e.target.text === 'O') {
       playerTypeSet({computer: 'x', player: 'o'})
+      gameSoftReset()
       // computer make the first move by random setting tiles
       tileSet(Math.floor(Math.random() * (9)), 'x')
     } else {
       playerTypeSet({computer: 'o', player: 'x'})
+      gameSoftReset()
       tileSet(Math.floor(Math.random() * (9)), 'o')
     }
   }

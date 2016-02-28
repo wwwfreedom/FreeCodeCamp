@@ -89,6 +89,32 @@ function minimax(_stateCopy) {
   }
 }
 
+/**
+ * check array of string for possible win condition m
+ * @param  {array} t array of x or o or '' reflecting the board state
+ * @return {string}   a string character denoting the result of check
+ */
+function checkBoard(state) {
+  let t = state.tiles
+  // using regex join the strings in board to see if it matchs the pattern
+  let check = (a, b, c) => !!(a + b + c).match(/^(xxx|ooo)$/gi)
+  // if match one of the win condition then return the value of the match either as x or o
+  if (check(t[0], t[1], t[2])) return [t[0], 0, 1, 2]
+  if (check(t[3], t[4], t[5])) return [t[3], 3, 4, 5]
+  if (check(t[6], t[7], t[8])) return [t[6], 6, 7, 8]
+
+  if (check(t[0], t[3], t[6])) return [t[0], 0, 3, 6]
+  if (check(t[1], t[4], t[7])) return [t[1], 1, 4, 7]
+  if (check(t[2], t[5], t[8])) return [t[2], 2, 5, 8]
+
+  if (check(t[0], t[4], t[8])) return [t[0], 0, 4, 8]
+  if (check(t[2], t[4], t[6])) return [t[2], 2, 4, 6]
+
+  // if no match the string length of the array will be nice in which case return d as a draw
+  if (t.join('').length === 9) return ['d']
+  return ['n']
+}
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -123,13 +149,10 @@ export const playerTypeSet = (type) => ({
 
 export const gameStatusSet = createAction(GAME_STATUS_SET, status => status)
 export const turnSet = createAction(TURN_SET, player => player)
-
 export const winnerSet = createAction(WINNER_SET, player => player)
-
 export const statSet = createAction(STAT_SET, stat => stat)
 // reset only tiles and previous winner
 export const gameSoftReset = createAction(GAME_SOFT_RESET)
-
 export const gameHardReset = createAction(GAME_HARD_RESET)
 export const winningComboSet = createAction(WINNING_COMBO_SET, position => position)
 
@@ -177,16 +200,18 @@ export const tileSetIfValid = (position) => (dispatch, getState) => {
         // game's finish when winner is not equal to 'n'
         if (getState().TicTacToe.winner !== 'n') {
           if (getState().TicTacToe.winner !== 'd') {
+            // lesson: learn to use rest parameter with destructuring
             const [first, ...rest] = checkBoard(getState().TicTacToe)
             console.log(first)
             dispatch(winningComboSet(rest))
           }
           dispatch(updateStat())
+          // ToAsk: How to cancel this this timeOut in another dispatch like hardReset dispatch
           setTimeout(() => {
             dispatch(gameSoftReset())
             dispatch(tileSet(Math.floor(Math.random() * (9)), computer))
             dispatch(turnSet(player))
-          }, 2000)
+          }, 1000)
         }
       }, 0)
     }
@@ -210,37 +235,12 @@ export const updateStat = () => (dispatch, getState) => {
   }
 }
 
-/**
- * check array of string for possible win condition m
- * @param  {array} t array of x or o or '' reflecting the board state
- * @return {string}   a string character denoting the result of check
- */
-function checkBoard(state) {
-  let t = state.tiles
-  // using regex join the strings in board to see if it matchs the pattern
-  let check = (a, b, c) => !!(a + b + c).match(/^(xxx|ooo)$/gi)
-  // if match one of the win condition then return the value of the match either as x or o
-  if (check(t[0], t[1], t[2])) return [t[0], 0, 1, 2]
-  if (check(t[3], t[4], t[5])) return [t[3], 3, 4, 5]
-  if (check(t[6], t[7], t[8])) return [t[6], 6, 7, 8]
-
-  if (check(t[0], t[3], t[6])) return [t[0], 0, 3, 6]
-  if (check(t[1], t[4], t[7])) return [t[1], 1, 4, 7]
-  if (check(t[2], t[5], t[8])) return [t[2], 2, 5, 8]
-
-  if (check(t[0], t[4], t[8])) return [t[0], 0, 4, 8]
-  if (check(t[2], t[4], t[6])) return [t[2], 2, 4, 6]
-
-  // if no match the string length of the array will be nice in which case return d as a draw
-  if (t.join('').length === 9) return ['d']
-  return ['n']
-}
-
 export const actions = {
   tileSetIfValid,
   playerTypeSet,
   tileSet,
   gameHardReset,
+  gameSoftReset,
   gameStatusSet
 }
 
