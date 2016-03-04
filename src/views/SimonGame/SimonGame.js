@@ -1,17 +1,30 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './SimonGame.scss'
+import { connect } from 'react-redux'
+import { actions as SimonGameActions } from 'redux/modules/SimonGame/SimonGame.js'
+
 import ButtonsContainer from 'components/ButtonsContainer/ButtonsContainer'
 
-export default class SimonGame extends Component {
+const mapStateToProps = (state) => ({
+  score: state.SimonGame.score
+})
+
+class SimonGame extends Component {
   static propTypes = {
-    a: PropTypes.string
+    score: PropTypes.number.isRequired
   };
 
   render() {
+    const {score, userGuessSet} = this.props
     return (
       <div className={sty.container}>
-        <ButtonsContainer />
+        <ButtonsContainer
+          userGuessSet={userGuessSet}
+        />
+        {score}
       </div>
     )
   };
 }
+
+export default connect(mapStateToProps, SimonGameActions)(SimonGame)

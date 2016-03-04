@@ -12,7 +12,7 @@ const style = {
 
 export default class ButtonsContainer extends Component {
   static propTypes = {
-    blueClick: PropTypes.func.isRequired
+    userGuessSet: PropTypes.func.isRequired
   };
 
   render() {
@@ -59,6 +59,18 @@ export default class ButtonsContainer extends Component {
   };
 
   blueClick = () => {
-    console.log('blueclick')
+    this.props.userGuessSet('blue')
+  };
+
+  redClick = () => {
+    this.props.userGuessSet('red')
+  };
+
+  greenClick = () => {
+    this.props.userGuessSet('green')
+  };
+
+  yellowClick = () => {
+    this.props.userGuessSet('yellow')
   };
 }
