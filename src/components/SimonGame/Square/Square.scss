@@ -1,0 +1,57 @@
+@import 'base';
+.container {
+  width: 100px;
+  height: 100px;
+  margin: 1em;
+  @include materialShadow(1);
+  cursor: pointer;
+  border: 0;
+  borderRadius: 0.3em;
+}
+
+.active {
+  composes: container;
+  // this is the cool animation code responsible button press effect
+  transform: translateY(2px);
+  transition: translateY 0.3s cubic-bezier(.43,.41,.22,.91);
+}
+
+.active-red {
+  composes: active;
+  background-color: $red800;
+}
+
+.inactive-red {
+  composes: container;
+  background-color: $red300;
+}
+
+.active-blue {
+  composes: active;
+  background-color: $blue800;
+}
+
+.inactive-blue {
+  composes: container;
+  background-color: $blue300;
+}
+
+.active-green {
+  composes: active;
+  background-color: $green800;
+}
+
+.inactive-green {
+  composes: container;
+  background-color: $green300;
+}
+
+.active-yellow {
+  composes: active;
+  background-color: $yellow800;
+}
+
+.inactive-yellow {
+  composes: container;
+  background-color: $yellow300;
+}
