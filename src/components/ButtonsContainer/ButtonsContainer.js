@@ -4,16 +4,16 @@ import Square from 'components/SimonGame/Square/Square'
 
 export default class ButtonsContainer extends Component {
   static propTypes = {
-    userGuessSet: PropTypes.func.isRequired,
+    userInput: PropTypes.func.isRequired,
     tileTrigger: PropTypes.string.isRequired
   };
 
   render() {
-    const {tileTrigger, userGuessSet} = this.props
+    const {tileTrigger, userInput} = this.props
     return (
       <div className={sty.container}>
         <Square color={'red'} onClick={this.redClick} trigger={tileTrigger} />
-        <Square color={'blue'} onClick={() => userGuessSet('blue')} trigger={tileTrigger}/>
+        <Square color={'blue'} onClick={() => userInput('blue')} trigger={tileTrigger}/>
         <Square color={'green'} onClick={this.greenClick} trigger={tileTrigger}/>
         <Square color={'yellow'} onClick={this.yellowClick} trigger={tileTrigger}/>
       </div>
@@ -21,18 +21,18 @@ export default class ButtonsContainer extends Component {
   };
 
   blueClick = () => {
-    this.props.userGuessSet('blue')
+    this.props.userInput('blue')
   };
 
   redClick = () => {
-    this.props.userGuessSet('red')
+    this.props.userInput('red')
   };
 
   greenClick = () => {
-    this.props.userGuessSet('green')
+    this.props.userInput('green')
   };
 
   yellowClick = () => {
-    this.props.userGuessSet('yellow')
+    this.props.userInput('yellow')
   };
 }
