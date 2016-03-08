@@ -4,6 +4,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 
 export default class AudioPlayer extends Component {
   static propTypes = {
@@ -29,7 +30,7 @@ export default class AudioPlayer extends Component {
    */
 
   componentDidMount() {
-    var node = React.findDOMNode(this)
+    var node = ReactDOM.findDOMNode(this)
 
     // node.addEventListener('progress', this.handleProgress)
     // node.addEventListener('timeupdate', this.handleTimeUpdate)
@@ -53,7 +54,7 @@ export default class AudioPlayer extends Component {
   }
 
   componentWillUnmount() {
-    var node = React.findDOMNode(this)
+    var node = ReactDOM.findDOMNode(this)
 
     // node.removeEventListener('progress', this.handleProgress)
     // node.removeEventListener('timeupdate', this.handleTimeUpdate)
@@ -65,7 +66,7 @@ export default class AudioPlayer extends Component {
    */
 
   // handleTimeUpdate = () => {
-  //   var node = React.findDOMNode(this)
+  //   var node = ReactDOM.findDOMNode(this)
   //   var currentTime = node.currentTime
   //   var trackDuration = node.duration
 
@@ -76,12 +77,12 @@ export default class AudioPlayer extends Component {
   // }
 
   handleMediaEnd = () => {
-    React.findDOMNode(this).currentTime = 0
+    ReactDOM.findDOMNode(this).currentTime = 0
     this.props.onEnd()
   };
 
   // handleProgress = () => {
-  //   var node = React.findDOMNode(this)
+  //   var node = ReactDOM.findDOMNode(this)
   //   var trackDuration = node.duration
   //   var buffered = node.buffered
 
@@ -92,14 +93,14 @@ export default class AudioPlayer extends Component {
   // }
 
   updateCurrentTime = () => {
-    var node = React.findDOMNode(this)
+    var node = ReactDOM.findDOMNode(this)
     if (node.readyState) {
       node.currentTime = this.props.defaultTime
     }
   };
 
   updateIsPlaying = () => {
-    var node = React.findDOMNode(this)
+    var node = ReactDOM.findDOMNode(this)
     var isPlaying = this.props.isPlaying
 
     if (isPlaying) {
@@ -110,7 +111,7 @@ export default class AudioPlayer extends Component {
   };
 
   updateSource = () => {
-    var node = React.findDOMNode(this)
+    var node = ReactDOM.findDOMNode(this)
     var isPlaying = this.props.isPlaying
 
     node.pause()

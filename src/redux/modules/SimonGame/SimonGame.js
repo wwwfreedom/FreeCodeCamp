@@ -17,6 +17,8 @@ export const WRONG_SET = 'WRONG_SET'
 export const SCORE_INC = 'SCORE_INC'
 export const SCORE_SET = 'SCORE_SET'
 export const HARD_MODE_SET = 'HARD_MODE_SET'
+export const TILE_SOUND_PLAY_ON = 'TILE_SOUND_PLAY_ON'
+export const TILE_SOUND_PLAY_OFF = 'TILE_SOUND_PLAY_OFF'
 
 // ------------------------------------
 // Actions
@@ -35,6 +37,8 @@ export const scoreInc = createAction(SCORE_INC)
 export const hardModeSet = createAction(HARD_MODE_SET, state => state)
 export const tileOrderClear = createAction(TILE_ORDER_CLEAR)
 export const scoreSet = createAction(SCORE_SET, score => score)
+export const tileSoundPlayOn = createAction(TILE_SOUND_PLAY_ON, color => color)
+export const tileSoundPlayOff = createAction(TILE_SOUND_PLAY_OFF)
 
 // ------------------------------------
 // Thunk Actions
@@ -62,7 +66,7 @@ export const animateTiles = () => (dispatch, getState) => {
       dispatch(tileTrigger(item))
       setTimeout(() => {
         dispatch(tileTrigger('blank'))
-      }, 300)
+      }, 500)
     }, (index * 700))
   })
 
@@ -138,7 +142,9 @@ export const actions = {
   userInput,
   reset,
   start,
-  hardModeSet
+  hardModeSet,
+  tileSoundPlayOn,
+  tileSoundPlayOff
 }
 
 // ------------------------------------
@@ -201,6 +207,16 @@ const ACTION_HANDLERS = {
     hardMode: action.payload
   }),
 
+  [TILE_SOUND_PLAY_ON]: (state, action) => ({
+    ...state,
+    tileSoundPlaying: action.payload
+  }),
+
+  [TILE_SOUND_PLAY_OFF]: (state, action) => ({
+    ...state,
+    tileSoundPlaying: false
+  }),
+
   [RESET]: () => INITIAL_STATE
 }
 
@@ -217,6 +233,7 @@ const INITIAL_STATE = {
   animating: false,
   score: 0,
   tileTrigger: '',
+  tileSoundPlaying: '',
   hardMode: false
 }
 
