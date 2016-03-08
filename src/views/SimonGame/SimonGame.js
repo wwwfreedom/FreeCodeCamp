@@ -5,6 +5,8 @@ import { actions as SimonGameActions } from 'redux/modules/SimonGame/SimonGame.j
 
 import ButtonsContainer from 'components/ButtonsContainer/ButtonsContainer'
 import OptionButtons from 'components/SimonGame/OptionButtons/OptionButtons'
+import MdClear from 'react-icons/lib/md/clear'
+import MdCheck from 'react-icons/lib/md/check'
 
 const mapStateToProps = (state) => ({
   score: state.SimonGame.score,
@@ -25,33 +27,33 @@ class SimonGame extends Component {
   };
 
   render() {
-    const {score, userInput, reset, tileTrigger, start} = this.props
+    const {userInput, reset, tileTrigger, start, score} = this.props
     return (
       <div className={sty.container}>
         <ButtonsContainer
           userInput={userInput}
           tileTrigger={tileTrigger}
         />
-        {this.renderStatus()}
         <div className={sty.score}>
-          <span>{score}</span>
+         {score > 0 ? `Round ${score}` : ''}
         </div>
+        {this.renderStatusScore()}
         <OptionButtons reset={reset} start={start}/>
       </div>
     )
   };
 
-  renderStatus = () => {
+  renderStatusScore = () => {
     const {isWrong, gameStatus} = this.props
     if (gameStatus === 'active') {
       if (isWrong === 'true') {
         return <div className={sty.wrong}>
-          Wrong
+          <MdClear />
         </div>
       }
       if (isWrong === 'false') {
         return <div className={sty.correct}>
-          Correct
+          <MdCheck />
         </div>
       }
     }

@@ -1,7 +1,25 @@
 .container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   justify-content: center;
   width: 280px;
   margin: 0 auto;
+}
+
+.score {
+  text-align: center;
+  padding: 0.5em;
+  font-size: 1.5em;
+}
+
+.wrong {
+  text-align: center;
+  font-size: 2em;
+  color: red;
+}
+
+.correct {
+  text-align: center;
+  font-size: 2em;
+  color: green;
 }

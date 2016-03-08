@@ -13,6 +13,7 @@ export const TILE_TRIGGER = 'TILE_TRIGGER'
 export const ANIMATION_SET = 'ANIMATION_SET'
 export const GAME_STATUS_SET = 'GAME_STATUS_SET'
 export const WRONG_SET = 'WRONG_SET'
+export const SCORE_INC = 'SCORE_INC'
 
 // ------------------------------------
 // Actions
@@ -27,6 +28,7 @@ export const tileTrigger = createAction(TILE_TRIGGER, tile => tile)
 export const animationSet = createAction(ANIMATION_SET, state => state)
 export const gameStatusSet = createAction(GAME_STATUS_SET, state => state)
 export const wrongSet = createAction(WRONG_SET, state => state)
+export const scoreInc = createAction(SCORE_INC)
 
 // ------------------------------------
 // Thunk Actions
@@ -38,6 +40,7 @@ export const start = () => (dispatch, getState) => {
   if (getState().SimonGame.gameStatus === 'inActive') {
     dispatch(tileOrderSet(colors[random(0, 3)]))
     dispatch(animateTiles())
+    dispatch(scoreInc())
     dispatch(gameStatusSet('active'))
   }
 }
@@ -81,6 +84,7 @@ export const userInput = (color) => (dispatch, getState) => {
         setTimeout(() => {
           // set wrong state back to empty
           dispatch(wrongSet(''))
+          dispatch(scoreInc())
           dispatch(tileOrderSet(colors[random(0, 3)]))
           dispatch(animateTiles())
           dispatch(guessStatusSet(false))
@@ -105,6 +109,7 @@ export const userInput = (color) => (dispatch, getState) => {
         dispatch(wrongSet('false'))
         setTimeout(() => {
           dispatch(wrongSet(''))
+          dispatch(scoreInc())
           dispatch(tileOrderSet(colors[random(0, 3)]))
           dispatch(animateTiles())
           dispatch(guessStatusSet(false))
@@ -147,6 +152,11 @@ const ACTION_HANDLERS = {
   [WRONG_SET]: (state, action) => ({
     ...state,
     isWrong: action.payload
+  }),
+
+  [SCORE_INC]: (state, action) => ({
+    ...state,
+    score: state.score + 1
   }),
 
   [GAME_STATUS_SET]: (state, action) => ({
