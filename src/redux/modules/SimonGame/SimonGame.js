@@ -95,7 +95,10 @@ export const userInput = (color) => (dispatch, getState) => {
         if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
           dispatch(wrongSet('true'))
           dispatch(userGuessClear())
-          setTimeout(() => { dispatch(wrongSet('')) }, 1000 )
+          setTimeout(() => {
+            dispatch(wrongSet(''))
+            dispatch(animateTiles())
+          }, 1000 )
         }
         console.log('wrong')
       }
@@ -120,7 +123,10 @@ export const userInput = (color) => (dispatch, getState) => {
         if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
           dispatch(wrongSet('true'))
           dispatch(userGuessClear())
-          setTimeout(() => { dispatch(wrongSet('')) }, 1000 )
+          setTimeout(() => {
+            dispatch(wrongSet(''))
+            dispatch(animateTiles())
+          }, 1000 )
         }
         console.log('wrong')
       }
