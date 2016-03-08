@@ -73,98 +73,64 @@ export const animateTiles = () => (dispatch, getState) => {
   }, tilesOrder.length * 700)
 }
 
+// handler for user tile inputs
 export const userInput = (color) => (dispatch, getState) => {
   const {animating, gameStatus, isGuessing} = getState().SimonGame
   // ignore user input when the game is animating
   if (animating === false && gameStatus === 'active') {
-    // clear the user's guess after every round
+    // use isGuessing state to only clear the user input upon unsuccesful matching check. Effect is to avoid premature clearing of user input
     if (isGuessing === false) {
       dispatch(guessStatusSet(true))
       dispatch(userGuessSet(color))
       dispatch(wrongSet(''))
-      // check to see if the user's guess matchs the computer generated tilesOrder
-      const {tilesOrder, userGuess} = getState().SimonGame
-
-      if (isEqual(tilesOrder, userGuess)) {
-        dispatch(wrongSet('false'))
-        setTimeout(() => {
-          // set wrong state back to empty
-          dispatch(wrongSet(''))
-          dispatch(scoreInc())
-          dispatch(tileOrderSet(colors[random(0, 3)]))
-          dispatch(animateTiles())
-          dispatch(guessStatusSet(false))
-          dispatch(userGuessClear())
-        }, 1000)
-      } else {
-        const {hardMode, userGuess, tilesOrder} = getState().SimonGame
-        if (hardMode === true && userGuess.length >= tilesOrder.length) {
-          dispatch(wrongSet('true'))
-          dispatch(userGuessClear())
-          setTimeout(() => {
-            dispatch(wrongSet(''))
-            dispatch(tileOrderClear())
-            // set the score back to round 1
-            dispatch(scoreSet(1))
-            dispatch(tileOrderSet(colors[random(0, 3)]))
-            dispatch(animateTiles())
-            return
-          }, 1000 )
-        }
-        // if the user guess exceeds the computer generated sequence then reset and clear user's guess and toggle wrong state
-        if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
-          dispatch(wrongSet('true'))
-          dispatch(userGuessClear())
-          setTimeout(() => {
-            dispatch(wrongSet(''))
-            dispatch(animateTiles())
-          }, 1000 )
-        }
-        console.log('wrong')
-      }
+      dispatch(check())
     } else {
       dispatch(userGuessSet(color))
       dispatch(wrongSet(''))
-      // check to see if the user's guess matchs the computer generated tilesOrder
-      const {tilesOrder, userGuess} = getState().SimonGame
-
-      if (isEqual(tilesOrder, userGuess)) {
-        dispatch(wrongSet('false'))
-        setTimeout(() => {
-          dispatch(wrongSet(''))
-          dispatch(scoreInc())
-          dispatch(tileOrderSet(colors[random(0, 3)]))
-          dispatch(animateTiles())
-          dispatch(guessStatusSet(false))
-          dispatch(userGuessClear())
-        }, 1000)
-      } else {
-        const {hardMode, userGuess, tilesOrder} = getState().SimonGame
-        if (hardMode === true && userGuess.length >= tilesOrder.length) {
-          dispatch(wrongSet('true'))
-          dispatch(userGuessClear())
-          setTimeout(() => {
-            dispatch(wrongSet(''))
-            dispatch(tileOrderClear())
-            dispatch(scoreSet(1))
-            dispatch(tileOrderSet(colors[random(0, 3)]))
-            dispatch(animateTiles())
-            return
-          }, 1000 )
-        }
-
-        // if the user guess exceeds the computer generated sequence then reset and clear user's guess
-        if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
-          dispatch(wrongSet('true'))
-          dispatch(userGuessClear())
-          setTimeout(() => {
-            dispatch(wrongSet(''))
-            dispatch(animateTiles())
-          }, 1000 )
-        }
-        console.log('wrong')
-      }
+      dispatch(check())
     }
+  }
+}
+
+// check to see if the user's guess matchs the computer generated tilesOrder
+export const check = () => (dispatch, getState) => {
+  const {tilesOrder, userGuess} = getState().SimonGame
+  if (isEqual(tilesOrder, userGuess)) {
+    dispatch(wrongSet('false'))
+    setTimeout(() => {
+      // set wrong state back to empty
+      dispatch(wrongSet(''))
+      dispatch(scoreInc())
+      dispatch(tileOrderSet(colors[random(0, 3)]))
+      dispatch(animateTiles())
+      dispatch(guessStatusSet(false))
+      dispatch(userGuessClear())
+    }, 1000)
+  } else {
+    const {hardMode, userGuess, tilesOrder} = getState().SimonGame
+    if (hardMode === true && userGuess.length >= tilesOrder.length) {
+      dispatch(wrongSet('true'))
+      dispatch(userGuessClear())
+      setTimeout(() => {
+        dispatch(wrongSet(''))
+        dispatch(tileOrderClear())
+        // set the score back to round 1
+        dispatch(scoreSet(1))
+        dispatch(tileOrderSet(colors[random(0, 3)]))
+        dispatch(animateTiles())
+        return
+      }, 1000 )
+    }
+    // if the user guess exceeds the computer generated sequence then reset and clear user's guess and toggle wrong state
+    if (userGuess.length >= tilesOrder.length) {
+      dispatch(wrongSet('true'))
+      dispatch(userGuessClear())
+      setTimeout(() => {
+        dispatch(wrongSet(''))
+        dispatch(animateTiles())
+      }, 1000 )
+    }
+    console.log('wrong')
   }
 }
 
