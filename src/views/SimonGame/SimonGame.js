@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
   score: state.SimonGame.score,
   tileTrigger: state.SimonGame.tileTrigger,
   isWrong: state.SimonGame.isWrong,
-  gameStatus: state.SimonGame.gameStatus
+  gameStatus: state.SimonGame.gameStatus,
+  hardMode: state.SimonGame.hardMode
 })
 
 class SimonGame extends Component {
@@ -23,11 +24,13 @@ class SimonGame extends Component {
     tileTrigger: PropTypes.string.isRequired,
     start: PropTypes.func.isRequired,
     isWrong: PropTypes.string.isRequired,
-    gameStatus: PropTypes.string.isRequired
+    gameStatus: PropTypes.string.isRequired,
+    hardModeSet: PropTypes.func.isRequired,
+    hardMode: PropTypes.bool.isRequired
   };
 
   render() {
-    const {userInput, reset, tileTrigger, start, score} = this.props
+    const {userInput, reset, tileTrigger, start, score, hardModeSet, hardMode} = this.props
     return (
       <div className={sty.container}>
         <ButtonsContainer
@@ -38,7 +41,12 @@ class SimonGame extends Component {
          {score > 0 ? `Round ${score}` : ''}
         </div>
         {this.renderStatusScore()}
-        <OptionButtons reset={reset} start={start}/>
+        <OptionButtons
+          reset={reset}
+          start={start}
+          hardModeSet={hardModeSet}
+          toggleState={hardMode}
+        />
       </div>
     )
   };

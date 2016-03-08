@@ -9,11 +9,14 @@ export const USER_GUESS_CLEAR = 'USER_GUESS_CLEAR'
 export const RESET = 'RESET'
 export const GUESS_STATUS_SET = 'GUESS_STATUS_SET'
 export const TILE_ORDER_SET = 'TILE_ORDER_SET'
+export const TILE_ORDER_CLEAR = 'TILE_ORDER_CLEAR'
 export const TILE_TRIGGER = 'TILE_TRIGGER'
 export const ANIMATION_SET = 'ANIMATION_SET'
 export const GAME_STATUS_SET = 'GAME_STATUS_SET'
 export const WRONG_SET = 'WRONG_SET'
 export const SCORE_INC = 'SCORE_INC'
+export const SCORE_SET = 'SCORE_SET'
+export const HARD_MODE_SET = 'HARD_MODE_SET'
 
 // ------------------------------------
 // Actions
@@ -29,6 +32,9 @@ export const animationSet = createAction(ANIMATION_SET, state => state)
 export const gameStatusSet = createAction(GAME_STATUS_SET, state => state)
 export const wrongSet = createAction(WRONG_SET, state => state)
 export const scoreInc = createAction(SCORE_INC)
+export const hardModeSet = createAction(HARD_MODE_SET, state => state)
+export const tileOrderClear = createAction(TILE_ORDER_CLEAR)
+export const scoreSet = createAction(SCORE_SET, score => score)
 
 // ------------------------------------
 // Thunk Actions
@@ -91,6 +97,20 @@ export const userInput = (color) => (dispatch, getState) => {
           dispatch(userGuessClear())
         }, 1000)
       } else {
+        const {hardMode, userGuess, tilesOrder} = getState().SimonGame
+        if (hardMode === true && userGuess.length >= tilesOrder.length) {
+          dispatch(wrongSet('true'))
+          dispatch(userGuessClear())
+          setTimeout(() => {
+            dispatch(wrongSet(''))
+            dispatch(tileOrderClear())
+            // set the score back to round 1
+            dispatch(scoreSet(1))
+            dispatch(tileOrderSet(colors[random(0, 3)]))
+            dispatch(animateTiles())
+            return
+          }, 1000 )
+        }
         // if the user guess exceeds the computer generated sequence then reset and clear user's guess and toggle wrong state
         if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
           dispatch(wrongSet('true'))
@@ -119,6 +139,20 @@ export const userInput = (color) => (dispatch, getState) => {
           dispatch(userGuessClear())
         }, 1000)
       } else {
+        const {hardMode, userGuess, tilesOrder} = getState().SimonGame
+        if (hardMode === true && userGuess.length >= tilesOrder.length) {
+          dispatch(wrongSet('true'))
+          dispatch(userGuessClear())
+          setTimeout(() => {
+            dispatch(wrongSet(''))
+            dispatch(tileOrderClear())
+            dispatch(scoreSet(1))
+            dispatch(tileOrderSet(colors[random(0, 3)]))
+            dispatch(animateTiles())
+            return
+          }, 1000 )
+        }
+
         // if the user guess exceeds the computer generated sequence then reset and clear user's guess
         if (getState().SimonGame.userGuess.length >= getState().SimonGame.tilesOrder.length) {
           dispatch(wrongSet('true'))
@@ -137,7 +171,8 @@ export const userInput = (color) => (dispatch, getState) => {
 export const actions = {
   userInput,
   reset,
-  start
+  start,
+  hardModeSet
 }
 
 // ------------------------------------
@@ -180,9 +215,24 @@ const ACTION_HANDLERS = {
     tilesOrder: [ ...state.tilesOrder, action.payload ]
   }),
 
+  [TILE_ORDER_CLEAR]: (state) => ({
+    ...state,
+    tilesOrder: []
+  }),
+
+  [SCORE_SET]: (state, action) => ({
+    ...state,
+    score: action.payload
+  }),
+
   [TILE_TRIGGER]: (state, action) => ({
     ...state,
     tileTrigger: action.payload
+  }),
+
+  [HARD_MODE_SET]: (state, action) => ({
+    ...state,
+    hardMode: action.payload
   }),
 
   [RESET]: () => INITIAL_STATE
@@ -200,7 +250,8 @@ const INITIAL_STATE = {
   isGuessing: false,
   animating: false,
   score: 0,
-  tileTrigger: ''
+  tileTrigger: '',
+  hardMode: false
 }
 
 export default function TicTacToe(state = INITIAL_STATE, action) {
