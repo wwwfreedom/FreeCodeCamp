@@ -1,6 +1,10 @@
 import {random, isEqual} from 'lodash'
 import { createAction } from 'redux-actions'
 
+// increase the animation speed as round number increased
+// audio for wrong guess
+// show win when user get to round 20 and restart
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -67,14 +71,14 @@ export const animateTiles = () => (dispatch, getState) => {
       setTimeout(() => {
         dispatch(tileTrigger('blank'))
       }, 500)
-    }, (index * 700))
+    }, (index * 1000))
   })
 
   // toAsk is there a better way to ensure the order of async action dispatch instead of using setTimeout, mb promise or generator or async await
   // set animation state to false after animation is finish
   setTimeout(() => {
     dispatch(animationSet(false))
-  }, tilesOrder.length * 700)
+  }, tilesOrder.length * 1000)
 }
 
 // handler for user tile inputs
