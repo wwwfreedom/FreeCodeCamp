@@ -22,7 +22,7 @@ class SimonGame extends Component {
   static propTypes = {
     score: PropTypes.number.isRequired,
     userInput: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
+    handleReset: PropTypes.func.isRequired,
     tileTrigger: PropTypes.string.isRequired,
     start: PropTypes.func.isRequired,
     isWrong: PropTypes.string.isRequired,
@@ -36,7 +36,7 @@ class SimonGame extends Component {
   };
 
   render() {
-    const {userInput, reset, tileTrigger, start, score, hardModeSet, hardMode, tileSoundPlayOn, tileSoundPlayOff, tileSoundPlaying, animating} = this.props
+    const {userInput, handleReset, tileTrigger, start, score, hardModeSet, hardMode, tileSoundPlayOn, tileSoundPlayOff, tileSoundPlaying, animating} = this.props
     return (
       <div className={sty.container}>
         <ButtonsContainer
@@ -52,7 +52,7 @@ class SimonGame extends Component {
         </div>
         {this.renderStatusScore()}
         <OptionButtons
-          reset={reset}
+          reset={handleReset}
           start={start}
           hardModeSet={hardModeSet}
           toggleState={hardMode}

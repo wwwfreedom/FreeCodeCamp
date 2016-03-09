@@ -47,6 +47,9 @@ export const tileSoundPlayOff = createAction(TILE_SOUND_PLAY_OFF)
 // Thunk Actions
 // ------------------------------------
 const colors = ['blue', 'red', 'yellow', 'green']
+var tileAnimation = []
+var tileBlankAnimation = []
+var animationFalse
 
 export const start = () => (dispatch, getState) => {
   // only dispatch when the gameStatus is inActive
@@ -65,9 +68,9 @@ export const animateTiles = () => (dispatch, getState) => {
   // loop through generated tilesOrder and trigger the tiles
   const tilesOrder = getState().SimonGame.tilesOrder
   tilesOrder.forEach((item, index) => {
-    setTimeout(() => {
+    tileAnimation[index] = setTimeout(() => {
       dispatch(tileTrigger(item))
-      setTimeout(() => {
+      tileBlankAnimation[index] = setTimeout(() => {
         dispatch(tileTrigger('blank'))
       }, 500)
     }, (index * 1000))
@@ -75,7 +78,7 @@ export const animateTiles = () => (dispatch, getState) => {
 
   // toAsk is there a better way to ensure the order of async action dispatch instead of using setTimeout, mb promise or generator or async await
   // set animation state to false after animation is finish
-  setTimeout(() => {
+  animationFalse = setTimeout(() => {
     dispatch(animationSet(false))
   }, tilesOrder.length * 1000)
 }
@@ -147,9 +150,17 @@ export const check = () => (dispatch, getState) => {
   }
 }
 
+export const handleReset = () => (dispatch, getState) => {
+  // lesson: need to clearTimeOut to stop callback
+  tileAnimation.forEach(animationId => clearTimeout(animationId))
+  tileBlankAnimation.forEach(animationId => clearTimeout(animationId))
+  clearTimeout(animationFalse)
+  dispatch(reset())
+}
+
 export const actions = {
   userInput,
-  reset,
+  handleReset,
   start,
   hardModeSet,
   tileSoundPlayOn,
