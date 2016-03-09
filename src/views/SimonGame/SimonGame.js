@@ -39,6 +39,7 @@ class SimonGame extends Component {
     const {userInput, handleReset, tileTrigger, start, score, hardModeSet, hardMode, tileSoundPlayOn, tileSoundPlayOff, tileSoundPlaying, animating} = this.props
     return (
       <div className={sty.container}>
+        <h1>Simon Game</h1>
         <ButtonsContainer
           userInput={userInput}
           tileTrigger={tileTrigger}

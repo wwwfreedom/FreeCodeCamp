@@ -42,13 +42,13 @@ const projects = [
   {
     name: 'Tic Tac Toe',
     description: 'A simple Tic Tac Toe game featuring simple artificial intelligence',
-    image: 'http://i.imgur.com/vvEZbX8.png',
+    image: 'http://i.imgur.com/WStyuor.png',
     link: 'TicTacToe'
   },
   {
     name: 'Simon Game',
-    description: 'A simple Tic Tac Toe game featuring simple artificial intelligence',
-    image: 'http://i.imgur.com/vvEZbX8.png',
+    description: 'A simple Simon Game',
+    image: 'http://i.imgur.com/kgz9g7o.png',
     link: 'SimonGame'
   }
 ]
