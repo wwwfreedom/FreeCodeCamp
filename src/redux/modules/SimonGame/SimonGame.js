@@ -2,7 +2,6 @@ import {random, isEqual} from 'lodash'
 import { createAction } from 'redux-actions'
 
 // increase the animation speed as round number increased
-// audio for wrong guess
 // show win when user get to round 20 and restart
 
 // ------------------------------------
@@ -102,8 +101,15 @@ export const userInput = (color) => (dispatch, getState) => {
 
 // check to see if the user's guess matchs the computer generated tilesOrder
 export const check = () => (dispatch, getState) => {
-  const {tilesOrder, userGuess} = getState().SimonGame
+  const {tilesOrder, userGuess, score} = getState().SimonGame
   if (isEqual(tilesOrder, userGuess)) {
+    if (score >= 20) {
+      dispatch(gameStatusSet('won'))
+      setTimeout(() => {
+        dispatch(reset())
+      }, 2500)
+      return
+    }
     dispatch(wrongSet('false'))
     setTimeout(() => {
       // set wrong state back to empty
@@ -138,7 +144,6 @@ export const check = () => (dispatch, getState) => {
         dispatch(animateTiles())
       }, 1000 )
     }
-    console.log('wrong')
   }
 }
 

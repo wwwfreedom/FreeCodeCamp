@@ -75,6 +75,11 @@ class SimonGame extends Component {
         </div>
       }
     }
+    if (gameStatus === 'won') {
+      return <div className={sty.won}>
+        Congrats you won the game! :)
+      </div>
+    }
   }
 }
 
