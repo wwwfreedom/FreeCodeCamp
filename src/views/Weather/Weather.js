@@ -20,7 +20,7 @@ const combineActions = Object.assign({}, WeatherActions, {
   notifSend
 })
 
-export default class Weather extends Component {
+export class Weather extends Component {
   static propTypes = {
     location: PropTypes.object,
     locationReceive: PropTypes.func.isRequired,

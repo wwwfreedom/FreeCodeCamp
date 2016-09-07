@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import FaPlus from 'react-icons/lib/fa/plus'
 import FaMinus from 'react-icons/lib/fa/minus'
 import sty from './SettingsPanel.scss'
-import 'react-ios-switch/index.css'
+import 'react-ios-switch/build/bundle.css'
 import Switch from 'react-ios-switch'
 
 export default class SettingsPanel extends Component {

@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
   articles: state.wikipedia.articles
 })
 
-export default class Wikipedia extends Component {
+export class Wikipedia extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired,
     searchInput: PropTypes.string,

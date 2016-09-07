@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import sty from './OptionButtons.scss'
-import RaisedButton from 'material-ui/lib/raised-button'
-import Toggle from 'material-ui/lib/toggle'
+import RaisedButton from 'material-ui/RaisedButton'
+import Toggle from 'material-ui/Toggle'
 
 const style = {
   margin: '1em',

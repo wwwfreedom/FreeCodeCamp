@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 
-
 export default class Root extends React.Component {
   static propTypes = {
     history: React.PropTypes.object.isRequired,
