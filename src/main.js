@@ -24,7 +24,8 @@ import configureStore from './redux/configureStore'
 // const history = createHashHistory()
 
 const history = useBasename(createHashHistory)({
-  basename: __BASENAME__
+  basename: __BASENAME__,
+  queryKey: false
 })
 // const history = useScroll(createHashHistory)()
 const store = configureStore(window.__INITIAL_STATE__)
