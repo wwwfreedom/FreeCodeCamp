@@ -3,17 +3,38 @@
 .container {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  padding: 3.5em 1em 0 1em;
+
+  @include MQ(M) {
+    padding: 3.5rem 1.5rem 0 1.5rem;
+  }
+
+  padding: 2rem 1.5rem;
   background: $altBgColor;
   width: 100%;
+
   h2 {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 0;
-    font-size: 2em;
     color: $sectionHeaderTextColor;
+    font-size: 1.5em;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    @include MQ(SM) {
+      font-size: 2em;
+      padding-left: 5rem;
+    }
+
+    @include MQ(MM) {
+      font-size: 2.5em;
+      padding-left: 2.5rem;
+    }
+
+    @include MQ(L) {
+      font-size: 3em;
+      padding-left: 8.5rem;
+    }
   }
+
   margin: 0 auto;
 }
 
@@ -25,36 +46,43 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin: 3.5em 1em;
+  margin: 2.5em 0;
   max-width: 960px;
-  @include MQ(M) {
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 6em auto;
+
+  @include MQ(SM) {
+    margin: 2.5rem 5rem;
   }
+
+  @include MQ(MM) {
+    margin: 2.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   @include MQ(L) {
-    max-width: 1170px;
-    margin: 3.5em auto;
-    width: 1170px;
+    max-width: 1150px;
+    margin: 3.5rem 8.5rem;
   }
 }
 
 .image {
-  margin: 0 1em 1em 1em;
-  border: 1px solid #dfdfdf;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+
   @include MQ(SM) {
-    width: 400px;
-    margin: 0 auto;
+    width: 500px;
+    margin: 0;
   }
-  @include MQ(M) {
+
+  @include MQ(MM) {
     width: 450px;
+    margin: 0;
   }
-  @include MQ(L) {
+
+  @include MQ(M) {
     width: 550px;
     margin: 0;
   }
+
   img {
     max-width: 100%;
     border-radius: 0 0 10px 10px;
@@ -76,120 +104,34 @@
   }
 }
 
-.image1 {
-  composes: image;
-  @media only screen and (min-width: 1024px) and (max-width: 1150px) {
-    height: 292px;
-  }
-}
-
-.image2 {
-  composes: image;
-  @include MQ(M) {
-    order: 1;
-  }
-}
-
 .text {
-  padding: 0 1em;
   color: $textColor;
-  @include MQ(M) {
-    text-align: left;
-  }
-  @include MQ(L) {
-    width: 550px;
-  }
-}
 
-
-.title {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  h3 {
-    margin: 1.5em 0 1em 0;
-    font-size: 1.5em;
-    @include MQ(M) {
-      margin: 1em 0 0 0;
-    }
-  }
-  color: $sectionHeaderTextColor;
-  @include MQ(M) {
-    color: $textColor;
-  }
-}
-
-.introText {
-  font-size: 1.1em;
-  h4 {
-    @include MQ(M) {
-      margin: 0.5em 0 2em 0;
-    }
-  }
-}
-
-.separator {
-  color: $mediumGray;
-  margin: 1.5em auto;
-  position: relative;
-  z-index: 3;
-  width: 12em;
-  @include MQ(M) {
-    display: none;
-  }
-}
-
-.lineSeparator {
-  &:before {
-    display: block;
-    border: 1px solid $mediumGray;
-    width: 40%;
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    left: 5%;
-  }
-  &:after {
-    display: block;
-    border: 1px solid $mediumGray;
-    width: 40%;
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    right: 5%;
-  }
-}
-
-.description {
-  // Merryweather was chosen because it pair well with Lato the main font according to http://fontpair.co/
-  font-family: 'Merriweather', serif;
-  margin: 3em auto;
-  font-size: 1em;
-  // line height was chosen to match the golden ratio for better reading experience according to http://www.pearsonified.com/typography/
-  line-height: 1.5em;
-  @include MQ(SM) {
+  @include MQ(MM) {
     width: 400px;
-    // margin: 0 0 2em 0;
+    padding-right: 2em;
   }
   @include MQ(M) {
-    width: 450px;
-    margin: 0 0 2em 0;
+    width: 500px;
   }
   @include MQ(L) {
     width: 500px;
-    line-height: 25px;
+  }
+
+  p {
+    line-height: 1.2em;
+    margin-top: 0.5em;
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  h4 {
+    margin-bottom: 0;
   }
 }
 
-.link {
-  text-decoration: none;
-  color: $sectionHeaderTextColor;
-  border: 1px solid $sectionHeaderTextColor;
-  padding: 0.75em;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
-  &:hover {
-    color: $headerTextColor;
-    background: $sectionHeaderTextColor;
-    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-  }
+.projectButton {
+  margin: 1rem 0 2rem 0 !important;
 }

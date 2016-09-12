@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+
 /**
  * Constants
  */
@@ -25,18 +26,25 @@ const initialState = {
   headerParagraph: "I'm a web developer specializing in building interactive web apps.",
   portfolio: [
     {
+      title: 'Pollwise',
+      link: 'https://pollwise.herokuapp.com/',
+      image: 'http://i.imgur.com/8zcWJpJ.png',
+      brief: 'To build a full stack polling app where users can create and share their own polls.',
+      role: "Developing the front-end of the app with React.js and Redux. Creating a custom user registration system with OAuth logins and persist user's generated content to MongoDb."
+    },
+    {
       title: 'Escape Room SA',
       link: 'http://escaperoomsa.com.au/',
       image: 'http://i.imgur.com/HQmLQbA.png',
-      introText: 'A mobile optimizes custom design business website',
-      description: "I built this website focusing on accessibility. It had a responsive design and was optimized to load  under three seconds. It featured mailing list sign up and inbuilt contact form."
+      brief: 'To create a fast loading responsive website to showcase brand and identity guidelines.',
+      role: 'Developing all HTML, CSS and Javascript assets for project, based on a custom design created in-house.'
     },
     {
       title: 'Pomo Time',
       link: 'pomoTime',
       image: 'http://i.imgur.com/vvEZbX8.png',
-      introText: 'A simple pomodoro timer built with React.js',
-      description: "I built this application as a project for FreeCodeCamp. The focus of this app was on simplicity and displaying useful metric to keep the user motivated."
+      brief: 'To create a pomodoro timer with simple elegant design.',
+      role: 'Developing all timer features with React.js and Redux for state management. Creating responsive SVG design and animations.'
     }
   ]
 }
