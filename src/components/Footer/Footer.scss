@@ -4,11 +4,12 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  color: $headerTextColor;
+  color: $textColor;
+  background: $deskNavBgColour;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.12);
   width: 100%;
   height: $menuBarHeight;
-  background: #00237E;
   a {
-    color: $headerTextColor;
+    color: $dark-gray;
   }
 }
