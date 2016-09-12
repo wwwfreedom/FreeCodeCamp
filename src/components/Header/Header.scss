@@ -1,37 +1,9 @@
 @import 'base';
 $headerMinHeight: 320px;
+
 .container {
-  position: relative;
-}
-
-// style responsible for the pattern overlay on top of the background image
-.bgPattern {
   width: 100%;
-  min-height: $headerMinHeight;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  content: "";
-  opacity: .5;
-  background: #000;
-  background: url("../../static/images/pattern.png");
-  background-size: 100%;
-  @include MQ(SM) {
-    // lesson: can't use calc with variable, have to interpolate the sass variable like so #{$sassVariable}
-    height: calc(#{$headerMinHeight} + 130px);
-  }
-  @include MQ(M) {
-    height: calc(#{$headerMinHeight} + 180px);
-  }
-  @include MQ(L) {
-    height: calc(#{$headerMinHeight} + 280px);
-  }
-}
-
-.bgImage {
-  width: 100%;
-  min-height: $headerMinHeight;
+  min-height: 400px;
   @include MQ(SM) {
     height: calc(#{$headerMinHeight} + 130px);
   }
@@ -41,71 +13,75 @@ $headerMinHeight: 320px;
   @include MQ(L) {
     height: calc(#{$headerMinHeight} + 280px);
   }
-  // backup gradient just incase there's no picture
-  background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: $deskNavBgColour;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  // note the the prop below adjust according to the main-axis
   justify-content: center;
-  // lesson: align-content doesn't work if there is only one div, only when there are multiple div then it will work
-  // align-content: flex-end;
+  padding: 0 1.5rem;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  text-align: center;
   z-index: 4;
-  color: $headerTextColor;
-  h1 {
+  color: $dark-gray;
+
+  @include MQ(SM) {
+    padding: 0 5rem;
+  }
+
+  @include MQ(MM) {
+    padding: 0 2.5rem;
+  }
+
+  @include MQ(L) {
+    padding: 0 8.5rem;
+  }
+
+  h2 {
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    line-height: 1.1em;
+    font-weight: 300;
+
     @include MQ(SM) {
+      font-size: 2em;
+    }
+
+    @include MQ(MM) {
       font-size: 2.5em;
     }
-    @include MQ(M) {
+
+    @include MQ(L) {
       font-size: 3em;
     }
-    @include MQ(L) {
-      font-size: 3.5em;
-    }
   }
+
   p {
-    font-size: 1.5em;
-    font-weight: 400;
+    font-size: 1em;
   }
 }
 
-// style for the line separator
-.separator {
-  color: $headerTextColor;
-  margin: 1em auto;
-  position: relative;
-  z-index: 3;
-  width: 12em;
-}
+.cta {
+  display: flex;
+  flex-flow: row wrap;
 
-.lineSeparator {
-  &:before {
-    display: block;
-    border: 1px solid $headerTextColor;
-    width: 40%;
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    left: 5%;
+  @include MQ(SM) {
+    padding: 0 5rem;
   }
-  &:after {
-    display: block;
-    border: 1px solid $headerTextColor;
-    width: 40%;
-    content: ' ';
-    position: absolute;
-    top: 50%;
-    right: 5%;
+
+  @include MQ(MM) {
+    padding: 0 2.5rem;
+  }
+
+  @include MQ(L) {
+    padding: 0 8.5rem;
+  }
+
+  a {
+    margin: 0.5em 0.5em 0.5em 0;
+    @include MQ(M) {
+      margin: 1em 1em 1em 0;
+    }
   }
 }
