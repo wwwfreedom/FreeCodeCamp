@@ -23,7 +23,7 @@ export default class MenuBar extends Component {
           {this.renderMenuLinks()}
         </nav>
         <div className={sty.mobileNavTrigger}>
-          <MenuButton navStatus={this.props.mobileNavIsOpen} onClick={this.handleMenuClick}/>
+          <MenuButton navStatus={this.props.mobileNavIsOpen} onClick={this.handleMenuClick} />
         </div>
       </div>
     )

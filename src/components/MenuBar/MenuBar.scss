@@ -5,7 +5,7 @@
   justify-content: space-between;
   height: $menuBarHeight;
   margin: 0 auto;
-  padding: 0 1.5em;
+  padding: 0 1.5rem;
   align-items: center;
   letter-spacing: 0.1em;
   background: $deskNavBgColour;
@@ -14,11 +14,17 @@
   z-index: 10;
   position: fixed;
   width: 100%;
-  @include MQ(M) {
-    padding: 0 2em;
+
+  @include MQ(SM) {
+    padding: 0 6.5rem;
   }
+
+  @include MQ(MM) {
+    padding: 0 4rem;
+  }
+
   @include MQ(L) {
-    padding: 0 3em;
+    padding: 0 10rem;
   }
 }
 

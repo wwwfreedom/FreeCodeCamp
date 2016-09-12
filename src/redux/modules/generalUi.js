@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 /**
  * Fixed variables
  */
-export const menuLinks = ['portfolio', 'about', 'contact']
+export const menuLinks = ['projects', 'about', 'contact']
 
 /**
  * Constants
@@ -72,4 +72,3 @@ export const generalUi = handleActions({
 // }
 
 export default generalUi
-
