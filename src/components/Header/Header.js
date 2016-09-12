@@ -20,10 +20,10 @@ export default class Header extends Component {
           <h3>Full-stack Javascript Developer</h3>
         </div>
         <div className={sty.cta}>
-          <Link to='/about'>
+          <Link to='about'>
             <RaisedButton label='What I offer'></RaisedButton>
           </Link>
-          <Link to='/portfolio'>
+          <Link to='projects'>
             <RaisedButton label='My work experience'></RaisedButton>
           </Link>
         </div>

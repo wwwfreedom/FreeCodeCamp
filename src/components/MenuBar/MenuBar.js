@@ -34,8 +34,7 @@ export default class MenuBar extends Component {
     return (
       menuLinks.map((link, index) =>
         <Link
-          to={`/${link}`}
-          activeClassName={sty.activeLink}
+          to={`${link}`}
           key={index}
         >
           {link}

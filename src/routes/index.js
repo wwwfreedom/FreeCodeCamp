@@ -22,16 +22,16 @@ import SimonGame from 'views/SimonGame/SimonGame'
 export default (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
-    <Route path='/about' component={AboutView} />
-    <Route path='/contact' component={ContactView} />
-    <Route path='/quoteGenerator' component={QuoteView} />
-    <Route path='/pomotime' component={PomoTime} />
-    <Route path='/Wikipedia' component={Wikipedia} />
-    <Route path='/Twitch' component={Twitch} />
-    <Route path='/Weather' component={Weather} />
-    <Route path='/Calculator' component={Calculator} />
-    <Route path='/SimonGame' component={SimonGame} />
-    <Route path='/TicTacToe' component={TicTacToe} />
-    <Route path='/Portfolio' component={Portfolio} />
+    <Route path='about' component={AboutView} />
+    <Route path='contact' component={ContactView} />
+    <Route path='quoteGenerator' component={QuoteView} />
+    <Route path='pomotime' component={PomoTime} />
+    <Route path='Wikipedia' component={Wikipedia} />
+    <Route path='Twitch' component={Twitch} />
+    <Route path='Weather' component={Weather} />
+    <Route path='Calculator' component={Calculator} />
+    <Route path='SimonGame' component={SimonGame} />
+    <Route path='TicTacToe' component={TicTacToe} />
+    <Route path='Projects' component={Portfolio} />
   </Route>
 )
