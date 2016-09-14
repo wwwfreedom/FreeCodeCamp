@@ -1,5 +1,161 @@
+@import 'base';
+
 .container {
+  /* background: $deskNavBgColour; */
+  padding: 0 1.5rem 2rem 1.5rem;
+  @include MQ(SM) {
+    padding: 0 6.5rem 2rem 6.5rem;
+  }
+
+  @include MQ(MM) {
+    padding: 0 4rem 2rem 4rem;
+  }
+
+  @include MQ(L) {
+    padding: 0 10rem 2rem 10rem;
+  }
+}
+
+.innerContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  justify-content: space-between;
+
+  h1 {
+    display: none;
+  }
+
+  h2 {
+    color: $sectionHeaderTextColor;
+    font-size: 1.5em;
+    font-weight: 300;
+
+    @include MQ(SM) {
+      font-size: 2em;
+    }
+
+    @include MQ(MM) {
+      font-size: 2.5em;
+    }
+
+    @include MQ(L) {
+      font-size: 3em;
+    }
+  }
+
+  @include MQ(MM) {
+    flex-direction: row;
+  }
+}
+
+.offer {
+
+  /* color: $textColor; */
+
+  @include MQ(SM) {
+    width: 500px;
+  }
+
+  @include MQ(MM) {
+    width: 400px;
+    padding-right: 2em;
+  }
+
+  @include MQ(M) {
+    width: 500px;
+  }
+
+  @include MQ(L) {
+    width: 500px;
+  }
+
+  p {
+    line-height: 1.2em;
+    letter-spacing: 0.05rem;
+
+    @include MQ(SM) {
+      font-size: 1.2rem;
+    }
+    em {
+      font-variant: small-caps;
+    }
+    a {
+      color: #000;
+      text-decoration: none;
+      border-bottom: 3px solid #b2ebf2;
+      box-shadow: inset 0 -5px 0 #b2ebf2;
+      transition: background .15s cubic-bezier(0.33,0.66,0.66,1);
+    }
+    a:hover {
+      background: #b2ebf2;
+    }
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  h4 {
+    margin-bottom: 0;
+  }
+}
+
+.skillsChart {
+
+  ul {
+    list-style-type: none;
+    line-height: 2rem;
+    padding-left: 0;
+    font-size: 0.8rem;
+
+    @include MQ(SM) {
+      padding-left: 0.5rem;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    @include MQ(MM) {
+      line-height: 2.4rem;
+    }
+
+    ul {
+      padding-left: .5rem;
+    }
+  }
+
+  svg {
+    margin-right: .5rem;
+    fill: red;
+    width: 1.1em;
+    height: 1.1em;
+
+    @include MQ(SM) {
+      margin-right: 1rem;
+    }
+  }
+
+  @include MQ(SM) {
+    width: 500px;
+  }
+
+  @include MQ(MM) {
+    width: 400px;
+  }
+
+  @include MQ(M) {
+    width: 500px;
+  }
+}
+
+.cta {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 1rem;
+
+  a {
+    margin: 0.5em 0.5em .5em 0;
+    @include MQ(SM) {
+      margin: 1em 1em 1em 0;
+    }
+  }
 }
