@@ -30,21 +30,21 @@ const initialState = {
       link: 'https://pollwise.herokuapp.com/',
       image: 'http://i.imgur.com/8zcWJpJ.png',
       brief: 'To build a full stack polling app where users can create and share their own polls.',
-      role: "Developing the front-end of the app with React.js and Redux. Creating a custom user registration system with OAuth logins and persist user's generated content to MongoDb."
+      role: "Developing the front-end of the app with React.js and Redux. Design custom backend API endpoints with Express.js and Mongoose.js. Creating a custom user registration system with OAuth logins via Github and Google."
     },
     {
       title: 'Escape Room SA',
       link: 'http://escaperoomsa.com.au/',
       image: 'http://i.imgur.com/HQmLQbA.png',
       brief: 'To create a fast loading responsive website to showcase brand and identity guidelines.',
-      role: 'Developing all HTML, CSS and Javascript assets for project, based on a custom design created in-house.'
+      role: 'Developing all HTML, CSS and Javascript assets for the project, based on a custom design created in-house.'
     },
     {
       title: 'Pomo Time',
       link: 'pomoTime',
       image: 'http://i.imgur.com/vvEZbX8.png',
       brief: 'To create a pomodoro timer with simple elegant design.',
-      role: 'Developing all timer features with React.js and Redux for state management. Creating responsive SVG design and animations.'
+      role: 'Developing timer features with React.js and Redux for state management. Creating responsive SVG design and animations.'
     }
   ]
 }
