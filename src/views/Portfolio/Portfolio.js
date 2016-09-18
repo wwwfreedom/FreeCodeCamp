@@ -7,7 +7,8 @@ const projects = [
     name: 'PollWise',
     description: 'A full stack polling app where registered user can create their own polls and share it.',
     image: 'http://i.imgur.com/8zcWJpJ.png',
-    link: 'https://pollwise.herokuapp.com/'
+    link: 'https://pollwise.herokuapp.com/',
+    externalLink: 'true'
   },
   {
     name: 'Simple Wikipedia',

@@ -96,10 +96,10 @@ export class AboutView extends Component {
 
         <div className={sty.cta}>
           <Link to='contact'>
-            <RaisedButton label='Contact Me'></RaisedButton>
+            <RaisedButton label='Contact Me' />
           </Link>
           <Link to='projects'>
-            <RaisedButton label='My work experience'></RaisedButton>
+            <RaisedButton label='My work experience' />
           </Link>
         </div>
       </div>

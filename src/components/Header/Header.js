@@ -16,15 +16,15 @@ export default class Header extends Component {
       <div className={sty.container}>
         <div className={sty.content}>
           <h1 style={{display: 'none'}}>Kevin Truong</h1>
-          <h2>Ideas, Code, Deploy <br/> Specializing in responsive <br/> interactive web apps</h2>
+          <h2>Ideas, Code, Deploy <br /> Specializing in responsive <br /> interactive web apps</h2>
           <h3>Full-stack Javascript Developer</h3>
         </div>
         <div className={sty.cta}>
           <Link to='about'>
-            <RaisedButton label='What I offer'></RaisedButton>
+            <RaisedButton label='What I offer' />
           </Link>
           <Link to='projects'>
-            <RaisedButton label='My work experience'></RaisedButton>
+            <RaisedButton label='My work experience' />
           </Link>
         </div>
       </div>
