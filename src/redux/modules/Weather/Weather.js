@@ -218,4 +218,3 @@ export const Weather = handleActions({
 }, initialState)
 
 export default Weather
-
